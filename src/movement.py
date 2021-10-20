@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import math
-import serial
+import /home/sauna/.local/lib/python3.8/site-packages/serial
 
 firstAngle = 0
 secondAngle = 120

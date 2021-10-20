@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import movement
-import keyboard
+import /home/sauna/.local/lib/python3.8/site-packages/keyboard
 
 while(True):
     if keyboard.is_pressed("q"):
