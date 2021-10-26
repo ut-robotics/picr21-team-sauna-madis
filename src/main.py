@@ -8,7 +8,7 @@ import movement
 import keyboard
 
 while(True):
-    movement.setMovement(90)
+    movement.spin
     if keyboard.is_pressed("q"):
         print("Stopped by keypress")
         movement.stop()

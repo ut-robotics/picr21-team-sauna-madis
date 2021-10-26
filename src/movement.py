@@ -17,6 +17,9 @@ def omniWheel(speed, angle, direction):
 
     return vel
 
+def spin(speed):
+    ser.write(struct.pack("<hhhHH", speed, 0, 0, 0, 0xAAAA))
+
 def setMovement(direction):
     print("Moving")
     speed = 50
