@@ -8,7 +8,7 @@ firstAngle = 0
 secondAngle = 130
 thirdAgnle = 260
 
-ser = serial.Serial(port="COM3",
+ser = serial.Serial(port="ttyACM0",
            baudrate=115200,
            timeout = 2)
 

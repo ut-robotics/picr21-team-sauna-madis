@@ -6,10 +6,13 @@
 
 import movement
 import keyboard
+import keyboard
 
-while(True):
-    movement.spin
-    if keyboard.is_pressed("q"):
-        print("Stopped by keypress")
-        movement.stop()
-        break
+try:
+    while True:
+        movement.spin(20)
+        if keyboard.is_pressed("q"):
+            print("Stopped by keypress")
+            break
+finally:
+    movement.stop()
