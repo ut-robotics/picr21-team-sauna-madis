@@ -5,8 +5,10 @@ import numpy as np
 import cv2
 
 #Data
-cords = []
+cords = [0,0]
 
+def getCords():
+    return cords
 #Detection
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
@@ -80,9 +82,11 @@ try:
         for keypoint in keyPoints:
             x = int(keypoint.pt[0])
             y = int(keypoint.pt[1])
-            cords.clear()
+            #Salvestan koordinaadid kui need pole 0 ?
             cords.append(x)
             cords.append(y)
+            cords.pop(0)
+            cords.pop(0)
 
             koord = (str(x) + ":" + str(y))
             cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
