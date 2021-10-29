@@ -5,7 +5,7 @@ import numpy as np
 import cv2
 
 #Data
-cords = [0,0]
+cords = [0, 0]
 
 def getCords():
     return cords
@@ -79,6 +79,8 @@ try:
         hsv = cv2.drawKeypoints(hsv, keyPoints, np.array([]), (0, 0, 255),
                                   cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
+
+        # leida lähib keypoint ja lisada see cordsi. Lähib leida blob suuruse kaudu ?
         for keypoint in keyPoints:
             x = int(keypoint.pt[0])
             y = int(keypoint.pt[1])
