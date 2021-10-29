@@ -20,7 +20,7 @@ def omniWheel(speed, angle, direction):
     return vel
 
 def spinRight():
-    ser.write(struct.pack("<hhhHH", 10000, 10000, 10000, 0, 0xAAAA))
+    ser.write(struct.pack("<hhhHH", 10001, 10000, 10000, 0, 0xAAAA))
 
 def setMovement(direction):
     print("Moving")
