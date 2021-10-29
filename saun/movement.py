@@ -4,9 +4,11 @@ import math
 import serial
 import struct
 
-firstAngle = 0
-secondAngle = 130
-thirdAgnle = 260
+firstAngle = 40
+secondAngle = 140
+thirdAgnle = 270
+
+#kiirused 0-32767   65500-32768
 
 ser = serial.Serial(port="/dev/ttyACM0",
            baudrate=115200,
@@ -18,7 +20,7 @@ def omniWheel(speed, angle, direction):
     return vel
 
 def spinRight():
-    ser.write(struct.pack("<hhhHH", 32767, 32767, 32767, 0 0xAAAA))
+    ser.write(struct.pack("<hhhHH", 10000, 10000, 10000, 0, 0xAAAA))
 
 def setMovement(direction):
     print("Moving")
