@@ -4,9 +4,34 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 
+#Data
+cords = []
+
+#Detection
+params = cv2.SimpleBlobDetector_Params()
+params.filterByArea = True
+params.filterByCircularity = False
+params.filterByConvexity = False
+params.filterByInertia = False
+params.minArea=500
+params.maxArea=100000
+detector = cv2.SimpleBlobDetector_create(params)
+
 # Configure depth and color streams
 pipeline = rs.pipeline()
 config = rs.config()
+
+#Loeb threshold data
+try:
+    with open("trackbar_defaults.txt") as tholder:
+        lH = int(tholder.readline())
+        lS = int(tholder.readline())
+        lV = int(tholder.readline())
+        hH = int(tholder.readline())
+        hS = int(tholder.readline())
+        hV = int(tholder.readline())
+except:
+    print("Faili njetu")
 
 # Get device product line for setting a supporting resolution
 pipeline_wrapper = rs.pipeline_wrapper(pipeline)
@@ -40,6 +65,27 @@ try:
         color_image = np.asanyarray(color_frame.get_data())
         hsv = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
 
+        lowerLimits = np.array([lH, lS, lV])
+        upperLimits = np.array([hH, hS, hV])
+        thresholded = cv2.inRange(hsv, lowerLimits, upperLimits)
+
+        outimage = cv2.bitwise_and(hsv, hsv, mask=thresholded)
+        thresholded = cv2.bitwise_not(thresholded)
+        keyPoints = detector.detect(thresholded)
+        outimage = cv2.drawKeypoints(outimage, keyPoints, np.array([]), (0, 0, 255),
+                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        hsv = cv2.drawKeypoints(hsv, keyPoints, np.array([]), (0, 0, 255),
+                                  cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+        for keypoint in keyPoints:
+            x = int(keypoint.pt[0])
+            y = int(keypoint.pt[1])
+            cords.clear()
+            cords.append(x)
+            cords.append(y)
+
+            koord = (str(x) + ":" + str(y))
+            cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
         # Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)

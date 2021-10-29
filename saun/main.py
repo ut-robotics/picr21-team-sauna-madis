@@ -6,7 +6,6 @@
 
 import movement
 import keyboard
-import keyboard
 
 try:
     while True:
