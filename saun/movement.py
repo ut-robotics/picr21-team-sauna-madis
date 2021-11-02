@@ -33,7 +33,7 @@ def setMovement(direction):
     ser.write(package)
 
 def throwBall():
-    ser.write(struct.pack("<hhhHH", 10001, 10000, 0, 200, 0xAAAA))
+    ser.write(struct.pack("<hhhHH", 0, -5000, 5000, 200, 0xAAAA))
 
 def spinAroundBall():
     return 0
