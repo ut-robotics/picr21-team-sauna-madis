@@ -6,9 +6,11 @@ import cv2
 
 #Data
 cords = [0, 0]
-
+depth = 0
 def getCords():
     return cords
+def getDepth():
+    return depth
 #Detection
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
@@ -22,7 +24,12 @@ detector = cv2.SimpleBlobDetector_create(params)
 # Configure depth and color streams
 pipeline = rs.pipeline()
 config = rs.config()
-
+lH = 125
+lS = 125
+lV = 125
+hH = 255
+hS = 255
+hV = 255
 #Loeb threshold data
 try:
     with open("trackbar_defaults.txt") as tholder:
@@ -63,7 +70,16 @@ pipeline.start(config)
 try:
     while True:
         frames = pipeline.wait_for_frames()
+        
         color_frame = frames.get_color_frame()
+        depth_frame = frames.get_depth_frame()
+
+#leiab depth pildi pealt kauguse meetrites, koordinaatidega (x,y)(hetkel ekraani keskelt), korvi kauguse mõõtmiseks
+        distance = depth_frame.get_distance(320, 240)
+        if distance != 0:
+            #print("Kaugus:"+ str(distance))
+            depth=distance
+
         color_image = np.asanyarray(color_frame.get_data())
         hsv = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
 
@@ -93,7 +109,7 @@ try:
             koord = (str(x) + ":" + str(y))
             cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
-        # Show images
+        # Show images, päris mängus ei ole vaja kuvada pilti
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.imshow('RealSense', hsv)
         cv2.waitKey(1)

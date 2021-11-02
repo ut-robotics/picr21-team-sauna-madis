@@ -45,12 +45,16 @@ while True:
         print("Otsin korvi!")
         #keerab paremale kuni korv ilmub ekraanile
         movement.spinAroundBall()
+        
 
         #korvi kaugus üle 50cm ? depthsensor?
         #kui ei ole, otsin palli ? või tuleks see check enne pallini jõudmist teha ?
         #
+        if cameraImage.getDepth > 0.5:
+            gamestate="Viskan_palli"
+        else:
+            gamestate="Otsin_palli"
 
-        gamestate="Viskan_palli"
 
 #käivitab throweri ja sõidab otse
     elif gamestate =="Viskan_palli":

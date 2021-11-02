@@ -19,9 +19,6 @@ def omniWheel(speed, angle, direction):
 
     return vel
 
-def spinRight():
-    ser.write(struct.pack("<hhhHH", 10001, 10000, 10000, 0, 0xAAAA))
-
 def setMovement(direction):
     print("Moving")
     speed = 50
@@ -34,6 +31,27 @@ def setMovement(direction):
     package = struct.pack("<hhhHH", x, y, z, 0, 0xAAAA)
 
     ser.write(package)
+
+def throwBall():
+    ser.write(struct.pack("<hhhHH", 10001, 10000, 0, 200, 0xAAAA))
+
+def spinAroundBall():
+    return 0
+
+def turnLeft():
+    return 0
+
+def turnRight():
+    return 0
+
+def spinRight():
+    ser.write(struct.pack("<hhhHH", 10001, 10000, 10000, 0, 0xAAAA))
+
+def forward():
+    ser.write(struct.pack("<hhhHH", 10001, 10000, 0, 0, 0xAAAA))
+
+
+
 
 def stop():
     print("STOP")
