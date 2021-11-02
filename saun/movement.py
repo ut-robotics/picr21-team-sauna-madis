@@ -48,7 +48,7 @@ def spinRight():
     ser.write(struct.pack("<hhhHH", 10001, 10000, 10000, 0, 0xAAAA))
 
 def forward():
-    ser.write(struct.pack("<hhhHH", 0, 5000, 60000, 0, 0xAAAA))
+    ser.write(struct.pack("<hhhHH", 0, -5000, 5000, 0, 0xAAAA))
 
 
 
