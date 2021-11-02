@@ -19,6 +19,7 @@ while True:
     if gamestate =="Otsin_palli":
         print("Hakkan palli otsima!")
 
+
         # salvestab palli kordinaadid listis
         if ballX[0] != 0:
 

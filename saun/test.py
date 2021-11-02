@@ -2,6 +2,6 @@ import movement
 try:    
     while 1:
 
-        movement.throwBall()
+        movement.spinRight()
 finally:
     movement.stop()
