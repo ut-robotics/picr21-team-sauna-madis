@@ -24,12 +24,11 @@ while True:
         if ballX[0] != 0:
 
             #Kas pall on üle joone check?
-
+            print("Leidsin palli")
             gamestate="Liigun_pallini"
 
         #keerab paremale kuni ekraanile ilmub palli keypoint
         movement.spinRight()
-
     elif gamestate =="Liigun_pallini":
         print("Liigun palli poole!")
         #palli x-koordinaat tuleb viia ekraani keskele ja siis otse liikuda
