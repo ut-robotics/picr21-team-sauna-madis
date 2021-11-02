@@ -2,6 +2,6 @@ import movement
 try:    
     while 1:
 
-        movement.spinRight()
+        movement.forward()
 finally:
     movement.stop()
