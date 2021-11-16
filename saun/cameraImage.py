@@ -65,7 +65,7 @@ else:
     config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 
 # Start streaming
-pipeline.start(config)
+#pipeline.start(config)  #õige asukoht
 def get_image():
     try:
         pipeline.start(config)
