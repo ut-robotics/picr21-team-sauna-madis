@@ -9,7 +9,6 @@ import time
 import movement
 import keyboard
 import cameraImage
-from saun.movement import spinRight
 
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli"
 gamestate="Otsin_palli"
