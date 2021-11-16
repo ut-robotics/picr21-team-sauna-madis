@@ -66,55 +66,55 @@ else:
 
 # Start streaming
 pipeline.start(config)
+def get_image():
+    try:
+        while True:
+            frames = pipeline.wait_for_frames()
+            
+            color_frame = frames.get_color_frame()
+            depth_frame = frames.get_depth_frame()
 
-try:
-    while True:
-        frames = pipeline.wait_for_frames()
-        
-        color_frame = frames.get_color_frame()
-        depth_frame = frames.get_depth_frame()
+    #leiab depth pildi pealt kauguse meetrites, koordinaatidega (x,y)(hetkel ekraani keskelt), korvi kauguse mõõtmiseks
+            distance = depth_frame.get_distance(320, 240)
+            if distance != 0:
+                #print("Kaugus:"+ str(distance))
+                depth=distance
 
-#leiab depth pildi pealt kauguse meetrites, koordinaatidega (x,y)(hetkel ekraani keskelt), korvi kauguse mõõtmiseks
-        distance = depth_frame.get_distance(320, 240)
-        if distance != 0:
-            #print("Kaugus:"+ str(distance))
-            depth=distance
+            color_image = np.asanyarray(color_frame.get_data())
+            hsv = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
 
-        color_image = np.asanyarray(color_frame.get_data())
-        hsv = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
+            lowerLimits = np.array([lH, lS, lV])
+            upperLimits = np.array([hH, hS, hV])
+            thresholded = cv2.inRange(hsv, lowerLimits, upperLimits)
 
-        lowerLimits = np.array([lH, lS, lV])
-        upperLimits = np.array([hH, hS, hV])
-        thresholded = cv2.inRange(hsv, lowerLimits, upperLimits)
-
-        outimage = cv2.bitwise_and(hsv, hsv, mask=thresholded)
-        thresholded = cv2.bitwise_not(thresholded)
-        keyPoints = detector.detect(thresholded)
-        outimage = cv2.drawKeypoints(outimage, keyPoints, np.array([]), (0, 0, 255),
-                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        hsv = cv2.drawKeypoints(hsv, keyPoints, np.array([]), (0, 0, 255),
-                                  cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            outimage = cv2.bitwise_and(hsv, hsv, mask=thresholded)
+            thresholded = cv2.bitwise_not(thresholded)
+            keyPoints = detector.detect(thresholded)
+            outimage = cv2.drawKeypoints(outimage, keyPoints, np.array([]), (0, 0, 255),
+                                        cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            hsv = cv2.drawKeypoints(hsv, keyPoints, np.array([]), (0, 0, 255),
+                                    cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
 
-        # leida lähib keypoint ja lisada see cordsi. Lähib leida blob suuruse kaudu ?
-        for keypoint in keyPoints:
-            x = int(keypoint.pt[0])
-            y = int(keypoint.pt[1])
-            #Salvestan koordinaadid kui need pole 0 ?
-            cords.append(x)
-            cords.append(y)
-            cords.pop(0)
-            cords.pop(0)
+            # leida lähib keypoint ja lisada see cordsi. Lähib leida blob suuruse kaudu ?
+            for keypoint in keyPoints:
+                x = int(keypoint.pt[0])
+                y = int(keypoint.pt[1])
+                #Salvestan koordinaadid kui need pole 0 ?
+                cords.append(x)
+                cords.append(y)
+                cords.pop(0)
+                cords.pop(0)
 
-            koord = (str(x) + ":" + str(y))
-            cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+                koord = (str(x) + ":" + str(y))
+                cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
-        # Show images, päris mängus ei ole vaja kuvada pilti
-        cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('RealSense', hsv)
-        cv2.waitKey(1)
+            # Show images, päris mängus ei ole vaja kuvada pilti
+            cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
+            cv2.imshow('RealSense', hsv)
+            cv2.waitKey(1)
 
-finally:
+    finally:
 
-    # Stop streaming
-    pipeline.stop()
+        # Stop streaming
+        pipeline.stop()
