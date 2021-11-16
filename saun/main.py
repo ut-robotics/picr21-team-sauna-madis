@@ -59,16 +59,20 @@ while True:
         if ballX[0] != 0:
             #Kas pall on üle joone check?
             print("Leidsin palli")
+            movement.stop()
             gamestate="Liigun_pallini"
         #keerab paremale kuni ekraanile ilmub palli keypoint
         movement.spinRight()
 
     elif gamestate =="Liigun_pallini":
-        print("Liigun palli poole!")
-        #palli x-koordinaat tuleb viia ekraani keskele ja siis otse liikuda
-        #---mis saab kui keystone ära kaob või see muutub ( mitu palli )
-        print(ballX[0])
-        pid_controller(ballX[0])
+        if ballX[0] !=0:
+            print("Liigun palli poole!")
+            #palli x-koordinaat tuleb viia ekraani keskele ja siis otse liikuda
+            #---mis saab kui keystone ära kaob või see muutub ( mitu palli )
+            print(ballX[0])
+            pid_controller(ballX[0])
+        else:
+            gamestate = "Otsin_palli"
 
 
 
