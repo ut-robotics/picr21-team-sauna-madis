@@ -52,7 +52,7 @@ def forward():
 
 def forwardspeed(speed, pid):
     
-    ser.write(struct.pack("<hhhHH", 0, -speed-pid, speed+pid, 0, 0xAAAA))
+    ser.write(struct.pack("<hhhHH", 0, -speed+pid, speed-pid, 0, 0xAAAA))
 
 
 

@@ -77,6 +77,7 @@ while True:
     elif gamestate =="Liigun_pallini":
         if ballX[0] !=0:
             print("Liigun palli poole!")
+            # 320:380 depth sensori jaoks, et pall jääks õigele kaugusele
             #palli x-koordinaat tuleb viia ekraani keskele ja siis otse liikuda
             #---mis saab kui keystone ära kaob või see muutub ( mitu palli )
             print(ballX[0])
