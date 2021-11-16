@@ -68,6 +68,7 @@ else:
 pipeline.start(config)
 def get_image():
     try:
+        pipeline.start(config)
         frames = pipeline.wait_for_frames()
         
         color_frame = frames.get_color_frame()
@@ -114,6 +115,5 @@ def get_image():
         cv2.waitKey(1)
 
     finally:
-
         # Stop streaming
         pipeline.stop()
