@@ -15,7 +15,7 @@ gamestate="Otsin_palli"
 screenHalfX=320
 ballX =[]
 
-speed=500
+speed=50
 prev_time = time.time()
 new_time = time.time()
 integral_error = 0
@@ -48,7 +48,7 @@ def pid_controller(palliX):
         pid = Kp*e+Ki*integral_error+Kd*deriv_error
 
         print("speed: " + str(speed))
-        pid=int(pid/10)
+        pid=int(pid/100)
         print("pid: " + str(pid))
         movement.forwardspeed(speed, pid)
 
