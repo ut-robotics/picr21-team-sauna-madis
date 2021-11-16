@@ -33,7 +33,7 @@ def pid_controller(palliX):
         Kp = 0.6*Ku
         Ki = (1.2*Ku)/Tu
         Kd = (3*Ku*Tu)/40
-        e = 640-palliX
+        e = 320-palliX
     #     Kp = 1.2
         p= Kp * e
     #     print(Kp)
