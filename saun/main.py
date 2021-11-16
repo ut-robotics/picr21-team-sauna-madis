@@ -4,6 +4,7 @@
 #172.17.54.164:5901
 #madis or password
 
+import time
 import movement
 import keyboard
 import cameraImage
@@ -13,6 +14,47 @@ import cameraImage
 gamestate="Otsin_palli"
 screenHalfX=320
 ballX =[]
+
+speed=500
+prev_time = time.time()
+new_time = time.time()
+integral_error = 0
+e2 =0
+Ki =0
+def pid_controller(palliX):
+    global prev_time, new_time, Ki, e2, integral_error
+    # This function should use the line location to implement a PID controller.
+    # Feel free to define and use any global variables you may need.
+    if palliX != 0: 
+        new_time = time.time()
+    #     print(new_time)
+        # YOUR CODE HERE
+        Ku = 1.5
+        Tu = 1.25
+        Kp = 0.6*Ku
+        Ki = (1.2*Ku)/Tu
+        Kd = (3*Ku*Tu)/40
+        e = 640-palliX
+    #     Kp = 1.2
+        p= Kp * e
+    #     print(Kp)
+        integral_error += e * (new_time - prev_time)
+        
+    #     print(Ki)
+        deriv_error = (e - e2) / (new_time - prev_time)
+    #     print(Kd)
+        e2 = e
+        prev_time = new_time
+        
+       
+        
+        pid = Kp*e+Ki*integral_error+Kd*deriv_error
+
+    #     print(u)
+        movement.forwardspeed(speed, pid)
+
+
+
 
 while True:
 
@@ -33,12 +75,9 @@ while True:
         print("Liigun palli poole!")
         #palli x-koordinaat tuleb viia ekraani keskele ja siis otse liikuda
         #---mis saab kui keystone ära kaob või see muutub ( mitu palli )
-        if ballX[0] < screenHalfX-20:
-            movement.turnRight()
-        elif ballX[0] > screenHalfX+20:
-            movement.turnLeft()
-        else:
-            movement.forward()
+        print(ballX[0])
+        pid_controller(ballX[0])
+
 
 
     elif gamestate =="Otsin_korvi":
