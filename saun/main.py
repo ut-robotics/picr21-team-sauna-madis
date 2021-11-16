@@ -4,10 +4,12 @@
 #172.17.54.164:5901
 #madis or password
 
+from math import pi
 import time
 import movement
 import keyboard
 import cameraImage
+from saun.movement import spinRight
 
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli"
 gamestate="Otsin_palli"
@@ -46,8 +48,12 @@ def pid_controller(palliX):
         
         pid = Kp*e+Ki*integral_error+Kd*deriv_error
 
-    #     print(u)
+        print("speed: " + str(speed))
+        print("pid: " + str(pid))
         movement.forwardspeed(speed, pid)
+
+
+
 print("alustan mangu tsuklit")
 while True:
     cameraImage.get_image()
