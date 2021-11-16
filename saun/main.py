@@ -48,6 +48,7 @@ def pid_controller(palliX):
         pid = Kp*e+Ki*integral_error+Kd*deriv_error
 
         print("speed: " + str(speed))
+        pid=int(pid/10)
         print("pid: " + str(pid))
         movement.forwardspeed(speed, pid)
 
