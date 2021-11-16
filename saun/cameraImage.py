@@ -63,12 +63,15 @@ if device_product_line == 'L500':
     config.enable_stream(rs.stream.color, 960, 540, rs.format.bgr8, 30)
 else:
     config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-
+try:
+    pipeline.stop()
+except:
+    print("camera oli juba stopped")
 # Start streaming
-#pipeline.start(config)  #õige asukoht
+pipeline.start(config)  #õige asukoht
 def get_image():
     try:
-        pipeline.start(config)
+        #pipeline.start(config)
         frames = pipeline.wait_for_frames()
         
         color_frame = frames.get_color_frame()
@@ -113,7 +116,8 @@ def get_image():
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.imshow('RealSense', hsv)
         cv2.waitKey(1)
-
-    finally:
-        # Stop streaming
-        pipeline.stop()
+    except:
+        print("cameraerror")
+#    finally:
+ #       # Stop streaming
+  #      pipeline.stop()
