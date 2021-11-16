@@ -8,6 +8,7 @@ import time
 import movement
 import keyboard
 import cameraImage
+from saun.cameraImage import getCords
 
 
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli"
@@ -21,14 +22,13 @@ new_time = time.time()
 integral_error = 0
 e2 =0
 Ki =0
+
 def pid_controller(palliX):
     global prev_time, new_time, Ki, e2, integral_error
     # This function should use the line location to implement a PID controller.
     # Feel free to define and use any global variables you may need.
     if palliX != 0: 
         new_time = time.time()
-    #     print(new_time)
-        # YOUR CODE HERE
         Ku = 1.5
         Tu = 1.25
         Kp = 0.6*Ku
@@ -46,22 +46,17 @@ def pid_controller(palliX):
         e2 = e
         prev_time = new_time
         
-       
-        
         pid = Kp*e+Ki*integral_error+Kd*deriv_error
 
     #     print(u)
         movement.forwardspeed(speed, pid)
-
-
-
-
+print("alustan mangu tsuklit")
 while True:
 
+    ballX=getCords()
+    
     if gamestate =="Otsin_palli":
         print("Hakkan palli otsima!")
-
-
         # salvestab palli kordinaadid listis
         if ballX[0] != 0:
 
