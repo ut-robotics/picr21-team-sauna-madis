@@ -38,9 +38,8 @@ try:
         txtdata = tholder.readline()
         tykid = txtdata.split(",")
 
-        for tykk in tykid:
-            for x in data:
-                x = tykk
+        for tykk in range(len(tykid)):
+                data[tykk] = tykid[tykk]
 except:
     print("Faili njetu")
 
