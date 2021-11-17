@@ -111,10 +111,14 @@ while True:
 
         #korvi kaugus üle 50cm ? depthsensor?
         #kui ei ole, otsin palli ? või tuleks see check enne pallini jõudmist teha ?
-        #
-        if cameraImage.getDepth > 0.5:
+        
+
+        korvi_kaugus = cameraImage.getDepth()
+        if korvi_kaugus > 0.5:
+            print("Viskan palli")
             gamestate="Viskan_palli"
         else:
+            print("Korv liiga lähedal, otsin uut palli")
             gamestate="Otsin_palli"
 
 
@@ -122,6 +126,9 @@ while True:
     elif gamestate =="Viskan_palli":
         print("Viskan palli")
         movement.throwBall()
+        
+        #ei ole hea lahenud?
+        time.sleep(2)
 
         gamestate="Otsin_palli"
         
