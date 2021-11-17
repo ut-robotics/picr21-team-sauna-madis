@@ -15,20 +15,23 @@ detector = cv2.SimpleBlobDetector_create(params)
 
 data = ["lH", "lS", "lV", "hH", "hS", "hV"]
 
-lH = 125
-lS = 125
-lV = 125
-hH = 255
-hS = 255
-hV = 255
+lH = 0
+lS = 0
+lV = 0
+hH = 0
+hS = 0
+hV = 0
 
 try:
     with open("pall_defaults.txt") as tholder:
         txtdata = tholder.readline()
         tykid = txtdata.split(",")
-
+        print(tykid)
         for tykk in range(len(tykid)):
-                data[tykk] = tykid[tykk]
+                data[tykk] = int(tykid[tykk])
+
+
+
 except:
     print("Faili njetu")
 
@@ -58,7 +61,7 @@ def saveValue(fail):
     tholder_new.write(str(lV)+",")
     tholder_new.write(str(hH)+",")
     tholder_new.write(str(hS)+",")
-    tholder_new.write(str(hV)+"\n")
+    tholder_new.write(str(hV))
     tholder_new.close()
     pass
 

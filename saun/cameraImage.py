@@ -26,12 +26,12 @@ pipeline = rs.pipeline()
 config = rs.config()
 
 data = ["lH", "lS", "lV", "hH", "hS", "hV"]
-lH = 125
-lS = 125
-lV = 125
-hH = 255
+lH = 29
+lS = 101
+lV = 51
+hH = 96
 hS = 255
-hV = 255
+hV = 153
 #Loeb threshold data
 try:
     with open("pall_defaults.txt") as tholder:
