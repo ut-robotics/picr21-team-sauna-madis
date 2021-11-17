@@ -21,4 +21,5 @@ while True:
             print("Stopped by keypress")
             break
     except:
+        break
         print("vale nupp")
