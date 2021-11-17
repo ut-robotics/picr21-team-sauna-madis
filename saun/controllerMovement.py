@@ -1,7 +1,25 @@
 import keyboard
 import movement
+from sshkeyboard import listen_keyboard
 
-while True:
+def press(key):
+    if key=="up":
+        print("ControllerEdasi")
+        movement.forward()
+    elif key == "down":
+        print("down pressed")
+        movement.stop()
+    elif key == "left":
+        print("left pressed")
+        movement.turnLeft()
+    elif key == "right":
+        movement.turnRight()
+        print("right pressed")
+
+listen_keyboard(on_press=press)
+
+
+""" //while True:
     try:
         if keyboard.is_pressed("w"):
             print("ControllerEdasi")
@@ -22,4 +40,4 @@ while True:
             break
     except:
         break
-        print("vale nupp")
+        print("vale nupp") """
