@@ -54,9 +54,9 @@ def pid_controller(palliX):
         
         pid = Kp*e+Ki*integral_error+Kd*deriv_error
 
-        print("speed: " + str(speed))
+        #print("speed: " + str(speed))
         pid=int(pid/100)
-        print("pid: " + str(pid))
+        #print("pid: " + str(pid))
         if pid > 10:
             pid=15
         elif pid < -10:
@@ -114,7 +114,9 @@ while True:
         
 
         korvi_kaugus = cameraImage.getDepth()
+        print("Korvi kaugus: " + str(korvi_kaugus))
         if korvi_kaugus > 0.5:
+            
             print("Viskan palli")
             gamestate="Viskan_palli"
         else:
