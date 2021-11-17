@@ -79,7 +79,7 @@ def get_image():
 
 #leiab depth pildi pealt kauguse meetrites, koordinaatidega (x,y)(hetkel ekraani keskelt), korvi kauguse mõõtmiseks
         distance = depth_frame.get_distance(320, 240)
-        if distance != 0:
+        if distance > 0:
             #print("Kaugus:"+ str(distance))
             depth=distance
 
@@ -111,6 +111,12 @@ def get_image():
 
             koord = (str(x) + ":" + str(y))
             cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+
+        if len(keyPoints) == 0:
+            cords.append(0)
+            cords.append(0)
+            cords.pop(0)
+            cords.pop(0)
 
         # Show images, päris mängus ei ole vaja kuvada pilti
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)

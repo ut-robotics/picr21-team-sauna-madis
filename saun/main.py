@@ -87,7 +87,8 @@ while True:
             # 320:380 depth sensori jaoks, et pall jääks õigele kaugusele
             #palli x-koordinaat tuleb viia ekraani keskele ja siis otse liikuda
             #---mis saab kui keystone ära kaob või see muutub ( mitu palli )
-            print(ballX[0])
+            
+            #print(ballX[0])
             pid_controller(ballX[0])
 
             #y=420  x = 320
@@ -96,7 +97,8 @@ while True:
 
                 gamestate="Otsin_korvi"
 
-
+        elif ballX[0] == 0 :
+            gamestate = "Otsin_palli"
 
         else:
             gamestate = "Otsin_palli"
