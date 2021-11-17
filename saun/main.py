@@ -117,7 +117,7 @@ while True:
 
         korvi_kaugus = cameraImage.getDepth()
         print("Korvi kaugus: " + str(korvi_kaugus))
-        if korvi_kaugus > 0.5:
+        if korvi_kaugus > 0.1: #0.5 on õige
             
             print("Viskan palli")
             gamestate="Viskan_palli"
@@ -130,9 +130,6 @@ while True:
     elif gamestate =="Viskan_palli":
         print("Viskan palli")
         movement.throwBall()
-        
-        #ei ole hea lahenud?
-        time.sleep(2)
 
         gamestate="Otsin_palli"
         
