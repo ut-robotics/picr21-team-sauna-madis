@@ -24,6 +24,8 @@ detector = cv2.SimpleBlobDetector_create(params)
 # Configure depth and color streams
 pipeline = rs.pipeline()
 config = rs.config()
+
+data = ["lH", "lS", "lV", "hH", "hS", "hV"]
 lH = 125
 lS = 125
 lV = 125
@@ -33,12 +35,12 @@ hV = 255
 #Loeb threshold data
 try:
     with open("pall_defaults.txt") as tholder:
-        lH = int(tholder.readline())
-        lS = int(tholder.readline())
-        lV = int(tholder.readline())
-        hH = int(tholder.readline())
-        hS = int(tholder.readline())
-        hV = int(tholder.readline())
+        txtdata = tholder.readline()
+        tykid = txtdata.split(",")
+
+        for tykk in tykid:
+            for x in data:
+                x = tykk
 except:
     print("Faili njetu")
 
