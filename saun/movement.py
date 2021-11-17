@@ -3,6 +3,7 @@
 import math
 import serial
 import struct
+import time
 
 firstAngle = 40
 secondAngle = 140
@@ -35,6 +36,7 @@ def setMovement(direction):
 def throwBall():
     # tagumine, parem, vasak
     ser.write(struct.pack("<hhhHH", 0, -50, 50, 200, 0xAAAA))
+    time.sleep(2)
 
 def spinAroundBall():
     ser.write(struct.pack("<hhhHH", 10, 0, 0, 0, 0xAAAA))
@@ -46,7 +48,7 @@ def turnRight():
     return 0
 
 def spinRight():
-    ser.write(struct.pack("<hhhHH", -10, -10, -10, 0, 0xAAAA))
+    ser.write(struct.pack("<hhhHH", -5, -5, -5, 0, 0xAAAA))
 
 def forward():
     ser.write(struct.pack("<hhhHH", 0, -50, 50, 0, 0xAAAA))
