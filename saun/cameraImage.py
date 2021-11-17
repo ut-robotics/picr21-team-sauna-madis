@@ -70,6 +70,7 @@ except:
 # Start streaming
 pipeline.start(config)  #õige asukoht
 def get_image():
+    global depth
     try:
         #pipeline.start(config)
         frames = pipeline.wait_for_frames()
@@ -80,7 +81,7 @@ def get_image():
 #leiab depth pildi pealt kauguse meetrites, koordinaatidega (x,y)(hetkel ekraani keskelt), korvi kauguse mõõtmiseks
         distance = depth_frame.get_distance(320, 240)
         if distance > 0:
-            print("Kaugus:"+ str(distance))
+            #print("Kaugus:"+ str(distance))
             depth=distance
 
         color_image = np.asanyarray(color_frame.get_data())
