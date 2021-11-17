@@ -17,7 +17,7 @@ params.filterByArea = True
 params.filterByCircularity = False
 params.filterByConvexity = False
 params.filterByInertia = False
-params.minArea=500
+params.minArea=50
 params.maxArea=100000
 detector = cv2.SimpleBlobDetector_create(params)
 
