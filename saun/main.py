@@ -4,6 +4,13 @@
 #172.17.54.164:5901
 #madis or password
 
+
+
+# 1. - depth sensoriga õigele kaugusele
+# 2. - error check kui pall kaob 
+# 3. - 
+
+
 from math import pi
 import time
 import movement
@@ -48,7 +55,7 @@ def pid_controller(palliX):
         pid = Kp*e+Ki*integral_error+Kd*deriv_error
 
         print("speed: " + str(speed))
-        pid=int(pid/150)
+        pid=int(pid/100)
         print("pid: " + str(pid))
         if pid > 10:
             pid=15
@@ -82,6 +89,15 @@ while True:
             #---mis saab kui keystone ära kaob või see muutub ( mitu palli )
             print(ballX[0])
             pid_controller(ballX[0])
+
+            #y=420  x = 320
+
+            if ballX[1] > 410:
+
+                gamestate="Otsin_korvi"
+
+
+
         else:
             gamestate = "Otsin_palli"
 
