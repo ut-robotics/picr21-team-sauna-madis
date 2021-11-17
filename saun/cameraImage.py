@@ -32,7 +32,7 @@ hS = 255
 hV = 255
 #Loeb threshold data
 try:
-    with open("trackbar_defaults.txt") as tholder:
+    with open("pall_defaults.txt") as tholder:
         lH = int(tholder.readline())
         lS = int(tholder.readline())
         lV = int(tholder.readline())

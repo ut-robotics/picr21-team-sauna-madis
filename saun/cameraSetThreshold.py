@@ -1,5 +1,5 @@
 #HSV pilt
-
+import keyboard
 import pyrealsense2 as rs
 import numpy as np
 import cv2
@@ -12,6 +12,9 @@ params.minArea=500
 params.maxArea=100000
 detector = cv2.SimpleBlobDetector_create(params)
 
+
+data = ["lH", "lS", "lV", "hH", "hS", "hV"]
+
 lH = 125
 lS = 125
 lV = 125
@@ -19,19 +22,16 @@ hH = 255
 hS = 255
 hV = 255
 
-
 try:
-    with open("trackbar_defaults.txt") as tholder:
-        lH = int(tholder.readline())
-        lS = int(tholder.readline())
-        lV = int(tholder.readline())
-        hH = int(tholder.readline())
-        hS = int(tholder.readline())
-        hV = int(tholder.readline())
+    with open("pall_defaults.txt") as tholder:
+        txtdata = tholder.readline()
+        tykid = txtdata.split(",")
+
+        for tykk in tykid:
+            for x in data:
+                x = tykk
 except:
     print("Faili njetu")
-
-
 
 def updateValuelH(new_value):
     global lH
@@ -51,7 +51,21 @@ def updateValuehS(new_value):
 def updateValuehV(new_value):
     global hV
     hV = new_value
-    
+
+def saveValue(fail):
+    tholder_new = open(fail, "w")
+    tholder_new.write(str(lH)+",")
+    tholder_new.write(str(lS)+",")
+    tholder_new.write(str(lV)+",")
+    tholder_new.write(str(hH)+",")
+    tholder_new.write(str(hS)+",")
+    tholder_new.write(str(hV)+"\n")
+    tholder_new.close()
+    pass
+
+
+
+
 cv2.namedWindow("Processed")
 
 cv2.createTrackbar("lH", "Processed", lH, 255, updateValuelH)
@@ -60,6 +74,7 @@ cv2.createTrackbar("lV", "Processed", lV, 255, updateValuelV)
 cv2.createTrackbar("hH", "Processed", hH, 255, updateValuehH)
 cv2.createTrackbar("hS", "Processed", hS, 255, updateValuehS)
 cv2.createTrackbar("hV", "Processed", hV, 255, updateValuehV)
+
 
 # Configure depth and color streams
 pipeline = rs.pipeline()
@@ -122,19 +137,20 @@ try:
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.imshow('RealSense', frame)
         cv2.imshow('Processed', outimage)
+
+        if keyboard.is_pressed("z"):
+            saveValue("pall_defaults.txt")
+            print("Salvestasin palli väärtused")
+        elif keyboard.is_pressed("x"):
+            saveValue("roosa_defaults.txt")
+            print("Salvestasin roosa korvi väärtused")
+        elif keyboard.is_pressed("c"):
+            saveValue("sinine_defaults.txt")
+            print("Salvestasin sinise korvi väärtused")
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
 finally:
-        
-    tholder_new= open("trackbar_defaults.txt","w")
-    tholder_new.write(str(lH)+"\n")
-    tholder_new.write(str(lS)+"\n")
-    tholder_new.write(str(lV)+"\n")
-    tholder_new.write(str(hH)+"\n")
-    tholder_new.write(str(hS)+"\n")
-    tholder_new.write(str(hV)+"\n")
-
-    tholder_new.close()
     # Stop streaming
     pipeline.stop()
