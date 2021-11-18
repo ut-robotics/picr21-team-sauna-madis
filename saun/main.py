@@ -1,15 +1,8 @@
 #!/usr/bin/env python3
 
 #VNC
-#172.17.54.164:5901
+#172.17.54.164:5901  172.17.154.183
 #madis or password
-
-
-
-# 1. - depth sensoriga õigele kaugusele
-# 2. - error check kui pall kaob 
-# 3. - 
-
 
 from math import pi
 import time
@@ -19,7 +12,6 @@ import cameraImage
 import sys
 
 #Command Line Arguments
-
 korv = "roos" # "roosa", "sinine" 
 move_style = "auto" # "auto", "controller"
 
@@ -27,13 +19,13 @@ try:
     if len(sys.argv) != 0:
         for argument in sys.argv:
             if argument == "sinine":
+                print("Ründan sininst")
                 korv=argument
             elif argument == "controller":
+
                 move_style = "controller"
 except:
     print("Command line arguments empty, using defaults")
-
-
 
 if move_style== "controller":
     import controllerMovement
@@ -46,7 +38,7 @@ gamestate="Otsin_palli"
 screenHalfX=320
 ballX =[]
 
-speed=50
+speed=20
 prev_time = time.time()
 new_time = time.time()
 integral_error = 0
@@ -55,8 +47,7 @@ Ki =0
 
 def pid_controller(palliX):
     global prev_time, new_time, Ki, e2, integral_error
-    # This function should use the line location to implement a PID controller.
-    # Feel free to define and use any global variables you may need.
+
     if palliX != 0: 
         new_time = time.time()
         Ku = 1.5
@@ -117,10 +108,12 @@ while move_style =="auto":
 
             #y=420  x = 320
 
+            #kui pall piisavalt lähedal, otsib korvi
             if ballX[1] > 410:
 
                 gamestate="Otsin_korvi"
 
+        #kui pall ära kaob vahepeal
         elif ballX[0] == 0 :
             gamestate = "Otsin_palli"
 
@@ -131,28 +124,34 @@ while move_style =="auto":
 
     elif gamestate =="Otsin_korvi":
         print("Otsin korvi!")
-        #keerab paremale kuni korv ilmub ekraanile
+        #keerleb ümber palli paremale kuni vastase korv ilmub ekraanile
         movement.spinAroundBall()
         
 
         #korvi kaugus üle 50cm ? depthsensor?
-        #kui ei ole, otsin palli ? või tuleks see check enne pallini jõudmist teha ?
+        #kui ei ole, otsin uut palli ? või tuleks see check enne pallini jõudmist teha ?
         
-
+        
         korvi_kaugus = cameraImage.getDepth()
         print("Korvi kaugus: " + str(korvi_kaugus))
+
+        #kauguse annab meetrites
         if korvi_kaugus > 0.1: #0.5 on õige
             
             print("Viskan palli")
             gamestate="Viskan_palli"
         else:
             print("Korv liiga lähedal, otsin uut palli")
+            
+            #otsib uut palli, kuidas discardid roboti ees olev pall ?
             gamestate="Otsin_palli"
 
 
 #käivitab throweri ja sõidab otse
     elif gamestate =="Viskan_palli":
         print("Viskan palli")
+
+        #peaks jälgima viskamise ajal ka palli
         movement.throwBall()
 
         gamestate="Otsin_palli"

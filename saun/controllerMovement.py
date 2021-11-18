@@ -4,7 +4,7 @@ from sshkeyboard import listen_keyboard
 
 def press(key):
     if key=="up":
-        print("ControllerEdasi")
+        print("up pressed")
         movement.forward()
     elif key == "down":
         print("down pressed")
@@ -16,32 +16,13 @@ def press(key):
         movement.turnRight()
         print("right pressed")
 
+    elif key == "o":
+        movement.spinAroundBall()
+        print("o pressed, spinning around ball")
+
 def main():
 
     listen_keyboard(on_press=press)
 
 if __name__ =="__main__":
     main()
-
-""" //while True:
-    try:
-        if keyboard.is_pressed("w"):
-            print("ControllerEdasi")
-            movement.forward()
-        elif keyboard.is_pressed("s"):
-            print("stop")
-            movement.stop()
-        elif keyboard.is_pressed("a"):
-            print("ControllerVasakule")
-            movement.turnLeft()
-        elif keyboard.is_pressed("d"):
-            print("ControllerParemale")
-            movement.turnRight()
-        
-        if keyboard.is_pressed("q"):
-            movement.stop()
-            print("Stopped by keypress")
-            break
-    except:
-        break
-        print("vale nupp") """
