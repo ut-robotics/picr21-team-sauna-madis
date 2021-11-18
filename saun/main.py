@@ -15,8 +15,6 @@ import sys
 korv = "roosa" # "roosa", "sinine" 
 move_style = "auto" # "auto", "controller"
 
-def getKorv():
-    return korv
 
 try:
     if len(sys.argv) != 0:

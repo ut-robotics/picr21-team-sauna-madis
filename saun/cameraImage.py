@@ -3,7 +3,7 @@
 import pyrealsense2 as rs
 import numpy as np
 import cv2
-from main import getKorv as korv
+
 
 #Data
 cords = [0, 0]
@@ -35,8 +35,8 @@ data = {
     "hS" : 0,
     "hV" : 0
 }
+
 #Loeb threshold data
-korvifail = korv +"_defaults.txt"
 
 try:
     with open("roosa_defaults.txt") as tholder:
