@@ -12,8 +12,11 @@ import cameraImage
 import sys
 
 #Command Line Arguments
-korv = "roos" # "roosa", "sinine" 
+korv = "roosa" # "roosa", "sinine" 
 move_style = "auto" # "auto", "controller"
+
+def getKorv():
+    return korv
 
 try:
     if len(sys.argv) != 0:

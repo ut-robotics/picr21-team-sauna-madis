@@ -3,6 +3,7 @@
 import pyrealsense2 as rs
 import numpy as np
 import cv2
+from main import getKorv as korv
 
 #Data
 cords = [0, 0]
@@ -33,8 +34,11 @@ hH = 96
 hS = 255
 hV = 153
 #Loeb threshold data
+
+korvifail = korv +"_defaults.txt"
+
 try:
-    with open("pall_defaults.txt") as tholder:
+    with open(korvifail) as tholder:
         txtdata = tholder.readline()
         tykid = txtdata.split(",")
 

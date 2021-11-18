@@ -16,7 +16,7 @@ def press(key):
         movement.turnRight()
         print("right pressed")
 
-    elif key == "o":
+    elif key == 'o':
         movement.spinAroundBall()
         print("o pressed, spinning around ball")
 
