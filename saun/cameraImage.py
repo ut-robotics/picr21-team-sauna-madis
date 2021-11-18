@@ -26,24 +26,26 @@ detector = cv2.SimpleBlobDetector_create(params)
 pipeline = rs.pipeline()
 config = rs.config()
 
-data = ["lH", "lS", "lV", "hH", "hS", "hV"]
-lH = 29
-lS = 101
-lV = 51
-hH = 96
-hS = 255
-hV = 153
+#Threshold data
+data = {
+    "lH" : 0,
+    "lS" : 0,
+    "lV" : 0,
+    "hH" : 0,
+    "hS" : 0,
+    "hV" : 0
+}
 #Loeb threshold data
-
 korvifail = korv +"_defaults.txt"
 
 try:
-    with open(korvifail) as tholder:
+    with open("roosa_defaults.txt") as tholder:
         txtdata = tholder.readline()
         tykid = txtdata.split(",")
+        vaartused = list(data.keys())
 
-        for tykk in range(len(tykid)):
-                data[tykk] = tykid[tykk]
+        for x in range(6):
+            data[vaartused[x]] = int(tykid[x])
 except:
     print("Faili njetu")
 
@@ -79,12 +81,12 @@ def get_image():
     try:
         #pipeline.start(config)
         frames = pipeline.wait_for_frames()
-        
         color_frame = frames.get_color_frame()
         depth_frame = frames.get_depth_frame()
 
-#leiab depth pildi pealt kauguse meetrites, koordinaatidega (x,y)(hetkel ekraani keskelt), korvi kauguse mõõtmiseks
+        #leiab depth pildi pealt kauguse meetrites, koordinaatidega (x,y)(hetkel ekraani keskelt), korvi kauguse mõõtmiseks
         distance = depth_frame.get_distance(320, 240)
+
         if distance > 0:
             #print("Kaugus:"+ str(distance))
             depth=distance
@@ -92,8 +94,8 @@ def get_image():
         color_image = np.asanyarray(color_frame.get_data())
         hsv = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
 
-        lowerLimits = np.array([lH, lS, lV])
-        upperLimits = np.array([hH, hS, hV])
+        lowerLimits = np.array([data["lH"], data["lS"], data["lV"]])
+        upperLimits = np.array([data["hH"], data["hS"], data["hV"]])
         thresholded = cv2.inRange(hsv, lowerLimits, upperLimits)
 
         outimage = cv2.bitwise_and(hsv, hsv, mask=thresholded)

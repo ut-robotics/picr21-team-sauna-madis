@@ -13,55 +13,58 @@ params.maxArea=100000
 detector = cv2.SimpleBlobDetector_create(params)
 
 
-data = ["lH", "lS", "lV", "hH", "hS", "hV"]
-
-lH = 0
-lS = 0
-lV = 0
-hH = 0
-hS = 0
-hV = 0
+data = {
+    "lH" : 0,
+    "lS" : 0,
+    "lV" : 0,
+    "hH" : 0,
+    "hS" : 0,
+    "hV" : 0
+}
 
 try:
-    with open("pall_defaults.txt") as tholder:
+    with open("roosa_defaults.txt") as tholder:
         txtdata = tholder.readline()
         tykid = txtdata.split(",")
-        print(tykid)
-        for tykk in range(len(tykid)):
-                data[tykk] = int(tykid[tykk])
+        vaartused = list(data.keys())
 
-
+        for x in range(6):
+            data[vaartused[x]] = int(tykid[x])
 
 except:
     print("Faili njetu")
 
 def updateValuelH(new_value):
-    global lH
-    lH = new_value
+    global data
+    data["lH"] = new_value
 def updateValuelS(new_value):
-    global lS
-    lS = new_value
+    global data
+    data["lS"] = new_value
 def updateValuelV(new_value):
-    global lV
-    lV = new_value
+    global data
+    data["lV"] = new_value
 def updateValuehH(new_value):
-    global hH
-    hH = new_value
+    global data
+    data["hH"] = new_value
 def updateValuehS(new_value):
-    global hS
-    hS = new_value
+    global data
+    data["hS"] = new_value
 def updateValuehV(new_value):
-    global hV
-    hV = new_value
+    global data
+    data["hV"] = new_value
 
 def saveValue(fail):
     tholder_new = open(fail, "w")
-    tholder_new.write(str(lH)+",")
-    tholder_new.write(str(lS)+",")
-    tholder_new.write(str(lV)+",")
-    tholder_new.write(str(hH)+",")
-    tholder_new.write(str(hS)+",")
-    tholder_new.write(str(hV))
+    values = data.values()
+
+    for value in values:
+        cnt = 0
+        if (cnt == 5):
+            tholder_new.write(str(value))
+        else:
+            tholder_new.write(str(value) + ",")
+        cnt += 1
+
     tholder_new.close()
     pass
 
@@ -70,12 +73,12 @@ def saveValue(fail):
 
 cv2.namedWindow("Processed")
 
-cv2.createTrackbar("lH", "Processed", lH, 255, updateValuelH)
-cv2.createTrackbar("lS", "Processed", lS, 255, updateValuelS)
-cv2.createTrackbar("lV", "Processed", lV, 255, updateValuelV)
-cv2.createTrackbar("hH", "Processed", hH, 255, updateValuehH)
-cv2.createTrackbar("hS", "Processed", hS, 255, updateValuehS)
-cv2.createTrackbar("hV", "Processed", hV, 255, updateValuehV)
+cv2.createTrackbar("lH", "Processed", data["lH"], 255, updateValuelH)
+cv2.createTrackbar("lS", "Processed", data["lS"], 255, updateValuelS)
+cv2.createTrackbar("lV", "Processed", data["lV"], 255, updateValuelV)
+cv2.createTrackbar("hH", "Processed", data["hH"], 255, updateValuehH)
+cv2.createTrackbar("hS", "Processed", data["hS"], 255, updateValuehS)
+cv2.createTrackbar("hV", "Processed", data["hV"], 255, updateValuehV)
 
 
 # Configure depth and color streams
@@ -116,8 +119,8 @@ try:
 
 
 
-        lowerLimits = np.array([lH, lS, lV])
-        upperLimits = np.array([hH, hS, hV])
+        lowerLimits = np.array([data["lH"], data["lS"], data["lV"]])
+        upperLimits = np.array([data["hH"], data["hS"], data["hV"]])
         thresholded = cv2.inRange(frame, lowerLimits, upperLimits)
         
         outimage = cv2.bitwise_and(frame, frame, mask = thresholded)
