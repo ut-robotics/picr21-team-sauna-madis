@@ -16,6 +16,30 @@ import time
 import movement
 import keyboard
 import cameraImage
+import sys
+
+#Command Line Arguments
+
+korv = "roos" # "roosa", "sinine" 
+move_style = "auto" # "auto", "controller"
+
+try:
+    if len(sys.argv) != 0:
+        for argument in sys.argv:
+            if argument == "sinine":
+                korv=argument
+            elif argument == "controller":
+                move_style = "controller"
+except:
+    print("Command line arguments empty, using defaults")
+
+
+
+if move_style== "controller":
+    import controllerMovement
+    controllerMovement.main()
+    print("Controller juhib")
+
 
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli"
 gamestate="Otsin_palli"
@@ -66,7 +90,7 @@ def pid_controller(palliX):
 
 
 print("alustan mangu tsuklit")
-while True:
+while move_style =="auto":
     cameraImage.get_image()
     ballX=cameraImage.getCords()
 

@@ -16,8 +16,12 @@ def press(key):
         movement.turnRight()
         print("right pressed")
 
-listen_keyboard(on_press=press)
+def main():
 
+    listen_keyboard(on_press=press)
+
+if __name__ =="__main__":
+    main()
 
 """ //while True:
     try:
