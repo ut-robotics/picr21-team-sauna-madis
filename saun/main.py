@@ -10,6 +10,7 @@ import movement
 import keyboard
 import cameraImage
 import sys
+import pidSpeed as pid
 
 #Command Line Arguments
 korv = "roosa" # "roosa", "sinine" 
@@ -39,45 +40,7 @@ gamestate="Otsin_palli"
 screenHalfX=320
 ballX =[]
 
-speed=20
-prev_time = time.time()
-new_time = time.time()
-integral_error = 0
-e2 =0
-Ki =0
-
-def pid_controller(palliX):
-    global prev_time, new_time, Ki, e2, integral_error
-
-    if palliX != 0: 
-        new_time = time.time()
-        Ku = 1.5
-        Tu = 1.25
-        Kp = 0.6*Ku
-        Ki = (1.2*Ku)/Tu
-        Kd = (3*Ku*Tu)/40
-        e = 320-palliX
-    #     Kp = 1.2
-        p= Kp * e
-    #     print(Kp)
-        integral_error += e * (new_time - prev_time)
-        
-    #     print(Ki)
-        deriv_error = (e - e2) / (new_time - prev_time)
-    #     print(Kd)
-        e2 = e
-        prev_time = new_time
-        
-        pid = Kp*e+Ki*integral_error+Kd*deriv_error
-
-        #print("speed: " + str(speed))
-        pid=int(pid/100)
-        #print("pid: " + str(pid))
-        if pid > 10:
-            pid=15
-        elif pid < -10:
-            pid = -15
-        movement.forwardspeed(speed, pid)
+speed = 20
 
 
 
@@ -105,7 +68,10 @@ while move_style =="auto":
             #---mis saab kui keystone ära kaob või see muutub ( mitu palli )
             
             #print(ballX[0])
-            pid_controller(ballX[0])
+            #pid_controller(ballX[0])
+
+            pid = pid.pidSpeed(ballX[0])
+            movement.forwardspeed(speed, pid)
 
             #y=420  x = 320
 
@@ -144,7 +110,7 @@ while move_style =="auto":
         else:
             print("Korv liiga lähedal, otsin uut palli")
             
-            #otsib uut palli, kuidas discardid roboti ees olev pall ?
+            #otsib uut palli, kuidas discardid roboti ees oleva palli ?
             gamestate="Otsin_palli"
 
 

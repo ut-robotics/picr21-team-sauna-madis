@@ -1,5 +1,7 @@
+### Ei kasuta hetkel
+
 import threading
-#import main
+import main
 import cameraImage
 
 if __name__ == "__main__":
