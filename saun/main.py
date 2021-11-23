@@ -119,7 +119,7 @@ while move_style =="auto":
         print("Viskan palli")
 
         #peaks jälgima viskamise ajal ka palli
-        movement.throwBall()
+        movement.throwBall(20)
 
         gamestate="Otsin_palli"
         
