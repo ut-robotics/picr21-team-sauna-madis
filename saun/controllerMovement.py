@@ -15,7 +15,8 @@ def press(key):
     elif key == "right":
         movement.turnRight()
         print("right pressed")
-    elif key == "t":
+        
+    elif key == 't':
         movement.throwBall(300)
         print("t pressed")
 
