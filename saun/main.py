@@ -10,7 +10,7 @@ import movement
 import keyboard
 import cameraImage
 import sys
-import pidSpeed as pid
+import pidSpeed as pidS
 
 #Command Line Arguments
 korv = "roosa" # "roosa", "sinine" 
@@ -70,7 +70,7 @@ while move_style =="auto":
             #print(ballX[0])
             #pid_controller(ballX[0])
 
-            pid = pid.pidSpeed(ballX[0])
+            pid = pidS.pidSpeed(ballX[0])
             movement.forwardspeed(speed, pid)
 
             #y=420  x = 320
