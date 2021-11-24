@@ -26,8 +26,12 @@ move_style = "auto" # "auto", "controller"
 #cl = Client(ws)
 #cl.start()
 
+#"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli", "Stop"
+gamestate="Otsin_palli"
+
 #mängu peatamiseks
 def press(key):
+    global gamestate
     if key=="up":
         if gamestate != "Stop":
             print("MÄNG PEATATUD")
@@ -56,8 +60,7 @@ if move_style== "controller":
     print("Controller juhib")
 
 
-#"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli", "Stop"
-gamestate="Otsin_palli"
+
 screenHalfX=320
 ballX =[]
 
