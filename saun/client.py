@@ -7,7 +7,7 @@ class Client:
     def __init__(self, ws):
         self.go = None
         self.stopped = False
-        self.robot = "tulihand"
+        self.robot = "SaunaMadis"
         self.ws = ws
         self.blue = True
 
