@@ -13,6 +13,7 @@ import sys
 import pidSpeed as pidS
 from websockets import connect
 from client import Client
+from sshkeyboard import listen_keyboard
 
 #Command Line Arguments
 korv = "roosa" # "roosa", "sinine" 
@@ -25,6 +26,16 @@ move_style = "auto" # "auto", "controller"
 #cl = Client(ws)
 #cl.start()
 
+#mängu peatamiseks
+def press(key):
+    if key=="up":
+        if gamestate != "Stop":
+            print("MÄNG PEATATUD")
+            movement.stop()
+            gamestate="Stop"
+        elif gamestate == "Stop":
+            print("MÄNG JATKUB")
+            gamestate="Otsin_palli"
 
 
 try:
@@ -45,7 +56,7 @@ if move_style== "controller":
     print("Controller juhib")
 
 
-#"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli"
+#"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli", "Stop"
 gamestate="Otsin_palli"
 screenHalfX=320
 ballX =[]
@@ -56,6 +67,7 @@ speed = 20
 
 print("alustan mangu tsuklit")
 while move_style =="auto":
+    listen_keyboard(on_press=press)
     cameraImage.get_image("Pall")
     ballX=cameraImage.getCords()
 

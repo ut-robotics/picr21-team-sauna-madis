@@ -77,8 +77,17 @@ try:
     pipeline.stop()
 except:
     print("camera oli juba stopped")
+
+
+    
 # Start streaming
+
 pipeline.start(config)  #õige asukoht
+
+depth_sensor = pipeline.start(config).get_device().query_sensors()[1]
+depth_sensor.set_option(rs.option.enable_auto_exposure, False)
+
+
 def get_image(img):
     global depth
 
