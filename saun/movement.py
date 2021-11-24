@@ -5,9 +5,9 @@ import serial
 import struct
 import time
 
-firstAngle = 40
-secondAngle = 140
-thirdAgnle = 270
+firstAngle = 0
+secondAngle = 130
+thirdAgnle = 230
 
 #kiirused 0-32767   65500-32768
 
