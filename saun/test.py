@@ -1,7 +1,11 @@
 import movement
-try:    
-    while 1:
+import keyboard
 
-        movement.spinRight()
-finally:
-    movement.stop()
+while True:
+
+    movement.setMovement(90)
+
+    if keyboard.is_pressed("q"):
+        movement.stop()
+        print("Stopped by keypress")
+        break
