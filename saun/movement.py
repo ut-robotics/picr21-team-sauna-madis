@@ -29,7 +29,7 @@ def setMovement(direction):
     print("Y: " + str(y))
     z = int(omniWheel(speed, thirdAgnle, direction))
     print("Z: " + str(z))
-    package = struct.pack("<hhhHH", x, y, z, 0, 0xAAAA)
+    package = struct.pack("<hhhHH", x, z, y, 0, 0xAAAA)
 
     ser.write(package)
 
