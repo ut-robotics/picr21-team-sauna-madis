@@ -31,9 +31,9 @@ def pidSpeed(palliX): #palli blobi x koordinaat
 
         pid = int(pid / 100)
 
-        if pid > 15:
-            pid = 15
-        elif pid < -15:
-            pid = -15
+ #       if pid > 15:
+  #          pid = 15
+   #     elif pid < -15:
+    #        pid = -15
 
         return(pid)
