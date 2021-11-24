@@ -71,10 +71,13 @@ speed = 20
 print("alustan mangu tsuklit")
 while move_style =="auto":
     
-    cameraImage.get_image("Pall")
-    ballX=cameraImage.getCords()
+    
 
     if gamestate =="Otsin_palli":
+
+        cameraImage.get_image("Pall")
+        ballX=cameraImage.getCords()
+
         print("Hakkan palli otsima!")
         # salvestab palli kordinaadid listis
         if ballX[0] != 0:
@@ -86,6 +89,10 @@ while move_style =="auto":
         movement.spinRight()
 
     elif gamestate =="Liigun_pallini":
+
+        cameraImage.get_image("Pall")
+        ballX=cameraImage.getCords()
+
         if ballX[0] !=0:
             print("Liigun palli poole!")
             # 320:380 depth sensori jaoks, et pall jääks õigele kaugusele
@@ -115,14 +122,25 @@ while move_style =="auto":
 
 
     elif gamestate =="Otsin_korvi":
+
+        cameraImage.get_image(korv)
+        ballX=cameraImage.getCords()
+
         print("Otsin korvi!")
         #keerleb ümber palli paremale kuni vastase korv ilmub ekraanile
         movement.spinAroundBall()
         
+        if ballX[0] != 0:
+            if  ballX[0] > 0:
+                movement.spinAroundBall()
+
+            elif ballX[0] < 0:
+                movement.spinAroundBall()
 
         #korvi kaugus üle 50cm ? depthsensor?
         #kui ei ole, otsin uut palli ? või tuleks see check enne pallini jõudmist teha ?
         
+
         
         korvi_kaugus = cameraImage.getDepth()
         print("Korvi kaugus: " + str(korvi_kaugus))
@@ -144,7 +162,7 @@ while move_style =="auto":
         print("Viskan palli")
 
         #peaks jälgima viskamise ajal ka palli
-        movement.throwBall(20)
+        movement.throwBall(2000)
 
         gamestate="Otsin_palli"
         
