@@ -22,14 +22,16 @@ def omniWheel(speed, angle, direction):
 
     return vel
 
-def setMovement(direction):
+def setMovement(xSpeed, ySpeed, rotSpeed):
     print("Moving")
-    speed = 50
-    x = int(omniWheel(speed, firstAngle, direction) * wheelSpeed)
+    robotSpeed = math.sqrt(xSpeed**2 + ySpeed**2)
+    robotDirectionalAngle = math.atan2(xSpeed, ySpeed)
+
+    x = int(omniWheel(robotSpeed, firstAngle, robotDirectionalAngle) + rotSpeed)
     print("X: " + str(x))
-    y = int(omniWheel(speed, secondAngle, direction) * wheelSpeed)
+    y = int(omniWheel(robotSpeed, secondAngle, robotDirectionalAngle) + rotSpeed)
     print("Y: " + str(y))
-    z = int(omniWheel(speed, thirdAgnle, direction) * wheelSpeed)
+    z = int(omniWheel(robotSpeed, thirdAgnle, robotDirectionalAngle) + rotSpeed)
     print("Z: " + str(z))
     package = struct.pack("<hhhHH", x, z, y, 0, 0xAAAA)
 
