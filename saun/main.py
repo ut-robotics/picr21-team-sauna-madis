@@ -70,7 +70,7 @@ speed = 20
 
 print("alustan mangu tsuklit")
 while move_style =="auto":
-    listen_keyboard(on_press=press)
+    
     cameraImage.get_image("Pall")
     ballX=cameraImage.getCords()
 
@@ -150,7 +150,7 @@ while move_style =="auto":
         
 
 
-
+    listen_keyboard(on_press=press)
     if keyboard.is_pressed("q"):
         movement.stop()
         print("Stopped by keypress")
