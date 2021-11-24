@@ -18,12 +18,12 @@ from client import Client
 korv = "roosa" # "roosa", "sinine" 
 move_style = "auto" # "auto", "controller"
 
-blue = False
-id = "SaunMadis"
-go = False
-ws = connect("ws://localhost:8080")
-cl = Client(ws)
-cl.start()
+#blue = False
+#robot = "SaunMadis"
+#go = False
+#ws = connect("ws://localhost:8080")
+#cl = Client(ws)
+#cl.start()
 
 
 
