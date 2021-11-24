@@ -5,6 +5,8 @@ import serial
 import struct
 import time
 
+wheelSpeed = 18.75 * 64 / (2 * math.pi * 0.035 * 60)
+
 firstAngle = 0
 secondAngle = 130
 thirdAgnle = 230
@@ -23,11 +25,11 @@ def omniWheel(speed, angle, direction):
 def setMovement(direction):
     print("Moving")
     speed = 50
-    x = int(omniWheel(speed, firstAngle, direction))
+    x = int(omniWheel(speed, firstAngle, direction) * wheelSpeed)
     print("X: " + str(x))
-    y = int(omniWheel(speed, secondAngle, direction))
+    y = int(omniWheel(speed, secondAngle, direction) * wheelSpeed)
     print("Y: " + str(y))
-    z = int(omniWheel(speed, thirdAgnle, direction))
+    z = int(omniWheel(speed, thirdAgnle, direction) * wheelSpeed)
     print("Z: " + str(z))
     package = struct.pack("<hhhHH", x, z, y, 0, 0xAAAA)
 
@@ -37,7 +39,6 @@ def throwBall(speed):
     # tagumine, parem, vasak
     ser.write(struct.pack("<hhhHH", 0, -10, 10, speed, 0xAAAA))
     time.sleep(2)
-
 
 def spinAroundBall():
     ser.write(struct.pack("<hhhHH", 10, 0, 0, 0, 0xAAAA))
