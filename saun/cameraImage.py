@@ -12,6 +12,19 @@ def getCords():
     return cords
 def getDepth():
     return depth
+
+def loefaili(failinimi):
+    try:
+        with open(failinimi) as tholder:
+            txtdata = tholder.readline()
+            tykid = txtdata.split(",")
+            vaartused = list(data.keys())
+
+            for x in range(6):
+                data[vaartused[x]] = int(tykid[x])
+    except:
+        print("Faili njetu")
+
 #Detection
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
@@ -37,17 +50,7 @@ data = {
 }
 
 #Loeb threshold data
-
-try:
-    with open("roosa_defaults.txt") as tholder:
-        txtdata = tholder.readline()
-        tykid = txtdata.split(",")
-        vaartused = list(data.keys())
-
-        for x in range(6):
-            data[vaartused[x]] = int(tykid[x])
-except:
-    print("Faili njetu")
+loefaili("pall_defaults.txt")
 
 # Get device product line for setting a supporting resolution
 pipeline_wrapper = rs.pipeline_wrapper(pipeline)
@@ -76,9 +79,20 @@ except:
     print("camera oli juba stopped")
 # Start streaming
 pipeline.start(config)  #õige asukoht
-def get_image():
+def get_image(img):
     global depth
+
     try:
+        #millist pilti
+        if img == "Pall":
+            loefaili("pall_defaults.txt")
+
+        elif img == "Roosa":
+            loefaili("roosa_defaults.txt")
+
+        elif img == "Sinine":
+            loefaili("sinine_defaults.txt")
+
         #pipeline.start(config)
         frames = pipeline.wait_for_frames()
         color_frame = frames.get_color_frame()

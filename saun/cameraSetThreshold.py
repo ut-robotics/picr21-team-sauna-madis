@@ -3,12 +3,13 @@ import keyboard
 import pyrealsense2 as rs
 import numpy as np
 import cv2
+
 params = cv2.SimpleBlobDetector_Params()
 params.filterByArea = True
 params.filterByCircularity = False
 params.filterByConvexity = False
 params.filterByInertia = False
-params.minArea=500
+params.minArea=50
 params.maxArea=100000
 detector = cv2.SimpleBlobDetector_create(params)
 
@@ -23,7 +24,7 @@ data = {
 }
 
 try:
-    with open("roosa_defaults.txt") as tholder:
+    with open("pall_defaults.txt") as tholder:
         txtdata = tholder.readline()
         tykid = txtdata.split(",")
         vaartused = list(data.keys())

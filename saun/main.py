@@ -11,10 +11,20 @@ import keyboard
 import cameraImage
 import sys
 import pidSpeed as pidS
+from websockets import connect
+from client import Client
 
 #Command Line Arguments
 korv = "roosa" # "roosa", "sinine" 
 move_style = "auto" # "auto", "controller"
+
+#blue = false
+#id = "SaunaMadis"
+#go = false
+ws = connect("ws://localhost:8080")
+cl = Client(ws)
+cl.start()
+
 
 
 try:
@@ -46,7 +56,7 @@ speed = 20
 
 print("alustan mangu tsuklit")
 while move_style =="auto":
-    cameraImage.get_image()
+    cameraImage.get_image("Pall")
     ballX=cameraImage.getCords()
 
     if gamestate =="Otsin_palli":
