@@ -9,7 +9,7 @@ wheelSpeed = 18.75 * 64 / (2 * math.pi * 0.035 * 60)
 
 firstAngle = 0
 secondAngle = 130
-thirdAgnle = 230
+thirdAgnle = 260
 
 #kiirused 0-32767   65500-32768
 
