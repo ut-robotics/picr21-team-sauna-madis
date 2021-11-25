@@ -25,7 +25,7 @@ def omniWheel(speed, angle, direction):
 def setMovement(xSpeed, ySpeed, rotSpeed):
     print("Moving")
     robotSpeed = math.sqrt(xSpeed**2 + ySpeed**2)
-    robotDirectionalAngle = math.atan2(xSpeed, ySpeed)
+    robotDirectionalAngle = math.atan2(ySpeed, xSpeed)
 
     x = int(omniWheel(robotSpeed, firstAngle, robotDirectionalAngle) + rotSpeed)
     print("X: " + str(x))
