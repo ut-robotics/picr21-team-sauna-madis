@@ -2,8 +2,7 @@ import movement
 import keyboard
 
 while True:
-
-    movement.setMovement(0,50,10)
+    movement.setMovement(90, 0)
 
     if keyboard.is_pressed("q"):
         movement.stop()
