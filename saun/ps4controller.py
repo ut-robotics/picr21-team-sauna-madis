@@ -34,7 +34,7 @@ class controller:
 
             def on_up_arrow_press(self):
                 movement.forward()
-            def on_up_arrow_press(self):
+            def on_up_down_arrow_release(self):
                 movement.stop()
 
 
