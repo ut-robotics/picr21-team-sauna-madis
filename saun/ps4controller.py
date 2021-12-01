@@ -35,10 +35,11 @@ class controller:
             def on_circle_press(self):
                 print("TURN RIGHT")
                 movement.turnRight()
-            def on_up_arrow_press(self):
-                print("UPARROW")
+
+            def on_L1_press(self):
                 movement.forward()
-            def on_up_down_arrow_release(self):
+
+            def on_L1_release(self):
                 movement.stop()
 
 
