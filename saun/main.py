@@ -77,7 +77,7 @@ speed = 20
 while True:
     while move_style == "controller":
         move_style = getgamestate()
-        print("CONTROLLER MOVEMENT ACTIVATED")
+        
         #if go == True:
         #   move_style ="auto"
 
@@ -88,6 +88,7 @@ while True:
         move_style= getgamestate()
         
         if move_style =="controller":
+            print("CONTROLLER MOVEMENT ACTIVATED")
             break
 
         if gamestate =="Otsin_palli":
