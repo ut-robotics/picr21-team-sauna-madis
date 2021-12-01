@@ -149,10 +149,10 @@ def get_image(img):
             cords.pop(0)
             cords.pop(0)
 
-        # Show images, päris mängus ei ole vaja kuvada pilti
-        #cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-        #cv2.imshow('RealSense', thresholded)
-        #cv2.waitKey(1)
+        #Show images, päris mängus ei ole vaja kuvada pilti
+        cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
+        cv2.imshow('RealSense', thresholded)
+        cv2.waitKey(1)
     except:
         print("cameraerror")
 #    finally:

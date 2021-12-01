@@ -16,7 +16,6 @@ from websockets import connect
 from client import Client
 from ps4controller import controller
 from ps4controller import getgamestate
-from sshkeyboard import listen_keyboard
 
 
 #Command Line Arguments
