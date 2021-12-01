@@ -11,7 +11,6 @@ class Client:
         self.ws = ws
         self.blue = True
 
-
     def start(self):
         Thread(target=self.listen, args=()).start()
         return self

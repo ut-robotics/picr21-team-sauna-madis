@@ -116,7 +116,8 @@ while True:
                 #pid_controller(ballX[0])
 
                 pid = pidS.pidSpeed(ballX[0])
-                movement.forwardspeed(speed, pid)
+                movement.setMovement(90, speed, pid)
+
 
                 #y=420  x = 320
 
