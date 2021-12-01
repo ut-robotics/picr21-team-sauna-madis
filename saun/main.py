@@ -14,6 +14,7 @@ import pidSpeed as pidS
 from websockets import connect
 from client import Client
 from ps4controller import controller
+from ps4controller import getgamestate
 from sshkeyboard import listen_keyboard
 
 
@@ -31,6 +32,7 @@ move_style = "auto" # "auto", "controller"
 print("Stardin controlleri threadi")
 cntrl = controller()
 cntrl.start()
+
 
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli", "Stop"
 gamestate="Otsin_palli"
@@ -76,8 +78,8 @@ speed = 20
 print("alustan mangu tsuklit")
 while move_style =="auto":
     
-    key=cntrl.getKey()
-    print("_------------------------------"+ key)
+    style= getgamestate()
+    print("------------------------------:   "+ style)
 
     if gamestate =="Otsin_palli":
 
