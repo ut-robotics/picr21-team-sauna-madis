@@ -13,6 +13,7 @@ import sys
 import pidSpeed as pidS
 from websockets import connect
 from client import Client
+from ps4controller import controller
 from sshkeyboard import listen_keyboard
 
 
@@ -26,6 +27,9 @@ move_style = "auto" # "auto", "controller"
 #ws = connect("ws://localhost:8080")
 #cl = Client(ws)
 #cl.start()
+
+print("Stardin controlleri threadi")
+cntrl = controller.start()
 
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli", "Stop"
 gamestate="Otsin_palli"
