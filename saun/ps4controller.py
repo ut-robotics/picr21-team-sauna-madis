@@ -1,14 +1,16 @@
-
+import main
 from pyPS4Controller.controller import Controller
     
-    
+
+
 class MyController(Controller):
 
     def __init__(self, **kwargs):
         Controller.__init__(self, **kwargs)
 
     def on_x_press(self):
-       print("Hello world")
+        print("Hello world")
+       main.kask()
 
     def on_x_release(self):
        print("Goodbye world")

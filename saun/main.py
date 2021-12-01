@@ -15,22 +15,6 @@ from websockets import connect
 from client import Client
 from sshkeyboard import listen_keyboard
 
-from pyPS4Controller.controller import Controller
-    
-class MyController(Controller):
-
-    def __init__(self, **kwargs):
-        Controller.__init__(self, **kwargs)
-
-    def on_x_press(self):
-       print("Hello world")
-
-    def on_x_release(self):
-       print("Goodbye world")
-
-controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
-# you can start listening before controller is paired, as long as you pair it within the timeout window
-controller.listen(timeout=60)
 
 #Command Line Arguments
 korv = "roosa" # "roosa", "sinine" 
@@ -38,7 +22,7 @@ move_style = "auto" # "auto", "controller"
 
 #blue = False
 #robot = "SaunMadis"
-#go = False
+#go =    False
 #ws = connect("ws://localhost:8080")
 #cl = Client(ws)
 #cl.start()
@@ -83,7 +67,8 @@ ballX =[]
 
 speed = 20
 
-
+def kask():
+    print("MAINI PULTI")
 
 print("alustan mangu tsuklit")
 while move_style =="auto":
