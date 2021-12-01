@@ -2,7 +2,7 @@ import movement
 from pyPS4Controller.controller import Controller
 from threading import Thread
 
-gamestate = "auto" #"auto", "controller"
+gamestate = "controller" #"auto", "controller"
 
 def getgamestate():
     return gamestate
@@ -56,10 +56,6 @@ class controller:
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
         # you can start listening before controller is paired, as long as you pair it within the timeout window
         controller.listen(timeout=60)
-    
-    def getKey(self):
-        
-        return (self.key)
 
 
 
