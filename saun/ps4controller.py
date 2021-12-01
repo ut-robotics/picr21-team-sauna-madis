@@ -33,11 +33,19 @@ class controller:
                     gamestate = "auto"
             
             def on_circle_press(self):
-                print("TURN RIGHT")
+                movement.turnLeft()
+            
+            def on_triangle_press(self):
                 movement.turnRight()
 
-            def on_L1_press(self):
+            def on_R1_press(self):
                 movement.forward()
+
+            def on_R1_release(self):
+                movement.stop()
+            
+            def on_L1_press(self):
+                movement.backward()
 
             def on_L1_release(self):
                 movement.stop()

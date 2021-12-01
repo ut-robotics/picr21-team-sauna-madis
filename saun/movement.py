@@ -52,6 +52,9 @@ def spinRight():
 def forward():
     ser.write(struct.pack("<hhhHH", 0, -20, 20, 0, 0xAAAA))
 
+def backward():
+    ser.write(struct.pack("<hhhHH", 0, 20, -20, 0, 0xAAAA))
+
 def forwardspeed(speed, pid):
     
     ser.write(struct.pack("<hhhHH", 0, -speed+pid, speed-pid, 0, 0xAAAA))

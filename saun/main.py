@@ -21,7 +21,7 @@ from sshkeyboard import listen_keyboard
 
 #Command Line Arguments
 korv = "roosa" # "roosa", "sinine" 
-move_style = "auto" # "auto", "controller"
+move_style = "controller" # "auto", "controller"
 
 #blue = False
 #robot = "SaunMadis"
@@ -89,6 +89,7 @@ while True:
         
         if move_style =="controller":
             print("CONTROLLER MOVEMENT ACTIVATED")
+            movement.stop()
             break
 
         if gamestate =="Otsin_palli":
