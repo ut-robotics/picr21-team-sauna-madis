@@ -29,7 +29,7 @@ def pidSpeed(palliX): #palli blobi x koordinaat
 
         pid = Kp * e + Ki * integral_error + Kd * deriv_error
 
-        pid = int(pid / 100)
+        pid = int(pid / 200)
 
  #       if pid > 15:
   #          pid = 15
