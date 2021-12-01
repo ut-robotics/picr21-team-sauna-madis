@@ -30,7 +30,7 @@ move_style = "auto" # "auto", "controller"
 
 print("Stardin controlleri threadi")
 cntrl = controller()
-cntrl = controller.start()
+cntrl.start()
 
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli", "Stop"
 gamestate="Otsin_palli"
