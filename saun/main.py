@@ -38,17 +38,7 @@ cntrl.start()
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli", "Stop"
 gamestate="Otsin_palli"
 
-#mängu peatamiseks
-def press(key):
-    global gamestate
-    if key=="up":
-        if gamestate != "Stop":
-            print("MÄNG PEATATUD")
-            movement.stop()
-            gamestate="Stop"
-        elif gamestate == "Stop":
-            print("MÄNG JATKUB")
-            gamestate="Otsin_palli"
+
 
 
 try:
@@ -78,11 +68,15 @@ while True:
     while move_style == "controller":
         move_style = getgamestate()
         
+        if move_style =="auto":
+            print("alustan mangu tsuklit")
+            break
         #if go == True:
         #   move_style ="auto"
+        #   break
 
 
-    print("alustan mangu tsuklit")
+    
     while move_style =="auto":
         
         move_style= getgamestate()

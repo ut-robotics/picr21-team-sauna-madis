@@ -31,7 +31,7 @@ class controller:
                     gamestate = "controller"
                 else:
                     gamestate = "auto"
-                    print(gamestate)
+                    
             
             def on_circle_press(self):
                 movement.turnLeft()
