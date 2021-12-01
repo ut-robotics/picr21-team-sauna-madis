@@ -5,6 +5,7 @@
 #madis or password
 
 from math import pi
+from threading import BrokenBarrierError
 import time
 import movement
 import keyboard
@@ -24,7 +25,7 @@ move_style = "auto" # "auto", "controller"
 
 #blue = False
 #robot = "SaunMadis"
-#go =    False
+#go = False
 #ws = connect("ws://localhost:8080")
 #cl = Client(ws)
 #cl.start()
@@ -73,111 +74,119 @@ screenHalfX=320
 ballX =[]
 
 speed = 20
+while True:
+    while move_style == "controller":
+        move_style = getgamestate()
+        print("CONTROLLER MOVEMENT ACTIVATED")
+        #if go == True:
+        #   move_style ="auto"
 
 
-print("alustan mangu tsuklit")
-while move_style =="auto":
-    
-    style= getgamestate()
-    print("------------------------------:   "+ style)
+    print("alustan mangu tsuklit")
+    while move_style =="auto":
+        
+        move_style= getgamestate()
+        
+        if move_style =="controller":
+            break
 
-    if gamestate =="Otsin_palli":
+        if gamestate =="Otsin_palli":
 
-        cameraImage.get_image("Pall")
-        ballX=cameraImage.getCords()
+            cameraImage.get_image("Pall")
+            ballX=cameraImage.getCords()
 
-        print("Hakkan palli otsima!")
-        # salvestab palli kordinaadid listis
-        if ballX[0] != 0:
-            #Kas pall on üle joone check?
-            print("Leidsin palli")
-            movement.stop()
-            gamestate="Liigun_pallini"
-        #keerab paremale kuni ekraanile ilmub palli keypoint
-        movement.spinRight()
+            print("Hakkan palli otsima!")
+            # salvestab palli kordinaadid listis
+            if ballX[0] != 0:
+                #Kas pall on üle joone check?
+                print("Leidsin palli")
+                movement.stop()
+                gamestate="Liigun_pallini"
+            #keerab paremale kuni ekraanile ilmub palli keypoint
+            movement.spinRight()
 
-    elif gamestate =="Liigun_pallini":
+        elif gamestate =="Liigun_pallini":
 
-        cameraImage.get_image("Pall")
-        ballX=cameraImage.getCords()
+            cameraImage.get_image("Pall")
+            ballX=cameraImage.getCords()
 
-        if ballX[0] !=0:
-            print("Liigun palli poole!")
-            # 320:380 depth sensori jaoks, et pall jääks õigele kaugusele
-            #palli x-koordinaat tuleb viia ekraani keskele ja siis otse liikuda
-            #---mis saab kui keystone ära kaob või see muutub ( mitu palli )
+            if ballX[0] !=0:
+                print("Liigun palli poole!")
+                # 320:380 depth sensori jaoks, et pall jääks õigele kaugusele
+                #palli x-koordinaat tuleb viia ekraani keskele ja siis otse liikuda
+                #---mis saab kui keystone ära kaob või see muutub ( mitu palli )
+                
+                #print(ballX[0])
+                #pid_controller(ballX[0])
+
+                pid = pidS.pidSpeed(ballX[0])
+                movement.forwardspeed(speed, pid)
+
+                #y=420  x = 320
+
+                #kui pall piisavalt lähedal, otsib korvi
+                if ballX[1] > 410:
+
+                    gamestate="Otsin_korvi"
+
+            #kui pall ära kaob vahepeal
+            elif ballX[0] == 0 :
+                gamestate = "Otsin_palli"
+
+            else:
+                gamestate = "Otsin_palli"
+
+
+
+        elif gamestate =="Otsin_korvi":
+
+            cameraImage.get_image(korv)
+            ballX=cameraImage.getCords()
+
+            print("Otsin korvi!")
+            #keerleb ümber palli paremale kuni vastase korv ilmub ekraanile
+            movement.spinAroundBall()
             
-            #print(ballX[0])
-            #pid_controller(ballX[0])
+            if ballX[0] != 0:
+                if  ballX[0] > 0:
+                    movement.spinAroundBall()
 
-            pid = pidS.pidSpeed(ballX[0])
-            movement.forwardspeed(speed, pid)
+                elif ballX[0] < 0:
+                    movement.spinAroundBall()
 
-            #y=420  x = 320
-
-            #kui pall piisavalt lähedal, otsib korvi
-            if ballX[1] > 410:
-
-                gamestate="Otsin_korvi"
-
-        #kui pall ära kaob vahepeal
-        elif ballX[0] == 0 :
-            gamestate = "Otsin_palli"
-
-        else:
-            gamestate = "Otsin_palli"
-
-
-
-    elif gamestate =="Otsin_korvi":
-
-        cameraImage.get_image(korv)
-        ballX=cameraImage.getCords()
-
-        print("Otsin korvi!")
-        #keerleb ümber palli paremale kuni vastase korv ilmub ekraanile
-        movement.spinAroundBall()
-        
-        if ballX[0] != 0:
-            if  ballX[0] > 0:
-                movement.spinAroundBall()
-
-            elif ballX[0] < 0:
-                movement.spinAroundBall()
-
-        #korvi kaugus üle 50cm ? depthsensor?
-        #kui ei ole, otsin uut palli ? või tuleks see check enne pallini jõudmist teha ?
-        
-
-        
-        korvi_kaugus = cameraImage.getDepth()
-        print("Korvi kaugus: " + str(korvi_kaugus))
-
-        #kauguse annab meetrites
-        if korvi_kaugus > 0.1: #0.5 on õige
+            #korvi kaugus üle 50cm ? depthsensor?
+            #kui ei ole, otsin uut palli ? või tuleks see check enne pallini jõudmist teha ?
             
+
+            
+            korvi_kaugus = cameraImage.getDepth()
+            print("Korvi kaugus: " + str(korvi_kaugus))
+
+            #kauguse annab meetrites
+            if korvi_kaugus > 0.1: #0.5 on õige
+                
+                print("Viskan palli")
+                gamestate="Viskan_palli"
+            else:
+                print("Korv liiga lähedal, otsin uut palli")
+                
+                #otsib uut palli, kuidas discardid roboti ees oleva palli ?
+                gamestate="Otsin_palli"
+
+
+    #käivitab throweri ja sõidab otse
+        elif gamestate =="Viskan_palli":
             print("Viskan palli")
-            gamestate="Viskan_palli"
-        else:
-            print("Korv liiga lähedal, otsin uut palli")
-            
-            #otsib uut palli, kuidas discardid roboti ees oleva palli ?
+
+            #peaks jälgima viskamise ajal ka palli
+            movement.throwBall(2000)
+
             gamestate="Otsin_palli"
+            
 
 
-#käivitab throweri ja sõidab otse
-    elif gamestate =="Viskan_palli":
-        print("Viskan palli")
-
-        #peaks jälgima viskamise ajal ka palli
-        movement.throwBall(2000)
-
-        gamestate="Otsin_palli"
         
-
-
-    
-    if keyboard.is_pressed("q"):
-        movement.stop()
-        print("Stopped by keypress")
-        break
+        if keyboard.is_pressed("q"):
+            movement.stop()
+            print("Stopped by keypress")
+            break
