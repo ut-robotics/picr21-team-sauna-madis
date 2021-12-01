@@ -1,4 +1,4 @@
-
+import movement
 from pyPS4Controller.controller import Controller
 from threading import Thread
 
@@ -32,8 +32,12 @@ class controller:
                 else:
                     gamestate = "auto"
 
-            def on_x_release(self):
-                print("Goodbye world")
+            def on_up_arrow_press(self):
+                movement.forward()
+            def on_up_arrow_press(self):
+                movement.stop()
+
+
 
 
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
