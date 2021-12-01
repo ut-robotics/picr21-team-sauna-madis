@@ -72,13 +72,11 @@ ballX =[]
 
 speed = 20
 
-def kask():
-    print("MAINI PULTI")
 
 print("alustan mangu tsuklit")
 while move_style =="auto":
     
-    key=controller.getKey()
+    key=cntrl.getKey()
     print("_------------------------------"+ key)
 
     if gamestate =="Otsin_palli":
