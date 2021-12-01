@@ -29,6 +29,7 @@ move_style = "auto" # "auto", "controller"
 #cl.start()
 
 print("Stardin controlleri threadi")
+cntrl = controller()
 cntrl = controller.start()
 
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli", "Stop"
