@@ -6,7 +6,7 @@ class controller:
 
     def __init__(self):
         self.stopped = False
-        self.key = None                                 
+        self.key = " "                                 
 
     def start(self):
         Thread(target=self.listen, args=()).start()
