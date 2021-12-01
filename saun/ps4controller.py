@@ -33,6 +33,7 @@ class controller:
                     gamestate = "auto"
 
             def on_up_arrow_press(self):
+                print("UPARROW")
                 movement.forward()
             def on_up_down_arrow_release(self):
                 movement.stop()
