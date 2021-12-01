@@ -77,7 +77,8 @@ def kask():
 print("alustan mangu tsuklit")
 while move_style =="auto":
     
-    
+    key=controller.getKey()
+    print("_------------------------------"+ key)
 
     if gamestate =="Otsin_palli":
 
