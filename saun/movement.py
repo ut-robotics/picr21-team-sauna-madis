@@ -9,32 +9,27 @@ wheelSpeed = 18.75 * 64 / (2 * math.pi * 0.035 * 60)
 
 firstAngle = 0
 secondAngle = 130
-thirdAgnle = 260
+thirdAgnle = 230
 
 #kiirused 0-32767   65500-32768
 
-ser = serial.Serial(port="/dev/ttyACM0",
-           baudrate=115200,
-           timeout = 2)
+ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout = 2)
 
 def omniWheel(speed, angle, direction):
     vel = speed * math.cos(math.radians(direction - angle))
 
     return vel
 
-def setMovement(direction , rotSpeed):
+def setMovement(direction ,robotSpeed, rotSpeed):
     print("Moving")
-    robotSpeed = 40
-
-
     x = int(omniWheel(robotSpeed, firstAngle, direction) + rotSpeed)
     print("X: " + str(x))
     y = int(omniWheel(robotSpeed, secondAngle, direction) + rotSpeed)
     print("Y: " + str(y))
     z = int(omniWheel(robotSpeed, thirdAgnle, direction) + rotSpeed)
     print("Z: " + str(z))
-    package = struct.pack("<hhhHH", x, y, z, 0, 0xAAAA)
 
+    package = struct.pack("<hhhHH", x, y, z, 0, 0xAAAA)
     ser.write(package)
 
 def throwBall(speed):
