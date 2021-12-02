@@ -57,7 +57,7 @@ class controller:
                 print(throwerspeed)
 
             def on_circle_press(self):
-                movement.thrower()
+                movement.thrower(throwerspeed)
 
             def on_R1_press(self):
                 movement.forward()
