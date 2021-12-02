@@ -2,7 +2,10 @@ import movement
 from pyPS4Controller.controller import Controller
 from threading import Thread
 
+from saun.movement import throwBall
+
 gamestate = "controller" #"auto", "controller"
+throwerspeed = 200
 
 def getgamestate():
     return gamestate
@@ -21,11 +24,13 @@ class controller:
 
         class MyController(Controller):
             
+
             def __init__(self, **kwargs):
                 Controller.__init__(self, **kwargs)
 
             def on_x_press(self):
                 global gamestate
+
                 print("Hello world")
                 if gamestate == "auto":
                     gamestate = "controller"
@@ -33,11 +38,27 @@ class controller:
                     gamestate = "auto"
                     
             
-            def on_circle_press(self):
+            def on_left_arrow_press(self):
                 movement.turnLeft()
-            
-            def on_triangle_press(self):
+
+            def on_right_arrow_press(self):
                 movement.turnRight()
+
+            def on_left_right_arrow_release(self):
+                movement.stop()
+
+            def on_up_arrow_press(self):
+                global throwerspeed
+                throwerspeed = throwerspeed+100
+                print(throwerspeed)
+
+            def on_down_arrow_press(self):
+                global throwerspeed
+                throwerspeed = throwerspeed-100
+                print(throwerspeed)
+
+            def on_circle_press(self):
+                movement.thrower()
 
             def on_R1_press(self):
                 movement.forward()

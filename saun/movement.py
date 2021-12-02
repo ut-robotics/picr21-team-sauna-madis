@@ -41,10 +41,10 @@ def spinAroundBall():
     ser.write(struct.pack("<hhhHH", 10, 0, 0, 0, 0xAAAA))
 
 def turnLeft():
-    ser.write(struct.pack("<hhhHH", 5, 5, 5, 0, 0xAAAA))
+    ser.write(struct.pack("<hhhHH", 10, 10, 10, 0, 0xAAAA))
 
 def turnRight():
-    ser.write(struct.pack("<hhhHH", -5, -5, -5, 0, 0xAAAA))
+    ser.write(struct.pack("<hhhHH", -10, -10, -10, 0, 0xAAAA))
 
 def spinRight():
     ser.write(struct.pack("<hhhHH", -5, -5, -5, 0, 0xAAAA))
