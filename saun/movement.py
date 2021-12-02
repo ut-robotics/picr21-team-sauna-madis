@@ -29,7 +29,7 @@ def setMovement(direction ,robotSpeed, rotSpeed):
     z = int(omniWheel(robotSpeed, thirdAgnle, direction) + rotSpeed)
     print("Z: " + str(z))
 
-    package = struct.pack("<hhhHH", x, y, z, 0, 0xAAAA)
+    package = struct.pack("<hhhHH", x, z, y, 0, 0xAAAA)
     ser.write(package)
 
 def throwBall(speed):

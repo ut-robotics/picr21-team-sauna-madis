@@ -122,7 +122,7 @@ while True:
                 #y=420  x = 320
 
                 #kui pall piisavalt lähedal, otsib korvi
-                if ballX[1] > 410:
+                if ballX[1] > 600:
 
                     gamestate="Otsin_korvi"
 

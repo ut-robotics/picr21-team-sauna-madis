@@ -30,10 +30,6 @@ def pidSpeed(palliX): #palli blobi x koordinaat
         pid = Kp * e + Ki * integral_error + Kd * deriv_error
 
         pid = int(pid / 300)
-
-        if pid > 5:
-            pid = 5
-        elif pid < -5:
-            pid = -5
+        print("PID ON:    " + str(pid))
 
         return(pid)
