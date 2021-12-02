@@ -19,15 +19,21 @@ from ps4controller import getgamestate
 
 
 #Command Line Arguments
-korv = "roosa" # "roosa", "sinine" 
-move_style = "controller" # "auto", "controller"
+korv = "Sinine"                 #"roosa", "sinine"
+move_style = "controller"       # "auto", "controller"
 
-#blue = False
+blue = True
 #robot = "SaunMadis"
 #go = False
 #ws = connect("ws://localhost:8080")
 #cl = Client(ws)
 #cl.start()
+#go, blue = cl.getter()
+
+if blue:
+    korv = "Sinine"
+else:
+    korv = "Roosa"
 
 print("Stardin controlleri threadi")
 cntrl = controller()
@@ -61,7 +67,9 @@ if move_style== "controller":
 
 screenHalfX=320
 ballX =[]
+basketX = []
 
+spinSpeed = 10
 speed = 20
 while True:
     while move_style == "controller":
@@ -122,7 +130,7 @@ while True:
                 #y=420  x = 320
 
                 #kui pall piisavalt lähedal, otsib korvi
-                if ballX[1] > 410:
+                if ballX[1] > 600:
 
                     gamestate="Otsin_korvi"
 
@@ -138,38 +146,33 @@ while True:
         elif gamestate =="Otsin_korvi":
 
             cameraImage.get_image(korv)
-            ballX=cameraImage.getCords()
+            basketX=cameraImage.getCords()
 
             print("Otsin korvi!")
             #keerleb ümber palli paremale kuni vastase korv ilmub ekraanile
-            movement.spinAroundBall()
+            movement.setMovement(0, spinSpeed, 5)
             
-            if ballX[0] != 0:
-                if  ballX[0] > 0:
-                    movement.spinAroundBall()
+            if basketX[0] != 0:
+                pid = pidS.pidSpeed(basketX[0])
+                movement.setMovement(0, spinSpeed, pid)
 
-                elif ballX[0] < 0:
-                    movement.spinAroundBall()
+                if basketX[0] > 630 and basketX[0] < 650:
+                    korvi_kaugus = cameraImage.getDepth()
+                    print("Korvi kaugus: " + str(korvi_kaugus))
 
+                    # kauguse annab meetrites
+                    if korvi_kaugus > 0.5:  # 0.5 on õige
+
+                        print("Viskan palli")
+                        gamestate = "Viskan_palli"
+                    else:
+                        print("Korv liiga lähedal, otsin uut palli")
+
+                        # otsib uut palli, kuidas discardid roboti ees oleva palli ?
+                        gamestate = "Otsin_palli"
             #korvi kaugus üle 50cm ? depthsensor?
             #kui ei ole, otsin uut palli ? või tuleks see check enne pallini jõudmist teha ?
             
-
-            
-            korvi_kaugus = cameraImage.getDepth()
-            print("Korvi kaugus: " + str(korvi_kaugus))
-
-            #kauguse annab meetrites
-            if korvi_kaugus > 0.1: #0.5 on õige
-                
-                print("Viskan palli")
-                gamestate="Viskan_palli"
-            else:
-                print("Korv liiga lähedal, otsin uut palli")
-                
-                #otsib uut palli, kuidas discardid roboti ees oleva palli ?
-                gamestate="Otsin_palli"
-
 
     #käivitab throweri ja sõidab otse
         elif gamestate =="Viskan_palli":
