@@ -37,6 +37,9 @@ def throwBall(speed):
     ser.write(struct.pack("<hhhHH", 0, -10, 10, speed, 0xAAAA))
     time.sleep(2)
 
+def thrower(speed):
+    ser.write(struct.pack("<hhhHH", 0, 0, 0, speed, 0xAAAA))
+
 def spinAroundBall():
     ser.write(struct.pack("<hhhHH", 10, 0, 0, 0, 0xAAAA))
 
