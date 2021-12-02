@@ -65,6 +65,7 @@ ballX =[]
 speed = 20
 while True:
     while move_style == "controller":
+        cameraImage.get_image("Pall")
         move_style = getgamestate()
         
         if move_style =="auto":
