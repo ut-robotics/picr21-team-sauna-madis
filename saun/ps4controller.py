@@ -2,7 +2,6 @@ import movement
 from pyPS4Controller.controller import Controller
 from threading import Thread
 
-from saun.movement import throwBall
 
 gamestate = "controller" #"auto", "controller"
 throwerspeed = 200
