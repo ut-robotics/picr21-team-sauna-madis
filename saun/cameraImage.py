@@ -5,7 +5,7 @@ import cv2
 
 ####Data
 cords = [0, 0]
-depth_frame
+depth_frame= 0
 depth = 0
 pinkBasket = (165,115,118,255,255,255)
 blueBasekt = (33,110,64,160,255,106)
