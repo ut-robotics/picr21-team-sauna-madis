@@ -5,12 +5,13 @@ import cv2
 
 ####Data
 cords = [0, 0]
+depth_frame
 depth = 0
 pinkBasket = (165,115,118,255,255,255)
 blueBasekt = (33,110,64,160,255,106)
 ball = (13,93,55,89,255,143)
-xDept = 320
-yDept = 240
+xDepth = 320
+yDepth = 240
 
 #Threshold data
 data = {
@@ -26,7 +27,9 @@ data = {
 def getCords():
     return cords
 
-def getDepth():
+def getDepth(x, y):
+    global depth_frame
+    depth =  depth_frame.get_distance(x, y)
     return depth
 
 def readThresHold(img):
@@ -42,9 +45,6 @@ def readThresHold(img):
         for x in range(6):
             data[keys[x]] = blueBasekt[x]
 
-def setDept(x, y):
-    xDept = x
-    yDept = y
 
 
 #Detection
@@ -99,7 +99,7 @@ color_sensor.set_option(rs.option.enable_auto_exposure, False)
 
 
 def get_image(img):
-    global depth
+    global depth, depth_frame
 
     try:
         #Reads threshold data
@@ -110,7 +110,7 @@ def get_image(img):
         depth_frame = frames.get_depth_frame()
 
         #Finds dept
-        distance = depth_frame.get_distance(xDept, yDept)
+        distance = depth_frame.get_distance(xDepth, yDepth)
 
         if distance > 0:
             depth=distance

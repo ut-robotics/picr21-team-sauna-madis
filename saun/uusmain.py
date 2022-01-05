@@ -17,6 +17,8 @@ move_style = "auto" # "auto" , "controller"
 
 
 
+
+
 def get_coordinates(item):
     # "ball", "basket"
     cameraImage.get_image(item)
@@ -42,15 +44,16 @@ def move_to_ball():
     find_ball()
 
 def find_basket():
+    global basket_color
     print("Searching for basket")
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0:
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(180, 10, ball_coordinates[0]-camera_x_mid, 0)
-        basket_coordinates = get_coordinates("basket")
+        basket_coordinates = get_coordinates(basket_color)
 
         if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
-            basket_depth = cameraImage.getDepth() # is the spot right?
+            basket_depth = cameraImage.getDepth(basket_coordinates[0],basket_coordinates[1]  ) # is the spot right?
             
             if basket_depth > 0.5:
                 throwBall(basket_depth)
