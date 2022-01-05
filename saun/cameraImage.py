@@ -103,7 +103,7 @@ def get_image(img):
 
     try:
         #Reads threshold data
-
+    	readThresHold(img)
         #pipeline.start(config)
         frames = pipeline.wait_for_frames()
         color_frame = frames.get_color_frame()
