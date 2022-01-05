@@ -34,10 +34,11 @@ def find_ball():
 def move_to_ball():
     print("Moving towards ball")
     ball_coordinates = get_coordinates("ball")
-    while ball_coordinates[0] != 0:
-        movement.setMovement(90, ball_coordinates[1] , ball_coordinates[0], 0 )  # direction, robotspeed, rotspeed
+    while ball_coordinates[0] != 0: #640-480
+        movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed
         if ball_coordinates[1] > 600:
             find_basket()
+            
     find_ball()
 
 def find_basket():
