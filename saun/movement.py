@@ -21,13 +21,13 @@ def omniWheel(speed, angle, direction):
     return vel
 
 def setMovement(direction ,robotSpeed, rotSpeed, throwerSpeed):
-    print("Moving")
+    #print("Moving")
     x = int(omniWheel(robotSpeed, firstAngle, direction) + rotSpeed)
-    print("X: " + str(x))
+    #print("X: " + str(x))
     y = int(omniWheel(robotSpeed, secondAngle, direction) + rotSpeed)
-    print("Y: " + str(y))
+    #print("Y: " + str(y))
     z = int(omniWheel(robotSpeed, thirdAgnle, direction) + rotSpeed)
-    print("Z: " + str(z))
+    #print("Z: " + str(z))
 
     package = struct.pack("<hhhHH", x, z, y, throwerSpeed, 0xAAAA)
     ser.write(package)
