@@ -7,7 +7,6 @@
 from math import pi
 import movement
 import cameraImage
-from saun.movement import throwBall
 
 camera_x_mid = 320
 
