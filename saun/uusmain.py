@@ -26,10 +26,11 @@ def get_coordinates(item):
 
 def find_ball():
     print("Searching for ball!")    
-    movement.setMovement(0,0,10,0 ) # direction, robotspeed, rotspeed
+    movement.setMovement(0,10,10,0 ) # direction, robotspeed, rotspeed
     ball_coordinates = [0,0]
     while ball_coordinates[0] == 0:
-       ball_coordinates = get_coordinates("ball")
+        print("test")
+        ball_coordinates = get_coordinates("ball")
     print("Ball found!")
 
 def move_to_ball():

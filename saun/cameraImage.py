@@ -8,7 +8,7 @@ cords = [0, 0]
 depth_frame= 0
 depth = 0
 pinkBasket = (165,115,118,255,255,255)
-blueBasekt = (33,110,64,160,255,106)
+blueBasket = (33,110,64,160,255,106)
 ball = (13,93,55,89,255,143)
 xDepth = 320
 yDepth = 240
@@ -43,7 +43,7 @@ def readThresHold(img):
             data[keys[x]] = pinkBasket[x]
     elif img == "Blue":
         for x in range(6):
-            data[keys[x]] = blueBasekt[x]
+            data[keys[x]] = blueBasket[x]
 
 
 
