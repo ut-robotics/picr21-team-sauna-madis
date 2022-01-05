@@ -58,7 +58,7 @@ def find_basket():
             basket_depth = cameraImage.getDepth(basket_coordinates[0],basket_coordinates[1]  ) # is the spot right?
             
             if basket_depth > 0.5:
-                throwBall(basket_depth)
+                throw_ball(basket_depth)
 
 def throw_ball(basket_depth):
     print("Throwing ball")
