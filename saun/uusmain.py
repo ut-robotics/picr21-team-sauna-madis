@@ -29,7 +29,6 @@ def find_ball():
     movement.setMovement(0,10,10,0 ) # direction, robotspeed, rotspeed
     ball_coordinates = [0,0]
     while ball_coordinates[0] == 0:
-        print("test")
         ball_coordinates = get_coordinates("ball")
     print("Ball found!")
 
@@ -51,7 +50,7 @@ def find_basket():
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0:
         ball_coordinates = get_coordinates("ball")
-        movement.setMovement(180, 10, ball_coordinates[0]-camera_x_mid, 0)
+        movement.setMovement(180, 5, ball_coordinates[0]-camera_x_mid, 0)
         basket_coordinates = get_coordinates(basket_color)
 
         if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
