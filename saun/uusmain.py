@@ -50,8 +50,7 @@ def find_basket():
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0:
         ball_coordinates = get_coordinates("ball")
-        print("VASAKULE")
-        movement.setMovement(180, 10, ball_coordinates[0]-camera_x_mid, 0) #ball_coordinates[0]-camera_x_mid
+        movement.setMovement(180, 10, int((ball_coordinates[0]-camera_x_mid)/2), 0) #ball_coordinates[0]-camera_x_mid
         basket_coordinates = get_coordinates(basket_color)
 
         if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
