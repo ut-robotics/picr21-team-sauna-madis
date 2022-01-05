@@ -1,29 +1,51 @@
-#HSV pilt
-
+#Imports
 import pyrealsense2 as rs
 import numpy as np
 import cv2
 
-
-#Data
+####Data
 cords = [0, 0]
 depth = 0
+pinkBasket = (165,115,118,255,255,255)
+blueBasekt = (33,110,64,160,255,106)
+ball = (13,93,55,89,255,143)
+xDept = 320
+yDept = 240
+
+#Threshold data
+data = {
+    "lH" : 0,
+    "lS" : 0,
+    "lV" : 0,
+    "hH" : 0,
+    "hS" : 0,
+    "hV" : 0
+}
+
+#Functions
 def getCords():
     return cords
+
 def getDepth():
     return depth
 
-def loefaili(failinimi):
-    try:
-        with open(failinimi) as tholder:
-            txtdata = tholder.readline()
-            tykid = txtdata.split(",")
-            vaartused = list(data.keys())
+def readThresHold(img):
+    keys = list(data.keys())
+    #What image
+    if img == "Ball":
+        for x in range(6):
+            data[keys[x]] = ball[x]
+    elif img == "Pink":
+        for x in range(6):
+            data[keys[x]] = pinkBasket[x]
+    elif img == "Blue":
+        for x in range(6):
+            data[keys[x]] = blueBasekt[x]
 
-            for x in range(6):
-                data[vaartused[x]] = int(tykid[x])
-    except:
-        print("Faili njetu")
+def setDept(x, y):
+    xDept = x
+    yDept = y
+
 
 #Detection
 params = cv2.SimpleBlobDetector_Params()
@@ -38,19 +60,6 @@ detector = cv2.SimpleBlobDetector_create(params)
 # Configure depth and color streams
 pipeline = rs.pipeline()
 config = rs.config()
-
-#Threshold data
-data = {
-    "lH" : 0,
-    "lS" : 0,
-    "lV" : 0,
-    "hH" : 0,
-    "hS" : 0,
-    "hV" : 0
-}
-
-#Loeb threshold data
-loefaili("pall_defaults.txt")
 
 # Get device product line for setting a supporting resolution
 pipeline_wrapper = rs.pipeline_wrapper(pipeline)
@@ -68,12 +77,12 @@ if not found_rgb:
     print("The demo requires Depth camera with Color sensor")
     exit(0)
 
-config.enable_stream(rs.stream.depth, 640, 720, rs.format.z16, 30)
+config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
 
 if device_product_line == 'L500':
-    config.enable_stream(rs.stream.color, 960, 720, rs.format.bgr8, 30)
+    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 else:
-    config.enable_stream(rs.stream.color, 640, 720, rs.format.bgr8, 30)
+    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 try:
     pipeline.stop()
 except:
@@ -93,26 +102,17 @@ def get_image(img):
     global depth
 
     try:
-        #millist pilti
-        if img == "Pall":
-            loefaili("pall_defaults.txt")
-
-        elif img == "Roosa":
-            loefaili("roosa_defaults.txt")
-
-        elif img == "Sinine":
-            loefaili("sinine_defaults.txt")
+        #Reads threshold data
 
         #pipeline.start(config)
         frames = pipeline.wait_for_frames()
         color_frame = frames.get_color_frame()
         depth_frame = frames.get_depth_frame()
 
-        #leiab depth pildi pealt kauguse meetrites, koordinaatidega (x,y)(hetkel ekraani keskelt), korvi kauguse mõõtmiseks
-        distance = depth_frame.get_distance(320, 240)
+        #Finds dept
+        distance = depth_frame.get_distance(xDept, yDept)
 
         if distance > 0:
-            #print("Kaugus:"+ str(distance))
             depth=distance
 
         color_image = np.asanyarray(color_frame.get_data())
@@ -131,11 +131,11 @@ def get_image(img):
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
 
-        # leida lähib keypoint ja lisada see cordsi. Lähib leida blob suuruse kaudu ?
+        #Finds keypoints
         for keypoint in keyPoints:
             x = int(keypoint.pt[0])
             y = int(keypoint.pt[1])
-            #Salvestan koordinaadid kui need pole 0 ?
+            #Saves keypoints
             cords.append(x)
             cords.append(y)
             cords.pop(0)
@@ -150,12 +150,9 @@ def get_image(img):
             cords.pop(0)
             cords.pop(0)
 
-        #Show images, päris mängus ei ole vaja kuvada pilti
+        #Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.imshow('RealSense', thresholded)
         cv2.waitKey(1)
     except:
         print("cameraerror")
-#    finally:
- #       # Stop streaming
-  #      pipeline.stop()
