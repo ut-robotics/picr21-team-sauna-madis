@@ -17,7 +17,6 @@ from client import Client
 from ps4controller import controller
 from ps4controller import getgamestate
 
-
 #Command Line Arguments
 korv = "Sinine"                 #"roosa", "sinine"
 move_style = "controller"       # "auto", "controller"
@@ -39,12 +38,8 @@ print("Stardin controlleri threadi")
 cntrl = controller()
 cntrl.start()
 
-
 #"Otsin_palli", "Liigun_pallini","Otsin_korvi", "Viskan_palli", "Stop"
 gamestate="Otsin_palli"
-
-
-
 
 try:
     if len(sys.argv) != 0:
@@ -63,14 +58,13 @@ if move_style== "controller":
     controllerMovement.main()
     print("Controller juhib")
 
-
-
 screenHalfX=320
 ballX =[]
 basketX = []
 
 spinSpeed = 10
 speed = 20
+
 while True:
     while move_style == "controller":
         cameraImage.get_image("Pall")
@@ -81,29 +75,22 @@ while True:
             break
         #if go == True:
         #   move_style ="auto"
-        #   break
-
-
-    
+        #   break    
     while move_style =="auto":
-        
         move_style= getgamestate()
-        
         if move_style =="controller":
             print("CONTROLLER MOVEMENT ACTIVATED")
             movement.stop()
             break
 
         if gamestate =="Otsin_palli":
-
             cameraImage.get_image("Pall")
             ballX=cameraImage.getCords()
-
-            print("Hakkan palli otsima!")
-            # salvestab palli kordinaadid listis
+            print("Searching for ball!")
+            # saves ball coordinates in a list
             if ballX[0] != 0:
                 #Kas pall on üle joone check?
-                print("Leidsin palli")
+                print("Ball found")
                 movement.stop()
                 gamestate="Liigun_pallini"
             #keerab paremale kuni ekraanile ilmub palli keypoint
@@ -126,31 +113,24 @@ while True:
                 pid = pidS.pidSpeed(ballX[0])
                 movement.setMovement(90, speed, pid)
 
-
-                #y=420  x = 320
-
                 #kui pall piisavalt lähedal, otsib korvi
                 if ballX[1] > 600:
-
                     gamestate="Otsin_korvi"
 
             #kui pall ära kaob vahepeal
             elif ballX[0] == 0 :
                 gamestate = "Otsin_palli"
-
             else:
                 gamestate = "Otsin_palli"
 
-
-
         elif gamestate =="Otsin_korvi":
-
             cameraImage.get_image(korv)
             basketX=cameraImage.getCords()
 
             print("Otsin korvi!")
             #keerleb ümber palli paremale kuni vastase korv ilmub ekraanile
             movement.setMovement(0, spinSpeed, 5)
+            #movement.setMovement()
             
             if basketX[0] != 0:
                 pid = pidS.pidSpeed(basketX[0])
@@ -162,29 +142,21 @@ while True:
 
                     # kauguse annab meetrites
                     if korvi_kaugus > 0.5:  # 0.5 on õige
-
                         print("Viskan palli")
                         gamestate = "Viskan_palli"
                     else:
                         print("Korv liiga lähedal, otsin uut palli")
-
                         # otsib uut palli, kuidas discardid roboti ees oleva palli ?
                         gamestate = "Otsin_palli"
             #korvi kaugus üle 50cm ? depthsensor?
             #kui ei ole, otsin uut palli ? või tuleks see check enne pallini jõudmist teha ?
             
-
     #käivitab throweri ja sõidab otse
         elif gamestate =="Viskan_palli":
             print("Viskan palli")
-
             #peaks jälgima viskamise ajal ka palli
             movement.throwBall(2000)
-
             gamestate="Otsin_palli"
-            
-
-
         
         if keyboard.is_pressed("q"):
             movement.stop()
