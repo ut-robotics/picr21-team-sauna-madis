@@ -35,13 +35,13 @@ def getDepth(x, y):
 def readThresHold(img):
     keys = list(data.keys())
     #What image
-    if img == "Ball":
+    if img == "ball":
         for x in range(6):
             data[keys[x]] = ball[x]
-    elif img == "Pink":
+    elif img == "pink":
         for x in range(6):
             data[keys[x]] = pinkBasket[x]
-    elif img == "Blue":
+    elif img == "blue":
         for x in range(6):
             data[keys[x]] = blueBasket[x]
 
@@ -103,7 +103,7 @@ def get_image(img):
 
     try:
         #Reads threshold data
-    	readThresHold(img)
+        readThresHold(img)
         #pipeline.start(config)
         frames = pipeline.wait_for_frames()
         color_frame = frames.get_color_frame()
