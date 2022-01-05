@@ -5,12 +5,13 @@ import cv2
 
 ####Data
 cords = [0, 0]
+depth_frame= 0
 depth = 0
 pinkBasket = (165,115,118,255,255,255)
-blueBasekt = (33,110,64,160,255,106)
+blueBasket = (33,110,64,160,255,106)
 ball = (13,93,55,89,255,143)
-xDept = 320
-yDept = 240
+xDepth = 320
+yDepth = 240
 
 #Threshold data
 data = {
@@ -26,25 +27,24 @@ data = {
 def getCords():
     return cords
 
-def getDepth():
+def getDepth(x, y):
+    global depth_frame
+    depth =  depth_frame.get_distance(x, y)
     return depth
 
 def readThresHold(img):
     keys = list(data.keys())
     #What image
-    if img == "Ball":
+    if img == "ball":
         for x in range(6):
             data[keys[x]] = ball[x]
-    elif img == "Pink":
+    elif img == "pink":
         for x in range(6):
             data[keys[x]] = pinkBasket[x]
-    elif img == "Blue":
+    elif img == "blue":
         for x in range(6):
-            data[keys[x]] = blueBasekt[x]
+            data[keys[x]] = blueBasket[x]
 
-def setDept(x, y):
-    xDept = x
-    yDept = y
 
 
 #Detection
@@ -96,21 +96,21 @@ except:
 
 color_sensor = pipeline.start(config).get_device().query_sensors()[1]
 color_sensor.set_option(rs.option.enable_auto_exposure, False)
-
+color_sensor.set_option(rs.option.enable_auto_white_balance, False)
 
 def get_image(img):
-    global depth
+    global depth, depth_frame
 
     try:
         #Reads threshold data
-
+        readThresHold(img)
         #pipeline.start(config)
         frames = pipeline.wait_for_frames()
         color_frame = frames.get_color_frame()
         depth_frame = frames.get_depth_frame()
 
         #Finds dept
-        distance = depth_frame.get_distance(xDept, yDept)
+        distance = depth_frame.get_distance(xDepth, yDepth)
 
         if distance > 0:
             depth=distance
