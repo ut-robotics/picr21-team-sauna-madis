@@ -39,7 +39,7 @@ def move_to_ball():
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed
         
-        if ball_coordinates[1] > 600:
+        if ball_coordinates[1] > 400:
             find_basket()
             
     find_ball()
@@ -51,7 +51,7 @@ def find_basket():
     while ball_coordinates[0] != 0:
         ball_coordinates = get_coordinates("ball")
         print("VASAKULE")
-        movement.setMovement(180, 10, 0, 0) #ball_coordinates[0]-camera_x_mid
+        movement.setMovement(180, 10, ball_coordinates[0]-camera_x_mid, 0) #ball_coordinates[0]-camera_x_mid
         basket_coordinates = get_coordinates(basket_color)
 
         if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
