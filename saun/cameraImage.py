@@ -96,7 +96,7 @@ except:
 
 color_sensor = pipeline.start(config).get_device().query_sensors()[1]
 color_sensor.set_option(rs.option.enable_auto_exposure, False)
-
+color_sensor.set_option(rs.option.enable_auto_white_balance, False)
 
 def get_image(img):
     global depth, depth_frame
