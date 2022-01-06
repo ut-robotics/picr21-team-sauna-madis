@@ -7,6 +7,7 @@
 from math import pi
 import movement
 import cameraImage
+import time
 
 camera_x_mid = 320
 
@@ -26,18 +27,19 @@ def get_coordinates(item):
 
 def find_ball():
     print("Searching for ball!")    
-    movement.setMovement(0,10,10,0 ) # direction, robotspeed, rotspeed
+    movement.setMovement(0,10,10,0 ) # direction, robotspeed, rotspeed, throwerspeed
     ball_coordinates = [0,0]
     while ball_coordinates[0] == 0:
         ball_coordinates = get_coordinates("ball")
     print("Ball found!")
+    move_to_ball()
 
 def move_to_ball():
     print("Moving towards ball")
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0: #640-480
         ball_coordinates = get_coordinates("ball")
-        movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed
+        movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
         if ball_coordinates[1] > 400:
             find_basket()
@@ -61,11 +63,14 @@ def find_basket():
 
 def throw_ball(basket_depth):
     print("Throwing ball")
-    movement.setMovement(90, 20 , 0 , basket_depth*200 )    #direction, robotspeed, rotspeed, throwerSpeed
+    # x/0,3934+735
+    movement.setMovement(90, 20 , 0 , basket_depth*100/0.3934+735 )    #direction, robotspeed, rotspeed, throwerSpeed
+    print("Thrower speed: "+ str(basket_depth*100/0.3934+735))
+    time.sleep(1) #for testing purposes
 
 while True:
     find_ball()
-    move_to_ball()
+    
 
 
 
