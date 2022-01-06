@@ -17,7 +17,7 @@ steps = 10
 
 def save():
     with open("throwerData.txt", "w") as file:
-        file.write(throwerspeed + ";" + distace + "\n")
+        file.write(str(throwerspeed) + ";" + str(distance) + "\n")
 
 class controller:
 
@@ -39,31 +39,32 @@ class controller:
                 save()
 
             def on_circle_press(self):
+                global throwerspeed
                 movement.thrower(throwerspeed)
 
             def on_square_press(self):
                 movement.stop()
 
             def on_up_arrow_press(self):
-                global throwerspeed
+                global throwerspeed, steps
                 throwerspeed = throwerspeed + steps
                 print(throwerspeed)
 
             def on_down_arrow_press(self):
-                global throwerspeed
+                global throwerspeed, steps
                 throwerspeed = throwerspeed - steps
                 print(throwerspeed)
 
             def on_left_arrow_press(self):
+                global steps
                 if (steps > 1):
                     steps / 10
 
             def on_right_arrow_press(self):
+                global steps
                 if(steps < 100):
                     steps * 10
 
-            def on_circle_press(self):
-                movement.thrower(throwerspeed)
 
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
         controller.listen(timeout=60)
