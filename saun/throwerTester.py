@@ -1,5 +1,6 @@
 import cameraImage
 import movement
+import keyboard
 from pyPS4Controller.controller import Controller
 from threading import Thread
 
@@ -16,8 +17,8 @@ throwerspeed = 0
 steps = 10
 
 def save():
-    with open("throwerData.txt", "w") as file:
-        file.write(throwerspeed + ";" + distace + "\n")
+    with open("throwerData.txt", "a") as file:
+        file.write(str(throwerspeed) + ";" + str(distance*100) + "\n")
 
 class controller:
 
@@ -39,39 +40,46 @@ class controller:
                 save()
 
             def on_circle_press(self):
-                movement.thrower(throwerspeed)
+                global throwerspeed
+                movement.thrower(int(throwerspeed))
 
             def on_square_press(self):
                 movement.stop()
 
             def on_up_arrow_press(self):
-                global throwerspeed
+                global throwerspeed, steps
                 throwerspeed = throwerspeed + steps
                 print(throwerspeed)
 
             def on_down_arrow_press(self):
-                global throwerspeed
+                global throwerspeed, steps
                 throwerspeed = throwerspeed - steps
                 print(throwerspeed)
 
             def on_left_arrow_press(self):
+                global steps
                 if (steps > 1):
-                    steps / 10
+                    steps = steps / 10
 
             def on_right_arrow_press(self):
+                global steps
                 if(steps < 100):
-                    steps * 10
+                    steps = steps * 10
 
-            def on_circle_press(self):
-                movement.thrower(throwerspeed)
 
-controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
-controller.listen(timeout=60)
+        controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
+        controller.listen(timeout=60)
+cntrl = controller()
+cntrl.start()
 
 while True:
     cameraImage.get_image("Blue")
-    distace = cameraImage.getDepth()
-    print("Steps: " + str(steps) + ";  Speed: " + str(throwerspeed) + ";  Distance: " + str(distace))
+    distance = cameraImage.getDepth(320, 100)
+    print("Steps: " + str(steps) + ";  Speed: " + str(throwerspeed) + ";  Distance: " + str(distance))
 
+    if keyboard.is_pressed("q"):
+        movement.stop()
+        print("Stopped by keypress")
+        break
 
 
