@@ -70,7 +70,7 @@ class controller:
 
 while True:
     cameraImage.get_image("Blue")
-    distace = cameraImage.getDepth()
+    distace = cameraImage.getDepth(320, 100)
     print("Steps: " + str(steps) + ";  Speed: " + str(throwerspeed) + ";  Distance: " + str(distace))
 
 
