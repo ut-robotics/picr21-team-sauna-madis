@@ -71,7 +71,7 @@ controller.listen(timeout=60)
 while True:
     cameraImage.get_image("Blue")
     distace = cameraImage.getDepth()
-    print("Steps: " + steps + ";  Speed: " + throwerspeed + ";  Distance: " + distace)
+    print("Steps: " + str(steps) + ";  Speed: " + str(throwerspeed) + ";  Distance: " + str(distace))
 
 
 
