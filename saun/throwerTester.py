@@ -16,7 +16,7 @@ throwerspeed = 0
 steps = 10
 
 def save():
-    with open("throwerData.txt", "w") as file:
+    with open("throwerData.txt", "a") as file:
         file.write(str(throwerspeed) + ";" + str(distance*100) + "\n")
 
 class controller:
@@ -76,5 +76,9 @@ while True:
     distance = cameraImage.getDepth(320, 100)
     print("Steps: " + str(steps) + ";  Speed: " + str(throwerspeed) + ";  Distance: " + str(distance))
 
+    if keyboard.is_pressed("q"):
+    movement.stop()
+    print("Stopped by keypress")
+    break
 
 
