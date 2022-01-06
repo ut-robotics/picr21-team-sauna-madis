@@ -67,6 +67,8 @@ class controller:
 
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
         controller.listen(timeout=60)
+cntrl = controller()
+cntrl.start()
 
 while True:
     cameraImage.get_image("Blue")
