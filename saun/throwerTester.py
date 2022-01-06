@@ -65,13 +65,13 @@ class controller:
             def on_circle_press(self):
                 movement.thrower(throwerspeed)
 
-controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
+controller = Controller(interface="/dev/input/js0", connecting_using_ds4drv=False)
 controller.listen(timeout=60)
 
 while True:
     cameraImage.get_image("Blue")
     distace = cameraImage.getDepth()
-    print("Steps: " + steps + ";  Speed: " + throwerspeed + ";  Distance: " + distace)
+    print("Steps: " + str(steps) + ";  Speed: " + str(throwerspeed) + ";  Distance: " + str(distace))
 
 
 
