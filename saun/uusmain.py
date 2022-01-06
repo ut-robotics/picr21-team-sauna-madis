@@ -51,11 +51,11 @@ def find_basket():
     while ball_coordinates[0] != 0:
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(180, 10, int((ball_coordinates[0]-camera_x_mid)/2), 0) #ball_coordinates[0]-camera_x_mid
+        
         basket_coordinates = get_coordinates(basket_color)
-
         if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
             basket_depth = cameraImage.getDepth(basket_coordinates[0],basket_coordinates[1]  ) # is the spot right?
-            
+            print("Basket distance: " + str(basket_depth))
             if basket_depth > 0.5:
                 throw_ball(basket_depth)
 
