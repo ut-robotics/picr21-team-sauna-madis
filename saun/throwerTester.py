@@ -41,7 +41,7 @@ class controller:
 
             def on_circle_press(self):
                 global throwerspeed
-                movement.thrower(throwerspeed)
+                movement.thrower(int(throwerspeed))
 
             def on_square_press(self):
                 movement.stop()
