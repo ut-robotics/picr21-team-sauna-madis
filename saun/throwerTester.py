@@ -1,5 +1,6 @@
 import cameraImage
 import movement
+import keyboard
 from pyPS4Controller.controller import Controller
 from threading import Thread
 
