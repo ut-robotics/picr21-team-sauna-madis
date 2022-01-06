@@ -110,7 +110,7 @@ def get_image(img):
         depth_frame = frames.get_depth_frame()
 
         #Finds dept
-        distance = depth_frame.get_distance(xDepth, yDepth)
+        distance = depth_frame.get_distance(320, 240)
 
         if distance > 0:
             depth=distance
