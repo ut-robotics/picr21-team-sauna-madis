@@ -17,7 +17,7 @@ steps = 10
 
 def save():
     with open("throwerData.txt", "w") as file:
-        file.write(str(throwerspeed) + ";" + str(distance) + "\n")
+        file.write(str(throwerspeed) + ";" + str(distance*100) + "\n")
 
 class controller:
 
@@ -58,12 +58,12 @@ class controller:
             def on_left_arrow_press(self):
                 global steps
                 if (steps > 1):
-                    steps / 10
+                    steps = steps / 10
 
             def on_right_arrow_press(self):
                 global steps
                 if(steps < 100):
-                    steps * 10
+                    steps = steps * 10
 
 
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
@@ -73,8 +73,8 @@ cntrl.start()
 
 while True:
     cameraImage.get_image("Blue")
-    distace = cameraImage.getDepth(320, 100)
-    print("Steps: " + str(steps) + ";  Speed: " + str(throwerspeed) + ";  Distance: " + str(distace))
+    distance = cameraImage.getDepth(320, 100)
+    print("Steps: " + str(steps) + ";  Speed: " + str(throwerspeed) + ";  Distance: " + str(distance))
 
 
 
