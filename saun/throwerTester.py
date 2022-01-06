@@ -77,8 +77,8 @@ while True:
     print("Steps: " + str(steps) + ";  Speed: " + str(throwerspeed) + ";  Distance: " + str(distance))
 
     if keyboard.is_pressed("q"):
-    movement.stop()
-    print("Stopped by keypress")
-    break
+        movement.stop()
+        print("Stopped by keypress")
+        break
 
 
