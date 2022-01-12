@@ -20,8 +20,22 @@ print("Stardin controlleri threadi")
 cntrl = controller()
 cntrl.start()
 
+def move_style_check():
+    global move_style
+    move_style_new = getgamestate()
 
+    if move_style == "controller" and move_style_new == "auto":
+        print("Changing gamestyle to auto")
+        move_style = move_style_new
+         
+    elif move_style == "auto" and move_style_new =="controller":
+        print("Changing gamestyle to controller")
+        movement.stop()
+        move_style = move_style_new
 
+def controller_movement():
+    cameraImage.get_image("ball")
+    move_style_check()
 
 def get_coordinates(item):
     # "ball", "basket"
@@ -34,6 +48,7 @@ def find_ball():
     movement.setMovement(0,10,10,0 ) # direction, robotspeed, rotspeed, throwerspeed
     ball_coordinates = [0,0]
     while ball_coordinates[0] == 0:
+        move_style_check()
         ball_coordinates = get_coordinates("ball")
     print("Ball found!")
     move_to_ball()
@@ -43,12 +58,12 @@ def move_to_ball():
     print("Moving towards ball")
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0: #640-480
-        getgamestate()
+        move_style_check()
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
-        #if ball_coordinates[1] > 400:
-         #   find_basket()
+        if ball_coordinates[1] > 400:
+            find_basket()
             
     #find_ball()
 
@@ -58,17 +73,17 @@ def find_basket():
     print("Searching for basket")
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0:
-        getgamestate()
+        move_style_check()
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(180, 10, int((ball_coordinates[0]-camera_x_mid)/2), 0) #ball_coordinates[0]-camera_x_mid
         
         basket_coordinates = get_coordinates(basket_color)
         
-        if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
-            basket_depth = cameraImage.getDepth(basket_coordinates[0],basket_coordinates[1]  ) # is the spot right?
-            print("Basket distance: " + str(basket_depth))
-            if basket_depth > 0.5:
-                throw_ball(basket_depth)
+       # if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
+        #    basket_depth = cameraImage.getDepth(basket_coordinates[0],basket_coordinates[1]  ) # is the spot right?
+         #   print("Basket distance: " + str(basket_depth))
+          #  if basket_depth > 0.5:
+           #     throw_ball(basket_depth)
 
 def throw_ball(basket_depth):
     print("Throwing ball")
@@ -78,23 +93,11 @@ def throw_ball(basket_depth):
     time.sleep(1) #for testing purposes
 
 while True:
-    while move_style == "controller":
-        cameraImage.get_image("ball")
-        move_style=getgamestate()
-
-        if move_style == "auto":
-            print("Changing gamestyle to auto")
-            break
-    
-    while move_style == "auto":
-        move_style= getgamestate()
-        if move_style == "controller":
-            print("Changing gamestyle to controller")
-            movement.stop()
-            break
-   
+    if move_style== "controller":
+        controller_movement()
+    elif move_style = "auto":
         find_ball()
-    
+
 
 
 
