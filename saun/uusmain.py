@@ -54,23 +54,22 @@ def find_ball():
     movement.setMovement(0,10,10,0 ) # direction, robotspeed, rotspeed, throwerspeed
     ball_coordinates = [0,0]
     while ball_coordinates[0] == 0:
-        if move_style_check():
-            return True
+        if move_style_check(): return True
         ball_coordinates = get_coordinates("ball")
     print("Ball found!")
+    return False
 
 def move_to_ball():
     
     print("Moving towards ball")
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0: #640-480
-        if move_style_check():
-            return True
+        if move_style_check(): return True
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
         if ball_coordinates[1] > 400:
-            break
+            return False
             
     find_ball()
 
@@ -80,7 +79,7 @@ def find_basket():
     print("Searching for basket")
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0:
-        move_style_check()
+        if move_style_check(): return True
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(180, 10, int((ball_coordinates[0]-camera_x_mid)/2), 0) #ball_coordinates[0]-camera_x_mid
         
@@ -105,13 +104,9 @@ while True:
         if controller_movement():
             break
     while move_style == "auto":
-        find_ball
         if find_ball(): break
-        move_to_ball
         if move_to_ball(): break
-        find_basket
         if find_basket(): break
-        find_basket
 
 
 
