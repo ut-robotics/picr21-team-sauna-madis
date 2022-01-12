@@ -66,7 +66,7 @@ def move_to_ball():
         if ball_coordinates[1] > 400:
             find_basket()
             
-    #find_ball()
+    find_ball()
 
 def find_basket():
     
