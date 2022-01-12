@@ -7,9 +7,9 @@ import cv2
 cords = [0, 0]
 depth_frame= 0
 depth = 0
-pinkBasket = (165,115,118,255,255,255)
-blueBasket = (33,110,64,160,255,106)
-ball = (13,93,55,89,255,143)
+pinkBasket = (66,125,181,182,218,255)
+blueBasket = (108,53,70,155,131,143)
+ball = (14,44,79,145,255,188)
 xDepth = 320
 yDepth = 240
 
@@ -54,7 +54,7 @@ params.filterByCircularity = False
 params.filterByConvexity = False
 params.filterByInertia = False
 params.minArea=50
-params.maxArea=100000
+params.maxArea=9999999
 detector = cv2.SimpleBlobDetector_create(params)
 
 # Configure depth and color streams
@@ -89,7 +89,7 @@ except:
     print("camera oli juba stopped")
 
 
-    
+
 # Start streaming
 
 #pipeline.start(config)  #õige asukoht
@@ -124,8 +124,9 @@ def get_image(img):
 
         outimage = cv2.bitwise_and(hsv, hsv, mask=thresholded)
         thresholded = cv2.bitwise_not(thresholded)
-        keyPoints = detector.detect(thresholded)
-        outimage = cv2.drawKeypoints(outimage, keyPoints, np.array([]), (0, 0, 255),
+        outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255,255,255])
+        keyPoints = detector.detect(outputImage)
+        outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         hsv = cv2.drawKeypoints(hsv, keyPoints, np.array([]), (0, 0, 255),
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
@@ -152,7 +153,7 @@ def get_image(img):
 
         #Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('RealSense', thresholded)
+        cv2.imshow('RealSense', outputImage)
         cv2.waitKey(1)
     except:
         print("cameraerror")
