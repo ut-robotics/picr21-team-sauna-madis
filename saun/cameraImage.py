@@ -124,8 +124,9 @@ def get_image(img):
 
         outimage = cv2.bitwise_and(hsv, hsv, mask=thresholded)
         thresholded = cv2.bitwise_not(thresholded)
-        keyPoints = detector.detect(thresholded)
-        outimage = cv2.drawKeypoints(outimage, keyPoints, np.array([]), (0, 0, 255),
+        outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=white)
+        keyPoints = detector.detect(outputImage)
+        outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         hsv = cv2.drawKeypoints(hsv, keyPoints, np.array([]), (0, 0, 255),
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
@@ -152,7 +153,7 @@ def get_image(img):
 
         #Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('RealSense', thresholded)
+        cv2.imshow('RealSense', outputImage)
         cv2.waitKey(1)
     except:
         print("cameraerror")

@@ -41,10 +41,10 @@ def move_to_ball():
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
-        if ball_coordinates[1] > 400:
-            find_basket()
+        #if ball_coordinates[1] > 400:
+         #   find_basket()
             
-    find_ball()
+    #find_ball()
 
 def find_basket():
     global basket_color
@@ -55,6 +55,7 @@ def find_basket():
         movement.setMovement(180, 10, int((ball_coordinates[0]-camera_x_mid)/2), 0) #ball_coordinates[0]-camera_x_mid
         
         basket_coordinates = get_coordinates(basket_color)
+        
         if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
             basket_depth = cameraImage.getDepth(basket_coordinates[0],basket_coordinates[1]  ) # is the spot right?
             print("Basket distance: " + str(basket_depth))
