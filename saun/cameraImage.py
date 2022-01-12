@@ -38,6 +38,7 @@ def readThresHold(img):
     if img == "ball":
         for x in range(6):
             data[keys[x]] = ball[x]
+        print(data)
     elif img == "pink":
         for x in range(6):
             data[keys[x]] = pinkBasket[x]
@@ -54,7 +55,7 @@ params.filterByCircularity = False
 params.filterByConvexity = False
 params.filterByInertia = False
 params.minArea=50
-params.maxArea=100000
+params.maxArea=9999999
 detector = cv2.SimpleBlobDetector_create(params)
 
 # Configure depth and color streams
