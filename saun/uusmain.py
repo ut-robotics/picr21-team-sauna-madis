@@ -5,6 +5,7 @@
 #madis or password
 
 from math import pi
+from sys import breakpointhook
 import movement
 import cameraImage
 import time
@@ -28,15 +29,19 @@ def move_style_check():
         print("Changing gamestyle to auto")
         movement.stop()
         move_style = move_style_new
+        return True
          
     elif move_style == "auto" and move_style_new =="controller":
         print("Changing gamestyle to controller")
         movement.stop()
         move_style = move_style_new
+        return True
 
 def controller_movement():
     cameraImage.get_image("ball")
-    move_style_check()
+    if move_style_check():
+        return True
+
 
 def get_coordinates(item):
     # "ball", "basket"
@@ -49,22 +54,23 @@ def find_ball():
     movement.setMovement(0,10,10,0 ) # direction, robotspeed, rotspeed, throwerspeed
     ball_coordinates = [0,0]
     while ball_coordinates[0] == 0:
-        move_style_check()
+        if move_style_check():
+            return True
         ball_coordinates = get_coordinates("ball")
     print("Ball found!")
-    move_to_ball()
 
 def move_to_ball():
     
     print("Moving towards ball")
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0: #640-480
-        move_style_check()
+        if move_style_check():
+            return True
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
         if ball_coordinates[1] > 400:
-            find_basket()
+            break
             
     find_ball()
 
@@ -95,10 +101,18 @@ def throw_ball(basket_depth):
 
 while True:
     print(move_style)
-    if move_style== "controller":
-        controller_movement()
-    elif move_style == "auto":
-        find_ball()
+    while move_style== "controller":
+        if controller_movement():
+            break
+    while move_style == "auto":
+        find_ball
+        if find_ball(): break
+        move_to_ball
+        if move_to_ball(): break
+        find_basket
+        if find_basket(): break
+        find_basket
+
 
 
 
