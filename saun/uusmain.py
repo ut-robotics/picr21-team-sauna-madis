@@ -95,7 +95,7 @@ def throw_ball(basket_depth):
 while True:
     if move_style== "controller":
         controller_movement()
-    elif move_style = "auto":
+    elif move_style == "auto":
         find_ball()
 
 
