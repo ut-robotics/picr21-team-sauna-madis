@@ -26,6 +26,7 @@ def move_style_check():
 
     if move_style == "controller" and move_style_new == "auto":
         print("Changing gamestyle to auto")
+        movement.stop()
         move_style = move_style_new
          
     elif move_style == "auto" and move_style_new =="controller":
