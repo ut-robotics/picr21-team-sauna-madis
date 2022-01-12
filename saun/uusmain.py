@@ -83,11 +83,13 @@ while True:
         move_style=getgamestate()
 
         if move_style == "auto":
+            print("Changing gamestyle to auto")
             break
     
     while move_style == "auto":
         move_style= getgamestate()
         if move_style == "controller":
+            print("Changing gamestyle to controller")
             movement.stop()
             break
    
