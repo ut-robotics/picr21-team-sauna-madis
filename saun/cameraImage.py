@@ -9,7 +9,7 @@ depth_frame= 0
 depth = 0
 pinkBasket = (66,125,181,182,218,255)
 blueBasket = (108,53,70,155,131,143)
-ball = (14,44,79,145,255,188)
+ball = (14,44,79,103,255,188)
 xDepth = 320
 yDepth = 240
 
