@@ -38,7 +38,6 @@ def readThresHold(img):
     if img == "ball":
         for x in range(6):
             data[keys[x]] = ball[x]
-        print(data)
     elif img == "pink":
         for x in range(6):
             data[keys[x]] = pinkBasket[x]
@@ -90,7 +89,7 @@ except:
     print("camera oli juba stopped")
 
 
-    
+
 # Start streaming
 
 #pipeline.start(config)  #õige asukoht

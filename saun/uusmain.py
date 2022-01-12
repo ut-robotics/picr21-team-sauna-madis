@@ -8,13 +8,17 @@ from math import pi
 import movement
 import cameraImage
 import time
+from ps4controller import controller
+from ps4controller import getgamestate
 
 camera_x_mid = 320
 
 basket_color = "blue" # "blue" , "pink"
 move_style = "auto" # "auto" , "controller"
 
-
+print("Stardin controlleri threadi")
+cntrl = controller()
+cntrl.start()
 
 
 
@@ -35,9 +39,11 @@ def find_ball():
     move_to_ball()
 
 def move_to_ball():
+    
     print("Moving towards ball")
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0: #640-480
+        getgamestate()
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
@@ -47,10 +53,12 @@ def move_to_ball():
     #find_ball()
 
 def find_basket():
+    
     global basket_color
     print("Searching for basket")
     ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0:
+        getgamestate()
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(180, 10, int((ball_coordinates[0]-camera_x_mid)/2), 0) #ball_coordinates[0]-camera_x_mid
         
@@ -70,7 +78,20 @@ def throw_ball(basket_depth):
     time.sleep(1) #for testing purposes
 
 while True:
-    find_ball()
+    while move_style == "controller":
+        cameraImage.get_image("ball")
+        move_style=getgamestate()
+
+        if move_style == "auto":
+            break
+    
+    while move_style == "auto":
+        move_style= getgamestate()
+        if move_style == "controller":
+            movement.stop()
+            break
+   
+        find_ball()
     
 
 
