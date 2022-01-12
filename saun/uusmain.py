@@ -93,6 +93,7 @@ def throw_ball(basket_depth):
     time.sleep(1) #for testing purposes
 
 while True:
+    print(move_style)
     if move_style== "controller":
         controller_movement()
     elif move_style == "auto":
