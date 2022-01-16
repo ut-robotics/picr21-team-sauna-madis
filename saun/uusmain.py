@@ -84,7 +84,7 @@ def find_basket():
         
         #ball_y = 420
 
-        y_rotation = (420-ball_coordinates[1])/20
+        y_rotation = (470-ball_coordinates[1])/20
 
         print(str(int((ball_coordinates[0]-camera_x_mid)/30)))
         movement.setMovement(0, 15 , int(((ball_coordinates[0]-camera_x_mid)/-20)+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
