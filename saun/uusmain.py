@@ -24,8 +24,8 @@ cntrl = controller()
 cntrl.start()
 
 image = image()
-proccessed_ball = imageProcess(50,999999, "ball")
-proccessed_basket = imageProcess(50,999999, basket_color)
+proccessed_ball = imageProcess(70,999999, "ball")
+proccessed_basket = imageProcess(150,999999, basket_color)
 
 
 def move_style_check():
@@ -113,8 +113,10 @@ def find_basket():
         x_rotation = (ball_coordinates[0]-camera_x_mid)/-20 #-4
         y_rotation = (400-ball_coordinates[1])/-20
 
-        print(str(int(x_rotation)))
-        print(str(int(y_rotation)))
+        print(ball_coordinates[0])
+        print(ball_coordinates[1])
+        print("X-ROTATION: " + str(int(x_rotation)))
+        print("X-ROTATION: " + str(int(y_rotation)))
         movement.setMovement(0, 15 , int(x_rotation+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
         
         proccessed_ball.find_objects(image.get_rbg_image())
