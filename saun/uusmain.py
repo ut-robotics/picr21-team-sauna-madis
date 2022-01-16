@@ -71,8 +71,8 @@ def move_to_ball():
         
         if ball_coordinates[1] > 350:
             return False
-            
-    find_ball()
+    return True
+    #find_ball()
 
 def find_basket():
     
