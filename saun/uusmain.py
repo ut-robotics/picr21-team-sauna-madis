@@ -69,7 +69,7 @@ def move_to_ball():
         ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
-        if ball_coordinates[1] > 350:
+        if ball_coordinates[1] > 300:
             return False
             
     find_ball()
