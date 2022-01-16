@@ -68,18 +68,26 @@ class imageProcess:
         self.cords.clear()
         # Finds keypoints
         for keypoint in keyPoints:
+            ball_keypoints = []
             x = int(keypoint.pt[0])
             y = int(keypoint.pt[1])
             # Saves keypoints
-            self.cords.append(x)
-            self.cords.append(y)
+
+            ball_keypoints.append(x)
+            ball_keypoints.append(y)
+
+            self.cords.append(ball_keypoints)
+            #self.cords.append(y)
 
             koord = (str(x) + ":" + str(y))
             cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
         if len(keyPoints) == 0:
-            self.cords.append(0)
-            self.cords.append(0)
+            self.cords.append([0,0])
+            #self.cords.append(0)
+
+        
+        sorted(self.cords, key = lambda x: x[1], reverse = True)
 
         #Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
