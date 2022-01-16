@@ -9,7 +9,7 @@ depth_frame= 0
 depth = 0
 pinkBasket = (66,125,181,182,218,255)
 blueBasket = (108,53,70,155,131,143)
-ball = (14,44,79,145,255,188)
+ball = (14,44,79,103,255,188)
 xDepth = 320
 yDepth = 240
 
@@ -131,7 +131,7 @@ def get_image(img):
         hsv = cv2.drawKeypoints(hsv, keyPoints, np.array([]), (0, 0, 255),
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-
+        cords.clear()
         #Finds keypoints
         for keypoint in keyPoints:
             x = int(keypoint.pt[0])
@@ -139,8 +139,7 @@ def get_image(img):
             #Saves keypoints
             cords.append(x)
             cords.append(y)
-            cords.pop(0)
-            cords.pop(0)
+
 
             koord = (str(x) + ":" + str(y))
             cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
@@ -148,12 +147,12 @@ def get_image(img):
         if len(keyPoints) == 0:
             cords.append(0)
             cords.append(0)
-            cords.pop(0)
-            cords.pop(0)
+
 
         #Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.imshow('RealSense', outputImage)
         cv2.waitKey(1)
     except:
-        print("cameraerror")
+        print("error in cameraimage")
+        exit()
