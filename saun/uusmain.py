@@ -7,8 +7,10 @@
 from math import pi
 from sys import breakpointhook
 import movement
-import cameraImage
+#import cameraImage
 import time
+from image import *
+import imageProcess
 from ps4controller import controller
 from ps4controller import getgamestate
 
@@ -20,6 +22,11 @@ move_style = "auto" # "auto" , "controller"
 print("Stardin controlleri threadi")
 cntrl = controller()
 cntrl.start()
+
+image = image()
+proccessed_ball = imageProcess(50,999999, "ball")
+proccessed_basket = imageProcess(50,999999, basket_color)
+
 
 def move_style_check():
     global move_style
@@ -38,17 +45,21 @@ def move_style_check():
         return True
 
 def controller_movement():
-    cameraImage.get_image("ball")
+    ball_image = image.get_rbg_image()
+    proccessed_ball.find_objects(ball_image)
+
+    #cameraImage.get_image("ball")
+    
     if move_style_check():
         return True
 
 
-def get_coordinates(item):
+#def get_coordinates(item):
     # "ball", "basket"
-    cameraImage.get_image(item)
-    coordinates = cameraImage.getCords() # get list [x, y]
+    #cameraImage.get_image(item)
+    #coordinates = cameraImage.getCords() # get list [x, y]
     #print("PALLIDE COORDINAADID ON: " + str(coordinates))
-    return coordinates
+    #return coordinates
 
 def find_ball():
     print("Searching for ball!")    
@@ -56,17 +67,26 @@ def find_ball():
     ball_coordinates = [0,0]
     while ball_coordinates[0] == 0:
         if move_style_check(): return True
-        ball_coordinates = get_coordinates("ball")
+
+        proccessed_ball.find_objects(image.get_rbg_image)
+        ball_coordinates = proccessed_ball.getcords()
+
+        #ball_coordinates = get_coordinates("ball")
     print("Ball found!")
     return False
 
 def move_to_ball():
     
     print("Moving towards ball")
-    ball_coordinates = get_coordinates("ball")
+    proccessed_ball.find_objects(image.get_rbg_image)
+    ball_coordinates = proccessed_ball.getcords()
+    #ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0: #640-480
         if move_style_check(): return True
-        ball_coordinates = get_coordinates("ball")
+
+        proccessed_ball.find_objects(image.get_rbg_image)
+        ball_coordinates = proccessed_ball.getcords()
+        #ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
         if ball_coordinates[1] > 350:
@@ -78,7 +98,11 @@ def find_basket():
     
     global basket_color
     print("Searching for basket")
-    ball_coordinates = get_coordinates("ball")
+    
+    proccessed_ball.find_objects(image.get_rbg_image)
+    ball_coordinates = proccessed_ball.getcords()
+    
+    #ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0:
         if move_style_check(): return True
         
@@ -88,14 +112,27 @@ def find_basket():
 
         print(str(int((ball_coordinates[0]-camera_x_mid)/30)))
         movement.setMovement(0, 15 , int(((ball_coordinates[0]-camera_x_mid)/-20)+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
-        ball_coordinates = get_coordinates("ball")
-        #basket_coordinates = get_coordinates(basket_color)
         
-       # if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
-        #    basket_depth = cameraImage.getDepth(basket_coordinates[0],basket_coordinates[1]  ) # is the spot right?
-         #   print("Basket distance: " + str(basket_depth))
-          #  if basket_depth > 0.5:
-           #     throw_ball(basket_depth)
+        proccessed_ball.find_objects(image.get_rbg_image)
+        ball_coordinates = proccessed_ball.getcords()
+        
+        #ball_coordinates = get_coordinates("ball")
+
+
+        proccessed_basket.find_objects(image.get_rbg_image)
+        basket_coordinates = proccessed_basket.getcords()
+        #basket_coordinates = get_coordinates(basket_color)
+
+        
+        if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
+
+            
+            basket_depth = image.getDepth(basket_coordinates[0], basket_coordinates[1])
+
+            #basket_depth = cameraImage.getDepth(basket_coordinates[0],basket_coordinates[1]  ) # is the spot right?
+            print("Basket distance: " + str(basket_depth))
+            if basket_depth > 0.5:
+                throw_ball(basket_depth)
 
 def throw_ball(basket_depth):
     print("Throwing ball")
