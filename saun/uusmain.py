@@ -67,8 +67,9 @@ def find_ball():
     ball_coordinates = [0,0]
     while ball_coordinates[0] == 0:
         if move_style_check(): return True
-
-        proccessed_ball.find_objects(image.get_rbg_image)
+        
+        #frame = image.get_rbg_image()
+        proccessed_ball.find_objects(image.get_rbg_image())
         ball_coordinates = proccessed_ball.getcords()
 
         #ball_coordinates = get_coordinates("ball")
@@ -78,13 +79,13 @@ def find_ball():
 def move_to_ball():
     
     print("Moving towards ball")
-    proccessed_ball.find_objects(image.get_rbg_image)
+    proccessed_ball.find_objects(image.get_rbg_image())
     ball_coordinates = proccessed_ball.getcords()
     #ball_coordinates = get_coordinates("ball")
     while ball_coordinates[0] != 0: #640-480
         if move_style_check(): return True
 
-        proccessed_ball.find_objects(image.get_rbg_image)
+        proccessed_ball.find_objects(image.get_rbg_image())
         ball_coordinates = proccessed_ball.getcords()
         #ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
@@ -99,7 +100,7 @@ def find_basket():
     global basket_color
     print("Searching for basket")
     
-    proccessed_ball.find_objects(image.get_rbg_image)
+    proccessed_ball.find_objects(image.get_rbg_image())
     ball_coordinates = proccessed_ball.getcords()
     
     #ball_coordinates = get_coordinates("ball")
@@ -113,13 +114,13 @@ def find_basket():
         print(str(int((ball_coordinates[0]-camera_x_mid)/30)))
         movement.setMovement(0, 15 , int(((ball_coordinates[0]-camera_x_mid)/-20)+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
         
-        proccessed_ball.find_objects(image.get_rbg_image)
+        proccessed_ball.find_objects(image.get_rbg_image())
         ball_coordinates = proccessed_ball.getcords()
         
         #ball_coordinates = get_coordinates("ball")
 
 
-        proccessed_basket.find_objects(image.get_rbg_image)
+        proccessed_basket.find_objects(image.get_rbg_image())
         basket_coordinates = proccessed_basket.getcords()
         #basket_coordinates = get_coordinates(basket_color)
 
