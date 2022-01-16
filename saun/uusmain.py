@@ -47,7 +47,7 @@ def get_coordinates(item):
     # "ball", "basket"
     cameraImage.get_image(item)
     coordinates = cameraImage.getCords() # get list [x, y]
-    print("PALLIDE COORDINAADID ON: " + coordinates)
+    print("PALLIDE COORDINAADID ON: " + str(coordinates))
     return coordinates
 
 def find_ball():
