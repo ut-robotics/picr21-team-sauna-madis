@@ -63,6 +63,7 @@ class imageProcess:
             if self.circle:
                 contours, hierarchy = cv2.findContours(thresholded, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
+                print(contours)
                 contours_area = []
                 # calculate area and filter into new array
                 for con in contours:
@@ -70,7 +71,6 @@ class imageProcess:
                     if 100 < area < 10000:
                         contours_area.append(con)
 
-                contours_cirles = []
 
                 # check if contour is of circular shape
                 for con in contours_area:
