@@ -116,7 +116,7 @@ def find_basket():
         print(ball_coordinates[0][0])
         print(ball_coordinates[0][1])
         print("X-ROTATION: " + str(int(x_rotation)))
-        print("X-ROTATION: " + str(int(y_rotation)))
+        print("Y-ROTATION: " + str(int(y_rotation)))
         movement.setMovement(0, 15 , int(x_rotation+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
         
         proccessed_ball.find_objects(image.get_rbg_image())
@@ -130,7 +130,7 @@ def find_basket():
         #basket_coordinates = get_coordinates(basket_color)
 
         
-        if basket_coordinates[0][0] < 300 and basket_coordinates[0][0] > 340:
+        if basket_coordinates[0][0] > 300 and basket_coordinates[0][0] < 340:
 
             
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
@@ -141,7 +141,7 @@ def find_basket():
                 throw_ball(basket_depth)
 
 def throw_ball(basket_depth):
-    print("Throwing ball")
+    print("Throwing ball---------------------------------------------------------")
     # x/0,3934+735
     movement.setMovement(90, 20 , 0 , basket_depth*100/0.3934+735 )    #direction, robotspeed, rotspeed, throwerSpeed
     print("Thrower speed: "+ str(basket_depth*100/0.3934+735))
