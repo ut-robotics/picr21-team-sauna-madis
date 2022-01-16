@@ -81,7 +81,7 @@ class imageProcess:
 
             #Show images
             cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-            cv2.imshow('RealSense', outputImage)
+            cv2.imshow('RealSense', outimage)
             cv2.waitKey(1)
 
         except:
