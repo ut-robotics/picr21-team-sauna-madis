@@ -46,6 +46,10 @@ class imageProcess:
 
         self.lowerLimits = np.array([self.data["lH"], self.data["lS"], self.data["lV"]])
         self.upperLimits = np.array([self.data["hH"], self.data["hS"], self.data["hV"]])
+
+    def getcords(self):
+        return self.cords
+
     def find_objects(self, rbgImage):
         try:
             thresholded = cv2.inRange(rbgImage, self.lowerLimits, self.upperLimits)
@@ -59,15 +63,14 @@ class imageProcess:
             hsv = cv2.drawKeypoints(rbgImage, keyPoints, np.array([]), (0, 0, 255),
                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-            #Finds keypoints
+            self.cords.clear()
+            # Finds keypoints
             for keypoint in keyPoints:
                 x = int(keypoint.pt[0])
                 y = int(keypoint.pt[1])
-                #Saves keypoints
+                # Saves keypoints
                 self.cords.append(x)
                 self.cords.append(y)
-                self.cords.pop(0)
-                self.cords.pop(0)
 
                 koord = (str(x) + ":" + str(y))
                 cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
@@ -75,8 +78,6 @@ class imageProcess:
             if len(keyPoints) == 0:
                 self.cords.append(0)
                 self.cords.append(0)
-                self.cords.pop(0)
-                self.cords.pop(0)
 
             #Show images
             cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
