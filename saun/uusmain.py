@@ -90,7 +90,7 @@ def move_to_ball():
         #ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
-        if ball_coordinates[1] > 350:
+        if ball_coordinates[1] > 400:
             return False
     return True
     #find_ball()
@@ -108,10 +108,10 @@ def find_basket():
         if move_style_check(): return True
         
         #ball_y = 420
-
-        y_rotation = (ball_coordinates[1]-500)/10
-        x_rotation = (ball_coordinates[0]-camera_x_mid)/20
-
+#230, 360
+        
+        x_rotation = (ball_coordinates[0]-camera_x_mid)/30 #-4
+        y_rotation = (ball_coordinates[1]-450)/30
 
         print(str(int(x_rotation)))
         print(str(int(y_rotation)))
