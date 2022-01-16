@@ -67,7 +67,7 @@ class imageProcess:
                 # calculate area and filter into new array
                 for con in contours:
                     area = cv2.contourArea(con)
-                    if 1000 < area < 10000:
+                    if 100 < area < 10000:
                         contours_area.append(con)
 
                 contours_cirles = []
