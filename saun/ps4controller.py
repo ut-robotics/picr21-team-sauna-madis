@@ -3,7 +3,7 @@ from pyPS4Controller.controller import Controller
 from threading import Thread
 
 
-gamestate = "controller" #"auto", "controller"
+gamestate = "auto" #"auto", "controller"
 throwerspeed = 200
 
 def getgamestate():
