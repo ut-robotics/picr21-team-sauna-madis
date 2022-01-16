@@ -131,7 +131,7 @@ def get_image(img):
         hsv = cv2.drawKeypoints(hsv, keyPoints, np.array([]), (0, 0, 255),
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-
+        cords.clear()
         #Finds keypoints
         for keypoint in keyPoints:
             x = int(keypoint.pt[0])
@@ -139,8 +139,7 @@ def get_image(img):
             #Saves keypoints
             cords.append(x)
             cords.append(y)
-            cords.pop(0)
-            cords.pop(0)
+
 
             koord = (str(x) + ":" + str(y))
             cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
