@@ -86,7 +86,7 @@ class imageProcess:
             #self.cords.append(0)
 
         
-        sorted(self.cords, key = lambda x: x[1])
+        sorted(self.cords, key = lambda x: x[1], reverse = True)
 
         #Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)

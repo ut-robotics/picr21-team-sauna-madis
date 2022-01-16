@@ -143,7 +143,7 @@ def find_basket():
 def throw_ball(basket_depth):
     print("Throwing ball---------------------------------------------------------")
     # x/0,3934+735
-    movement.setMovement(90, 20 , 0 , basket_depth*100/0.3934+735 )    #direction, robotspeed, rotspeed, throwerSpeed
+    movement.setMovement(90, 20 , 0 , int(basket_depth*100/0.3934+735) )    #direction, robotspeed, rotspeed, throwerSpeed
     print("Thrower speed: "+ str(basket_depth*100/0.3934+735))
     time.sleep(1) #for testing purposes
 
