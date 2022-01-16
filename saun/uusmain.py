@@ -112,7 +112,7 @@ def find_basket():
         y_rotation = (500-ball_coordinates[1])/10
 
         print(str(int((ball_coordinates[0]-camera_x_mid)/30)))
-        movement.setMovement(0, 15 , int(((ball_coordinates[0]-camera_x_mid)/-20)+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
+        movement.setMovement(0, 15 , int(((ball_coordinates[0]-camera_x_mid)/20)+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
         
         proccessed_ball.find_objects(image.get_rbg_image())
         ball_coordinates = proccessed_ball.getcords()
