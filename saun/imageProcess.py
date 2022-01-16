@@ -55,42 +55,38 @@ class imageProcess:
         return self.cords
 
     def find_objects(self, rbgImage):
-        try:
-            thresholded = cv2.inRange(rbgImage, self.lowerLimits, self.upperLimits)
+        thresholded = cv2.inRange(rbgImage, self.lowerLimits, self.upperLimits)
+        outimage = cv2.bitwise_and(rbgImage, rbgImage, mask=thresholded)
+        thresholded = cv2.bitwise_not(thresholded)
+        outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
+        kernel = np.ones((5,5), np.uint8)
+        outputImage = cv2.erode(outputImage, kernel, iterations=1)
+        outputImage = cv2.dilation(outputImage, kernel, iterations=1)
+        keyPoints = self.detector.detect(outputImage)
+        outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
+                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        hsv = cv2.drawKeypoints(rbgImage, keyPoints, np.array([]), (0, 0, 255),
+                                cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        self.cords.clear()
+        # Finds keypoints
+        for keypoint in keyPoints:
+            x = int(keypoint.pt[0])
+            y = int(keypoint.pt[1])
+            # Saves keypoints
+            self.cords.append(x)
+            self.cords.append(y)
 
-            outimage = cv2.bitwise_and(rbgImage, rbgImage, mask=thresholded)
-            thresholded = cv2.bitwise_not(thresholded)
-            outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
-            kernel = np.ones((5,5), np.uint8)
-            outputImage = cv2.erode(outputImage, kernel, iterations=1)
-            outputImage = cv2.dilation(outputImage, kernel, iterations=1)
-            keyPoints = self.detector.detect(outputImage)
-            outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
-                                         cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-            hsv = cv2.drawKeypoints(rbgImage, keyPoints, np.array([]), (0, 0, 255),
-                                    cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-            self.cords.clear()
-            # Finds keypoints
-            for keypoint in keyPoints:
-                x = int(keypoint.pt[0])
-                y = int(keypoint.pt[1])
-                # Saves keypoints
-                self.cords.append(x)
-                self.cords.append(y)
+            koord = (str(x) + ":" + str(y))
+            cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
-                koord = (str(x) + ":" + str(y))
-                cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+        if len(keyPoints) == 0:
+            self.cords.append(0)
+            self.cords.append(0)
 
-            if len(keyPoints) == 0:
-                self.cords.append(0)
-                self.cords.append(0)
+        #Show images
+        cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
+        cv2.imshow('RealSense', outputImage)
+        cv2.waitKey(1)
 
-            #Show images
-            cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-            cv2.imshow('RealSense', outputImage)
-            cv2.waitKey(1)
-
-        except:
-            print("cameraerror")
 
 
