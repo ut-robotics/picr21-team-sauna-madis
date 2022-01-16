@@ -82,8 +82,12 @@ def find_basket():
     while ball_coordinates[0] != 0:
         if move_style_check(): return True
         
+        #ball_y = 420
+
+        y_rotation = (420-ball_coordinates[1])/20
+
         print(str(int((ball_coordinates[0]-camera_x_mid)/30)))
-        movement.setMovement(0, 15 , int((ball_coordinates[0]-camera_x_mid)/-20), 0) #ball_coordinates[0]-camera_x_mid
+        movement.setMovement(0, 15 , int(((ball_coordinates[0]-camera_x_mid)/-20)+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
         ball_coordinates = get_coordinates("ball")
         #basket_coordinates = get_coordinates(basket_color)
         
