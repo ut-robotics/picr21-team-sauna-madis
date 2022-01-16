@@ -24,8 +24,6 @@ class imageProcess:
     }
 
     def __init__(self, minArea, maxArea, object):
-        self.circle = circle
-
         keys = list(self.data.keys())
         # What image
         if object == "ball":
