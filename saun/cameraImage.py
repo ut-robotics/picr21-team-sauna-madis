@@ -156,4 +156,5 @@ def get_image(img):
         cv2.imshow('RealSense', outputImage)
         cv2.waitKey(1)
     except:
-        print("cameraerror")
+        print("error in cameraimage")
+        exit()
