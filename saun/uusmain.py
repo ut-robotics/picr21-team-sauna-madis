@@ -47,6 +47,7 @@ def get_coordinates(item):
     # "ball", "basket"
     cameraImage.get_image(item)
     coordinates = cameraImage.getCords() # get list [x, y]
+    print("PALLIDE COORDINAADID ON: " + coordinates)
     return coordinates
 
 def find_ball():
@@ -81,6 +82,7 @@ def find_basket():
     while ball_coordinates[0] != 0:
         if move_style_check(): return True
         ball_coordinates = get_coordinates("ball")
+        closest_ball_coordinates = 
         movement.setMovement(180, 10, int((ball_coordinates[0]-camera_x_mid)/2), 0) #ball_coordinates[0]-camera_x_mid
         
         basket_coordinates = get_coordinates(basket_color)
