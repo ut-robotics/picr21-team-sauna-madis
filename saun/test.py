@@ -1,8 +1,8 @@
-import movement
-import keyboard
-#direction, robotspeed, rotspeed
-movement.setMovement(180, 10, -5, 0)
+from image import *
+from imageProcess import *
 
-if keyboard.is_pressed("q"):
-    movement.stop()
-    print("Stopped by keypress")
+pilt = image()
+pilditootlus = imageProcess(50, 9999999, "ball")
+while True:
+    pilt = pilt.get_rbg_image()
+    objectid = pilditootlus.find_objects(pilt)
