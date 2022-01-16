@@ -28,7 +28,6 @@ def getCords():
     return cords
 
 def getDepth(x, y):
-    global depth_frame
     depth =  depth_frame.get_distance(x, y)
     return depth
 
