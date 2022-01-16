@@ -87,6 +87,8 @@ def move_to_ball():
 
         proccessed_ball.find_objects(image.get_rbg_image())
         ball_coordinates = proccessed_ball.getcords()
+
+        print(ball_coordinates)
         #ball_coordinates = get_coordinates("ball")
         movement.setMovement(90, 48-int(ball_coordinates[0][1]/10),int((320- ball_coordinates[0][0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
