@@ -147,8 +147,7 @@ def get_image(img):
         if len(keyPoints) == 0:
             cords.append(0)
             cords.append(0)
-            cords.pop(0)
-            cords.pop(0)
+
 
         #Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
