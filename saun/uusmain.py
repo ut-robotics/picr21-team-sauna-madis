@@ -64,8 +64,8 @@ def controller_movement():
 def find_ball():
     print("Searching for ball!")    
     movement.setMovement(0,10,10,0 ) # direction, robotspeed, rotspeed, throwerspeed
-    ball_coordinates = [0,0]
-    while ball_coordinates[0] == 0:
+    ball_coordinates = [[0,0]]
+    while ball_coordinates[0][0] == 0:
         if move_style_check(): return True
         
         #frame = image.get_rbg_image()
@@ -82,15 +82,15 @@ def move_to_ball():
     proccessed_ball.find_objects(image.get_rbg_image())
     ball_coordinates = proccessed_ball.getcords()
     #ball_coordinates = get_coordinates("ball")
-    while ball_coordinates[0] != 0: #640-480
+    while ball_coordinates[0][0] != 0: #640-480
         if move_style_check(): return True
 
         proccessed_ball.find_objects(image.get_rbg_image())
         ball_coordinates = proccessed_ball.getcords()
         #ball_coordinates = get_coordinates("ball")
-        movement.setMovement(90, 48-int(ball_coordinates[1]/10),int((320- ball_coordinates[0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
+        movement.setMovement(90, 48-int(ball_coordinates[0][1]/10),int((320- ball_coordinates[0][0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
-        if ball_coordinates[1] > 400:
+        if ball_coordinates[0][1] > 400:
             return False
     return True
     #find_ball()
@@ -104,17 +104,17 @@ def find_basket():
     ball_coordinates = proccessed_ball.getcords()
     
     #ball_coordinates = get_coordinates("ball")
-    while ball_coordinates[0] != 0:
+    while ball_coordinates[0][0] != 0:
         if move_style_check(): return True
         
         #ball_y = 420
 #230, 360
         
-        x_rotation = (ball_coordinates[0]-camera_x_mid)/-20 #-4
-        y_rotation = (400-ball_coordinates[1])/-20
+        x_rotation = (ball_coordinates[0][0]-camera_x_mid)/-20 #-4
+        y_rotation = (400-ball_coordinates[0][1])/-20
 
-        print(ball_coordinates[0])
-        print(ball_coordinates[1])
+        print(ball_coordinates[0][0])
+        print(ball_coordinates[0][1])
         print("X-ROTATION: " + str(int(x_rotation)))
         print("X-ROTATION: " + str(int(y_rotation)))
         movement.setMovement(0, 15 , int(x_rotation+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
@@ -130,10 +130,10 @@ def find_basket():
         #basket_coordinates = get_coordinates(basket_color)
 
         
-        if basket_coordinates[0] < 300 and basket_coordinates[0] > 340:
+        if basket_coordinates[0][0] < 300 and basket_coordinates[0][0] > 340:
 
             
-            basket_depth = image.getDepth(basket_coordinates[0], basket_coordinates[1])
+            basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
 
             #basket_depth = cameraImage.getDepth(basket_coordinates[0],basket_coordinates[1]  ) # is the spot right?
             print("Basket distance: " + str(basket_depth))
