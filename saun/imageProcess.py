@@ -4,9 +4,9 @@ import numpy as np
 class imageProcess:
     ##Data
     cords = [0, 0]
-    pinkBasket = (165, 115, 118, 255, 255, 255)
-    blueBasket = (33, 110, 64, 160, 255, 106)
-    ball = (13, 93, 55, 89, 255, 143)
+    pinkBasket = (66,125,181,182,218,255)
+    blueBasket = (108,53,70,155,131,143)
+    ball = (14,44,79,103,255,188)
     lowerLimits = 0
     upperLimits = 0
     dectector = 0
