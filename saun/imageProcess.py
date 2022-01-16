@@ -82,7 +82,7 @@ class imageProcess:
             cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
         if len(keyPoints) == 0:
-            self.cords.append([0])
+            self.cords.append([0,0])
             #self.cords.append(0)
 
         
