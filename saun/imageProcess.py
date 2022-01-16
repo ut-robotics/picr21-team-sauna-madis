@@ -1,4 +1,5 @@
 import cv2
+import cv2.cv2
 import numpy as np
 import math
 
@@ -60,50 +61,29 @@ class imageProcess:
             outimage = cv2.bitwise_and(rbgImage, rbgImage, mask=thresholded)
             thresholded = cv2.bitwise_not(thresholded)
             outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
-            if self.circle:
-                contours, hierarchy = cv2.findContours(thresholded, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+            kernel = np.ones((5,5), np.uint8)
+            outputImage = cv2.erode(outputImage, kernel, iterations=1)
+            outputImage = cv2.dilation(outputImage, kernel, iterations=1)
+            keyPoints = self.detector.detect(outputImage)
+            outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
+                                         cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            hsv = cv2.drawKeypoints(rbgImage, keyPoints, np.array([]), (0, 0, 255),
+                                    cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+            self.cords.clear()
+            # Finds keypoints
+            for keypoint in keyPoints:
+                x = int(keypoint.pt[0])
+                y = int(keypoint.pt[1])
+                # Saves keypoints
+                self.cords.append(x)
+                self.cords.append(y)
 
-                print(contours)
-                contours_area = []
-                # calculate area and filter into new array
-                for con in contours:
-                    area = cv2.contourArea(con)
-                    if 100 < area < 10000:
-                        contours_area.append(con)
+                koord = (str(x) + ":" + str(y))
+                cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
-
-                # check if contour is of circular shape
-                for con in contours_area:
-                    perimeter = cv2.arcLength(con, True)
-                    area = cv2.contourArea(con)
-                    if perimeter == 0:
-                        break
-                    circularity = 4 * math.pi * (area / (perimeter * perimeter))
-                    print(str(circularity) + "Circ")
-                    if 0.7 < circularity < 1.2:
-                        self.cords.append(con)
-
-            else:
-                keyPoints = self.detector.detect(outputImage)
-                outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
-                                             cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-                hsv = cv2.drawKeypoints(rbgImage, keyPoints, np.array([]), (0, 0, 255),
-                                        cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-                self.cords.clear()
-                # Finds keypoints
-                for keypoint in keyPoints:
-                    x = int(keypoint.pt[0])
-                    y = int(keypoint.pt[1])
-                    # Saves keypoints
-                    self.cords.append(x)
-                    self.cords.append(y)
-
-                    koord = (str(x) + ":" + str(y))
-                    cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
-
-                if len(keyPoints) == 0:
-                    self.cords.append(0)
-                    self.cords.append(0)
+            if len(keyPoints) == 0:
+                self.cords.append(0)
+                self.cords.append(0)
 
             #Show images
             cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
