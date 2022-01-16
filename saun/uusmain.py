@@ -10,7 +10,7 @@ import movement
 #import cameraImage
 import time
 from image import *
-import imageProcess
+from imageProcess import *
 from ps4controller import controller
 from ps4controller import getgamestate
 
