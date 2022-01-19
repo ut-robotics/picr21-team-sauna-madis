@@ -8,7 +8,7 @@ class imageProcess:
     cords = [0, 0]
     pinkBasket = (66,125,181,182,218,255)
     blueBasket = (108,53,70,155,131,143)
-    ball = (14,44,79,103,255,188)
+    ball = (18,44,79,103,255,188)
     lowerLimits = 0
     upperLimits = 0
     dectector = 0
