@@ -55,8 +55,8 @@ class imageProcess:
 
     def find_objects(self, rbgImage):
         start = time.time()
-        self.pervtime = start
         fps = 1/(start - self.pervtime)
+        self.pervtime = start
         thresholded = cv2.inRange(rbgImage, self.lowerLimits, self.upperLimits)
         outimage = cv2.bitwise_and(rbgImage, rbgImage, mask=thresholded)
         thresholded = cv2.bitwise_not(thresholded)
