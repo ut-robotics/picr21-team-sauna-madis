@@ -115,10 +115,10 @@ def find_basket():
         x_rotation = (ball_coordinates[0][0]-camera_x_mid)/-20 #-4
         y_rotation = (500-ball_coordinates[0][1])/20
 
-        print(ball_coordinates[0][0])
-        print(ball_coordinates[0][1])
-        print("X-ROTATION: " + str(int(x_rotation)))
-        print("Y-ROTATION: " + str(int(y_rotation)))
+        #print(ball_coordinates[0][0])
+        #print(ball_coordinates[0][1])
+        #print("X-ROTATION: " + str(int(x_rotation)))
+        #print("Y-ROTATION: " + str(int(y_rotation)))
         movement.setMovement(0, 10 , int(x_rotation+y_rotation), 0) #ball_coordinates[0]-camera_x_mid
         
         proccessed_ball.find_objects(image.get_rbg_image())
@@ -129,6 +129,8 @@ def find_basket():
 
         proccessed_basket.find_objects(image.get_rbg_image())
         basket_coordinates = proccessed_basket.getcords()
+        print("basket coordinates:")
+        print(basket_coordinates)
         #basket_coordinates = get_coordinates(basket_color)
 
         
