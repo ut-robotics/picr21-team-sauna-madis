@@ -1,43 +1,17 @@
-#HSV pilt
-
+#Imports
 import pyrealsense2 as rs
 import numpy as np
 import cv2
 
-
-#Data
+####Data
 cords = [0, 0]
+depth_frame= 0
 depth = 0
-def getCords():
-    return cords
-def getDepth():
-    return depth
-
-def loefaili(failinimi):
-    try:
-        with open(failinimi) as tholder:
-            txtdata = tholder.readline()
-            tykid = txtdata.split(",")
-            vaartused = list(data.keys())
-
-            for x in range(6):
-                data[vaartused[x]] = int(tykid[x])
-    except:
-        print("Faili njetu")
-
-#Detection
-params = cv2.SimpleBlobDetector_Params()
-params.filterByArea = True
-params.filterByCircularity = False
-params.filterByConvexity = False
-params.filterByInertia = False
-params.minArea=50
-params.maxArea=100000
-detector = cv2.SimpleBlobDetector_create(params)
-
-# Configure depth and color streams
-pipeline = rs.pipeline()
-config = rs.config()
+pinkBasket = (66,125,181,182,218,255)
+blueBasket = (108,53,70,155,131,143)
+ball = (14,44,79,103,255,188)
+xDepth = 320
+yDepth = 240
 
 #Threshold data
 data = {
@@ -49,8 +23,42 @@ data = {
     "hV" : 0
 }
 
-#Loeb threshold data
-loefaili("pall_defaults.txt")
+#Functions
+def getCords():
+    return cords
+
+def getDepth(x, y):
+    depth =  depth_frame.get_distance(x, y)
+    return depth
+
+def readThresHold(img):
+    keys = list(data.keys())
+    #What image
+    if img == "ball":
+        for x in range(6):
+            data[keys[x]] = ball[x]
+    elif img == "pink":
+        for x in range(6):
+            data[keys[x]] = pinkBasket[x]
+    elif img == "blue":
+        for x in range(6):
+            data[keys[x]] = blueBasket[x]
+
+
+
+#Detection
+params = cv2.SimpleBlobDetector_Params()
+params.filterByArea = True
+params.filterByCircularity = False
+params.filterByConvexity = False
+params.filterByInertia = False
+params.minArea=50
+params.maxArea=9999999
+detector = cv2.SimpleBlobDetector_create(params)
+
+# Configure depth and color streams
+pipeline = rs.pipeline()
+config = rs.config()
 
 # Get device product line for setting a supporting resolution
 pipeline_wrapper = rs.pipeline_wrapper(pipeline)
@@ -68,51 +76,42 @@ if not found_rgb:
     print("The demo requires Depth camera with Color sensor")
     exit(0)
 
-config.enable_stream(rs.stream.depth, 640, 720, rs.format.z16, 30)
+config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
 
 if device_product_line == 'L500':
-    config.enable_stream(rs.stream.color, 960, 720, rs.format.bgr8, 30)
+    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 else:
-    config.enable_stream(rs.stream.color, 640, 720, rs.format.bgr8, 30)
+    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 try:
     pipeline.stop()
 except:
     print("camera oli juba stopped")
 
 
-    
+
 # Start streaming
 
 #pipeline.start(config)  #õige asukoht
 
 color_sensor = pipeline.start(config).get_device().query_sensors()[1]
 color_sensor.set_option(rs.option.enable_auto_exposure, False)
-
+color_sensor.set_option(rs.option.enable_auto_white_balance, False)
 
 def get_image(img):
-    global depth
+    global depth, depth_frame
 
     try:
-        #millist pilti
-        if img == "Pall":
-            loefaili("pall_defaults.txt")
-
-        elif img == "Roosa":
-            loefaili("roosa_defaults.txt")
-
-        elif img == "Sinine":
-            loefaili("sinine_defaults.txt")
-
+        #Reads threshold data
+        readThresHold(img)
         #pipeline.start(config)
         frames = pipeline.wait_for_frames()
         color_frame = frames.get_color_frame()
         depth_frame = frames.get_depth_frame()
 
-        #leiab depth pildi pealt kauguse meetrites, koordinaatidega (x,y)(hetkel ekraani keskelt), korvi kauguse mõõtmiseks
+        #Finds dept
         distance = depth_frame.get_distance(320, 240)
 
         if distance > 0:
-            #print("Kaugus:"+ str(distance))
             depth=distance
 
         color_image = np.asanyarray(color_frame.get_data())
@@ -124,22 +123,22 @@ def get_image(img):
 
         outimage = cv2.bitwise_and(hsv, hsv, mask=thresholded)
         thresholded = cv2.bitwise_not(thresholded)
-        keyPoints = detector.detect(thresholded)
-        outimage = cv2.drawKeypoints(outimage, keyPoints, np.array([]), (0, 0, 255),
+        outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255,255,255])
+        keyPoints = detector.detect(outputImage)
+        outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         hsv = cv2.drawKeypoints(hsv, keyPoints, np.array([]), (0, 0, 255),
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-
-        # leida lähib keypoint ja lisada see cordsi. Lähib leida blob suuruse kaudu ?
+        cords.clear()
+        #Finds keypoints
         for keypoint in keyPoints:
             x = int(keypoint.pt[0])
             y = int(keypoint.pt[1])
-            #Salvestan koordinaadid kui need pole 0 ?
+            #Saves keypoints
             cords.append(x)
             cords.append(y)
-            cords.pop(0)
-            cords.pop(0)
+
 
             koord = (str(x) + ":" + str(y))
             cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
@@ -147,15 +146,12 @@ def get_image(img):
         if len(keyPoints) == 0:
             cords.append(0)
             cords.append(0)
-            cords.pop(0)
-            cords.pop(0)
 
-        #Show images, päris mängus ei ole vaja kuvada pilti
+
+        #Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('RealSense', thresholded)
+        cv2.imshow('RealSense', outputImage)
         cv2.waitKey(1)
     except:
-        print("cameraerror")
-#    finally:
- #       # Stop streaming
-  #      pipeline.stop()
+        print("error in cameraimage")
+        exit()

@@ -1,8 +1,10 @@
-import movement
-import keyboard
+from image import *
+from imageProcess import *
 
-movement.setMovement(90, 0)
+pilt = image()
+pilditootlusPall = imageProcess(50, 9999999, "ball")
 
-if keyboard.is_pressed("q"):
-    movement.stop()
-    print("Stopped by keypress")
+while True:
+    pilditootlusPall.find_objects(pilt.get_rbg_image())
+    cords = pilditootlusPall.getcords()
+    print(str(cords) + "ball")

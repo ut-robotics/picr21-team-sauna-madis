@@ -10,7 +10,7 @@ params.filterByCircularity = False
 params.filterByConvexity = False
 params.filterByInertia = False
 params.minArea=50
-params.maxArea=100000
+params.maxArea=9999999
 detector = cv2.SimpleBlobDetector_create(params)
 
 
@@ -109,7 +109,11 @@ else:
     config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
 
 # Start streaming
-pipeline.start(config)
+#pipeline.start(config)
+
+color_sensor = pipeline.start(config).get_device().query_sensors()[1]
+color_sensor.set_option(rs.option.enable_auto_exposure, False)
+color_sensor.set_option(rs.option.enable_auto_white_balance, False)
 
 try:
     while True:
@@ -117,8 +121,6 @@ try:
         color_frame = frames.get_color_frame()
         color_image = np.asanyarray(color_frame.get_data())
         frame = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
-
-
 
         lowerLimits = np.array([data["lH"], data["lS"], data["lV"]])
         upperLimits = np.array([data["hH"], data["hS"], data["hV"]])
