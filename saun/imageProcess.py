@@ -58,8 +58,9 @@ class imageProcess:
         thresholded = cv2.bitwise_not(thresholded)
         outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
         kernel = np.ones((5,5), np.uint8)
-        outputImage = cv2.erode(outputImage, kernel, iterations=1)
         outputImage = cv2.dilate(outputImage, kernel, iterations=1)
+        outputImage = cv2.erode(outputImage, kernel, iterations=1)
+        outputImage = cv2.medianBlur(outputImage, 5)
         keyPoints = self.detector.detect(outputImage)
         outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
