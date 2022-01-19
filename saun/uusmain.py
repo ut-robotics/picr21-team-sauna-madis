@@ -112,7 +112,7 @@ def find_basket():
         #ball_y = 420
 #230, 360
         
-        x_rotation = (ball_coordinates[0][0]-camera_x_mid)/-12 #-4
+        x_rotation = (ball_coordinates[0][0]-camera_x_mid)/-20 #-4
         y_rotation = (500-ball_coordinates[0][1])/15
 
         #print(ball_coordinates[0][0])
