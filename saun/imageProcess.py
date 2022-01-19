@@ -6,8 +6,8 @@ import time
 class imageProcess:
     ##Data
     cords = [0, 0]
-    pinkBasket = (66,125,181,182,218,255)
-    blueBasket = (108,53,70,155,131,143)
+    pinkBasket = (170,183,187,178,255,255)
+    blueBasket = (27,209,142,151,255,239)
     ball = (28,78,73,82,217,202)
     lowerLimits = 0
     upperLimits = 0
