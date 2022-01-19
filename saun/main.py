@@ -58,12 +58,6 @@ try:
 except:
     print("Command line arguments empty, using defaults")
 
-if move_style== "controller":
-    import controllerMovement
-    controllerMovement.main()
-    print("Controller juhib")
-
-
 
 screenHalfX=320
 ballX =[]
