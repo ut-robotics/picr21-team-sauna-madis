@@ -112,8 +112,8 @@ def find_basket():
         #ball_y = 420
 #230, 360
         
-        x_rotation = (ball_coordinates[0][0]-camera_x_mid)/-20 #-4
-        y_rotation = (500-ball_coordinates[0][1])/20
+        x_rotation = (ball_coordinates[0][0]-camera_x_mid)/-15 #-4
+        y_rotation = (500-ball_coordinates[0][1])/15
 
         #print(ball_coordinates[0][0])
         #print(ball_coordinates[0][1])
@@ -126,7 +126,6 @@ def find_basket():
         
         #ball_coordinates = get_coordinates("ball")
 
-
         proccessed_basket.find_objects(image.get_rbg_image())
         basket_coordinates = proccessed_basket.getcords()
         print("basket coordinates:" + str(basket_coordinates))
@@ -134,7 +133,7 @@ def find_basket():
         #basket_coordinates = get_coordinates(basket_color)
 
         
-        if basket_coordinates[0][0] > 310 and basket_coordinates[0][0] < 330:
+        if basket_coordinates[0][0] > 315 and basket_coordinates[0][0] < 325:
 
             
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
