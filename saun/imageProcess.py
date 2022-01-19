@@ -4,28 +4,28 @@ import numpy as np
 import time
 
 class imageProcess:
-    ##Data
+    #Data
     pinkBasket = (170,183,187,178,255,255)
     blueBasket = (27,209,142,151,255,239)
     ball = (28,78,73,82,217,202)
-    lowerLimits = 0
-    upperLimits = 0
-    dectector = 0
-    pervTime = 0
-
-    # Threshold data
-    data = {
-        "lH": 0,
-        "lS": 0,
-        "lV": 0,
-        "hH": 0,
-        "hS": 0,
-        "hV": 0
-    }
 
     def __init__(self, minArea, maxArea, object):
+        ##Data
         self.cords = [0, 0]
+        self.lowerLimits = 0
+        self.upperLimits = 0
+        self.dectector = 0
+        self.pervTime = 0
 
+        # Threshold data
+        self.data = {
+            "lH": 0,
+            "lS": 0,
+            "lV": 0,
+            "hH": 0,
+            "hS": 0,
+            "hV": 0
+        }
         keys = list(self.data.keys())
         # What image
         if object == "ball":
