@@ -24,7 +24,7 @@ data = {
 }
 
 try:
-    with open("pall_defaults.txt") as tholder:
+    with open("../Not in use/pall_defaults.txt") as tholder:
         txtdata = tholder.readline()
         tykid = txtdata.split(",")
         vaartused = list(data.keys())

@@ -17,7 +17,7 @@ throwerspeed = 0
 steps = 10
 
 def save():
-    with open("throwerData.txt", "a") as file:
+    with open("../saun/throwerData.txt", "a") as file:
         file.write(str(throwerspeed) + ";" + str(distance*100) + "\n")
 
 class controller:
