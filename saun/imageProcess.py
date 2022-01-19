@@ -5,7 +5,6 @@ import time
 
 class imageProcess:
     ##Data
-    cords = [0, 0]
     pinkBasket = (170,183,187,178,255,255)
     blueBasket = (27,209,142,151,255,239)
     ball = (28,78,73,82,217,202)
@@ -25,6 +24,8 @@ class imageProcess:
     }
 
     def __init__(self, minArea, maxArea, object):
+        self.cords = [0, 0]
+
         keys = list(self.data.keys())
         # What image
         if object == "ball":
