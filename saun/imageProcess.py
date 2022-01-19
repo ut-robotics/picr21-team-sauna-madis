@@ -58,15 +58,15 @@ class imageProcess:
         fps = 1/(start - self.pervTime)
         self.pervTime = start
         thresholded = cv2.inRange(rbgImage, self.lowerLimits, self.upperLimits)
-        outimage = cv2.bitwise_and(rbgImage, rbgImage, mask=thresholded)
+        #outimage = cv2.bitwise_and(rbgImage, rbgImage, mask=thresholded)
         thresholded = cv2.bitwise_not(thresholded)
         outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
         kernel = np.ones((5,5), np.uint8)
-        #outputImage = cv2.dilate(outputImage, kernel, iterations=2)
-        #outputImage = cv2.erode(outputImage, kernel, iterations=2)
-        outputImageBlur = cv2.medianBlur(outputImage, 3)
-        keyPoints = self.detector.detect(outputImage)
-        outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
+        outputImageFiltered = cv2.medianBlur(outputImage, 3)
+        outputImageFiltered = cv2.dilate(outputImage, kernel, iterations=1)
+        outputImageFiltered = cv2.erode(outputImage, kernel, iterations=2)
+        keyPoints = self.detector.detect(outputImageFiltered)
+        outimage = cv2.drawKeypoints(outputImageFiltered, keyPoints, np.array([]), (0, 0, 255),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         hsv = cv2.drawKeypoints(rbgImage, keyPoints, np.array([]), (0, 0, 255),
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
@@ -98,7 +98,7 @@ class imageProcess:
         cv2.namedWindow('Real', cv2.WINDOW_AUTOSIZE)
         cv2.putText(outputImage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
         cv2.imshow('RealSense', outputImage)
-        cv2.imshow("Real", outputImageBlur)
+        cv2.imshow("Real", outimage)
         cv2.waitKey(1)
 
 
