@@ -64,7 +64,7 @@ class imageProcess:
         kernel = np.ones((5,5), np.uint8)
         outputImage = cv2.dilate(outputImage, kernel, iterations=1)
         outputImage = cv2.erode(outputImage, kernel, iterations=1)
-        outputImage = cv2.medianBlur(outputImage, 2)
+        outputImage = cv2.medianBlur(outputImage, 3)
         keyPoints = self.detector.detect(outputImage)
         outimage = cv2.drawKeypoints(outputImage, keyPoints, np.array([]), (0, 0, 255),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
