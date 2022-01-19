@@ -134,7 +134,7 @@ def find_basket():
         #basket_coordinates = get_coordinates(basket_color)
 
         
-        if basket_coordinates[1][0] > 310 and basket_coordinates[1][0] < 330:
+        if basket_coordinates[0][0] > 310 and basket_coordinates[0][0] < 330:
 
             
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
