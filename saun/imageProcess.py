@@ -1,7 +1,7 @@
 import cv2
 import cv2.cv2
 import numpy as np
-import math
+import time
 
 class imageProcess:
     ##Data
@@ -12,6 +12,7 @@ class imageProcess:
     lowerLimits = 0
     upperLimits = 0
     dectector = 0
+    pervTime = 0
 
     # Threshold data
     data = {
@@ -53,6 +54,9 @@ class imageProcess:
         return self.cords
 
     def find_objects(self, rbgImage):
+        start = time.time()
+        self.pervtime = start
+        fps = 1/(start - self.pervtime)
         thresholded = cv2.inRange(rbgImage, self.lowerLimits, self.upperLimits)
         outimage = cv2.bitwise_and(rbgImage, rbgImage, mask=thresholded)
         thresholded = cv2.bitwise_not(thresholded)
@@ -89,9 +93,9 @@ class imageProcess:
 
         
         sorted(self.cords, key = lambda x: x[1], reverse = True)
-
         #Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
+        cv2.putText(outputImage, str(fps), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
         cv2.imshow('RealSense', outputImage)
         cv2.waitKey(1)
 
