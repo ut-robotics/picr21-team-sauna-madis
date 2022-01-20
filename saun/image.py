@@ -44,7 +44,7 @@ class image:
         color_sensor.set_option(rs.option.enable_auto_white_balance, False)
 
         color_sensor.set_option(rs.option.white_balance, 3300)
-        color_sensor.set_option(rs.option.exposure, 50)
+        color_sensor.set_option(rs.option.exposure, 80)
 
     def getDepth(self, x, y):
         self.depth = self.depth_frame.get_distance(x, y)
