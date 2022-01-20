@@ -30,12 +30,9 @@ class image:
             print("The demo requires Depth camera with Color sensor")
             exit(0)
 
-        config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+        config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 60)
+        config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 60)
 
-        if device_product_line == 'L500':
-            config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-        else:
-            config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
         try:
             self.pipeline.stop()
         except:
@@ -45,6 +42,9 @@ class image:
         color_sensor = self.pipeline.start(config).get_device().query_sensors()[1]
         color_sensor.set_option(rs.option.enable_auto_exposure, False)
         color_sensor.set_option(rs.option.enable_auto_white_balance, False)
+
+        color_sensor.set_option(rs.option.white_balance, 3300)
+        color_sensor.set_option(rs.option.exposure, 50)
 
     def getDepth(self, x, y):
         self.depth = self.depth_frame.get_distance(x, y)
