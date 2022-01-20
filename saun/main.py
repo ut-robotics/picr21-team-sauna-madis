@@ -130,18 +130,17 @@ def align_basket():
         if move_style_check(): return True
 
         ball_coordinates, basket_coordinates = get_ballNbasket_cord()
-        x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
+        x_rotation = (ball_coordinates[0][0] - camera_x_mid) / - 15 # -4
         y_rotation = (500 - ball_coordinates[0][1]) / 15
 
-        if basket_coordinates[0][0] > 325 and basket_coordinates[0][0] < 315:
+        if basket_coordinates[0][0] > 325 and basket_coordinates[0][0] < 315 and ball_coordinates[0][0] > 325 and ball_coordinates[0][0] < 315:
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
-
             print("Basket distance: " + str(basket_depth))
             if basket_depth > 0.5:
-
                 throw_ball(basket_depth)
                 break
-        elif basket_coordinates[0][0] > 325:
+
+        elif basket_coordinates[0][0] > 320 :
             movement.setMovement(180, 10, int(x_rotation + y_rotation), 0)
         else:
             movement.setMovement(0, 10, int(x_rotation + y_rotation), 0)
