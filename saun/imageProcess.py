@@ -6,7 +6,7 @@ import time
 class imageProcess:
     #Data
     pinkBasket = (170,183,187,178,255,255)
-    blueBasket = (105,288,84,141,255,152)
+    blueBasket = (107,237,91,123,255,153)
     ball = (13,136,37,85,255,153)
 
     def __init__(self, minArea, maxArea, object):
