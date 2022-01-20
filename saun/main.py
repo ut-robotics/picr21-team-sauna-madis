@@ -132,7 +132,8 @@ def align_basket():
         ball_coordinates, basket_coordinates = get_ballNbasket_cord()
         x_rotation = (ball_coordinates[0][0] - camera_x_mid) / - 30 # -4
         y_rotation = (500 - ball_coordinates[0][1]) / 15
-
+        print("Ball: " + str(ball_coordinates) + " Basket: " + str(basket_coordinates))
+        print("X: " + str(x_rotation) + " Y: " + str(y_rotation))
         if basket_coordinates[0][0] > 325 and basket_coordinates[0][0] < 315 and ball_coordinates[0][0] > 325 and ball_coordinates[0][0] < 315:
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
             print("Basket distance: " + str(basket_depth))
