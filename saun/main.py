@@ -130,7 +130,7 @@ def align_basket():
         if move_style_check(): return True
 
         ball_coordinates, basket_coordinates = get_ballNbasket_cord()
-        x_rotation = (ball_coordinates[0][0] - camera_x_mid) / - 15 # -4
+        x_rotation = (ball_coordinates[0][0] - camera_x_mid) / - 10 # -4
         y_rotation = (500 - ball_coordinates[0][1]) / 15
 
         if basket_coordinates[0][0] > 325 and basket_coordinates[0][0] < 315 and ball_coordinates[0][0] > 325 and ball_coordinates[0][0] < 315:
