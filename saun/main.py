@@ -109,16 +109,15 @@ def find_basket():
         basket_coordinates = proccessed_basket.getcords()
         print("basket coordinates:" + str(basket_coordinates))
 
-        if basket_coordinates[0][0] > 310:
-            someWhereMiddle = True
-            while someWhereMiddle:
-                if basket_coordinates[0][0] > 325 and basket_coordinates[0][0] < 315:
-                    someWhereMiddle = False
-                    break
-                elif basket_coordinates[0][0] > 325:
-                    movement.setMovement(180, 10, int(x_rotation+y_rotation), 0)
-                else:
-                    movement.setMovement(0, 10 , int(x_rotation+y_rotation), 0)
+        while basket_coordinates[0][0] != 0:
+            proccessed_basket.find_objects(image.get_rbg_image())
+            basket_coordinates = proccessed_basket.getcords()
+            if basket_coordinates[0][0] > 325 and basket_coordinates[0][0] < 315:
+                break
+            elif basket_coordinates[0][0] > 325:
+                movement.setMovement(180, 10, int(x_rotation+y_rotation), 0)
+            else:
+                movement.setMovement(0, 10 , int(x_rotation+y_rotation), 0)
 
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
 
