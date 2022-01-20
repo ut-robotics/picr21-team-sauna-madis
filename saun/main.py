@@ -124,6 +124,7 @@ def find_basket():
             print("Basket distance: " + str(basket_depth))
             if basket_depth > 0.5:
                 throw_ball(basket_depth)
+                break
 
 def throw_ball(basket_depth):
     print("Throwing ball---------------------------------------------------------")
