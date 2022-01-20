@@ -27,6 +27,19 @@ image = image()
 proccessed_ball = imageProcess(70,999999, "ball")
 proccessed_basket = imageProcess(150,999999, basket_color)
 
+def get_ball_cord():
+    proccessed_ball.find_objects(image.get_rbg_image())
+    return proccessed_ball.getcords()
+
+def get_basket_cord():
+    proccessed_basket.find_objects(image.get_rbg_image())
+    return proccessed_basket.getcords()
+
+def get_ballNbasket_cord():
+    proccessed_ball.find_objects(image.get_rbg_image())
+    proccessed_basket.find_objects(image.get_rbg_image())
+    return proccessed_ball.getcords(), proccessed_basket.getcords()
+
 
 def move_style_check():
     global move_style
@@ -58,8 +71,8 @@ def find_ball():
     while ball_coordinates[0][0] == 0:
         if move_style_check(): return True
 
-        proccessed_ball.find_objects(image.get_rbg_image())
-        ball_coordinates = proccessed_ball.getcords()
+        #proccessed_ball.find_objects(image.get_rbg_image())
+        ball_coordinates = get_ball_cord()
 
     print("Ball found!")
     return False
@@ -67,14 +80,14 @@ def find_ball():
 def move_to_ball():
     
     print("Moving towards ball---------------------------------------------------------")
-    proccessed_ball.find_objects(image.get_rbg_image())
-    ball_coordinates = proccessed_ball.getcords()
+    #proccessed_ball.find_objects(image.get_rbg_image())
+    ball_coordinates = get_ball_cord()
 
     while ball_coordinates[0][0] != 0: #640-480
         if move_style_check(): return True
 
-        proccessed_ball.find_objects(image.get_rbg_image())
-        ball_coordinates = proccessed_ball.getcords()
+        #proccessed_ball.find_objects(image.get_rbg_image())
+        ball_coordinates = get_ball_cord()
 
         movement.setMovement(90, 48-int(ball_coordinates[0][1]/10),int((320- ball_coordinates[0][0])/10), 0 )  # direction, robotspeed, rotspeed, throwerspeed
         
@@ -83,12 +96,10 @@ def move_to_ball():
     return True
 
 def find_basket():
-    
     global basket_color
     print("Searching for basket---------------------------------------------------------")
-    someWhereMiddle = False
-    proccessed_ball.find_objects(image.get_rbg_image())
-    ball_coordinates = proccessed_ball.getcords()
+    #proccessed_ball.find_objects(image.get_rbg_image())
+    ball_coordinates = get_ball_cord()
 
     while ball_coordinates[0][0] != 0:
         if move_style_check(): return True
@@ -102,34 +113,38 @@ def find_basket():
         #print("Y-ROTATION: " + str(int(y_rotation)))
         movement.setMovement(0, 10 , int(x_rotation+y_rotation), 0)
         
-        proccessed_ball.find_objects(image.get_rbg_image())
-        ball_coordinates = proccessed_ball.getcords()
+        #proccessed_ball.find_objects(image.get_rbg_image())
+        ball_coordinates, basket_coordinates = get_ballNbasket_cord()
 
-        proccessed_basket.find_objects(image.get_rbg_image())
-        basket_coordinates = proccessed_basket.getcords()
+        #proccessed_basket.find_objects(image.get_rbg_image())
+        #basket_coordinates = proccessed_basket.getcords()
         print("basket coordinates:" + str(basket_coordinates))
 
-        while basket_coordinates[0][0] != 0 and ball_coordinates[0][0] != 0:
-            x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
-            y_rotation = (500 - ball_coordinates[0][1]) / 15
+        if basket_coordinates[0][0] != 0:
+            return False
 
-            proccessed_ball.find_objects(image.get_rbg_image())
-            ball_coordinates = proccessed_ball.getcords()
+def align_basket():
+    print("Found basket moving to align ---------------------------------------------------------")
+    ball_coordinates, basket_coordinates = get_ballNbasket_cord()
+    while ball_coordinates[0][0] != 0 and basket_coordinates[0][0] != 0:
+        if move_style_check(): return True
 
-            proccessed_basket.find_objects(image.get_rbg_image())
-            basket_coordinates = proccessed_basket.getcords()
-            if basket_coordinates[0][0] > 325 and basket_coordinates[0][0] < 315:
-                basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
+        ball_coordinates, basket_coordinates = get_ballNbasket_cord()
+        x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
+        y_rotation = (500 - ball_coordinates[0][1]) / 15
 
-                print("Basket distance: " + str(basket_depth))
-                if basket_depth > 0.5:
-                    throw_ball(basket_depth)
-                    break
-            elif basket_coordinates[0][0] > 325:
-                movement.setMovement(180, 10, int(x_rotation+y_rotation), 0)
-            else:
-                movement.setMovement(0, 10 , int(x_rotation+y_rotation), 0)
+        if basket_coordinates[0][0] > 325 and basket_coordinates[0][0] < 315:
+            basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
 
+            print("Basket distance: " + str(basket_depth))
+            if basket_depth > 0.5:
+
+                throw_ball(basket_depth)
+                break
+        elif basket_coordinates[0][0] > 325:
+            movement.setMovement(180, 10, int(x_rotation + y_rotation), 0)
+        else:
+            movement.setMovement(0, 10, int(x_rotation + y_rotation), 0)
 
 def throw_ball(basket_depth):
     print("Throwing ball---------------------------------------------------------")
@@ -147,6 +162,7 @@ while True:
         if find_ball(): break
         if move_to_ball(): break
         if find_basket(): break
+        if align_basket(): break
 
 
 
