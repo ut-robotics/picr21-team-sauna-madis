@@ -130,8 +130,8 @@ def align_basket():
         if move_style_check(): return True
 
         ball_coordinates, basket_coordinates = get_ballNbasket_cord()
-        x_rotation = (ball_coordinates[0][0] - camera_x_mid) / - 30 # -4
-        y_rotation = (500 - ball_coordinates[0][1]) / 15
+        x_rotation = (ball_coordinates[0][0] - camera_x_mid) / - 33 # -4
+        y_rotation = (500 - ball_coordinates[0][1]) / 17
         print("Ball: " + str(ball_coordinates) + " Basket: " + str(basket_coordinates))
         print("X: " + str(x_rotation) + " Y: " + str(y_rotation))
         if basket_coordinates[0][0] < 325 and basket_coordinates[0][0] > 315 and ball_coordinates[0][0] < 325 and ball_coordinates[0][0] > 315:
@@ -142,9 +142,9 @@ def align_basket():
                 break
 
         elif basket_coordinates[0][0] > 315 :
-            movement.setMovement(180, 8, int(x_rotation - y_rotation), 0)
+            movement.setMovement(180, 7, int(x_rotation - y_rotation), 0)
         else:
-            movement.setMovement(0, 8, int(x_rotation + y_rotation), 0)
+            movement.setMovement(0, 7, int(x_rotation + y_rotation), 0)
 
 def throw_ball(basket_depth):
     print("Throwing ball---------------------------------------------------------")
