@@ -2,7 +2,7 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 
-class image:
+class Image:
     #Data
     depth_frame = 0
     depth = 0
@@ -51,13 +51,11 @@ class image:
         return self.depth
 
     def get_rbg_image(self):
-        #try:
+        
         frames = self.pipeline.wait_for_frames()
         color_frame = frames.get_color_frame()
         self.depth_frame = frames.get_depth_frame()
         color_image = np.asanyarray(color_frame.get_data())
         hsv = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
-    #except:
-         #   print("cameraerror")
 
         return hsv

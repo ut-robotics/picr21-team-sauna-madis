@@ -23,9 +23,9 @@ print("Stardin controlleri threadi")
 cntrl = controller()
 cntrl.start()
 
-image = image()
-proccessed_ball = imageProcess(70,999999, "ball")
-proccessed_basket = imageProcess(150,999999, basket_color)
+image = Image()
+proccessed_ball = ImageProcess(70,999999, "ball")
+proccessed_basket = ImageProcess(150,999999, basket_color)
 
 def get_ball_cord():
     proccessed_ball.find_objects(image.get_rbg_image())

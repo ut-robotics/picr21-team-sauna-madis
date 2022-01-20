@@ -3,7 +3,7 @@ import cv2.cv2
 import numpy as np
 import time
 
-class imageProcess:
+class ImageProcess:
     #Data
     pinkBasket = (170,183,187,178,255,255)
     blueBasket = (107,237,91,123,255,153)
@@ -95,10 +95,10 @@ class imageProcess:
         
         sorted(self.cords, key = lambda x: x[1], reverse = True)
         #Show images
-        cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
+      #  cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.namedWindow('Real', cv2.WINDOW_AUTOSIZE)
-        cv2.putText(outputImage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
-        cv2.imshow('RealSense', outputImage)
+        cv2.putText(outimage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0,255,0), 2)
+       # cv2.imshow('RealSense', outputImage)
         cv2.imshow("Real", outimage)
         cv2.waitKey(1)
 
