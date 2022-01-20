@@ -38,7 +38,7 @@ class controller:
                     
             
             def on_left_arrow_press(self):
-                movement.setMovement(0,0,20,0)
+                movement.setMovement(0,0,-20,0)
 
             def on_right_arrow_press(self):
                 movement.setMovement(0,0,20,0)
