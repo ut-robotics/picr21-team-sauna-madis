@@ -141,9 +141,9 @@ def align_basket():
                 break
 
         elif basket_coordinates[0][0] > 320 :
-            movement.setMovement(180, 10, int(x_rotation + y_rotation), 0)
+            movement.setMovement(180, 20, int(x_rotation + y_rotation), 0)
         else:
-            movement.setMovement(0, 10, int(x_rotation + y_rotation), 0)
+            movement.setMovement(0, 20, int(x_rotation + y_rotation), 0)
 
 def throw_ball(basket_depth):
     print("Throwing ball---------------------------------------------------------")
