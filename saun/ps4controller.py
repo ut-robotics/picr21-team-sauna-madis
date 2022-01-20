@@ -38,10 +38,10 @@ class controller:
                     
             
             def on_left_arrow_press(self):
-                movement.turnLeft()
+                movement.setMovement(0,0,20,0)
 
             def on_right_arrow_press(self):
-                movement.turnRight()
+                movement.setMovement(0,0,20,0)
 
             def on_left_right_arrow_release(self):
                 movement.stop()
@@ -60,13 +60,13 @@ class controller:
                 movement.thrower(throwerspeed)
 
             def on_R1_press(self):
-                movement.forward()
+                movement.setMovement(90,20,0,0)#direction, robotspeed, rotspeed, throwerSpeed
 
             def on_R1_release(self):
                 movement.stop()
             
             def on_L1_press(self):
-                movement.backward()
+                movement.setMovement(270,20,0,0)
 
             def on_L1_release(self):
                 movement.stop()

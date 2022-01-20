@@ -17,7 +17,6 @@ ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout = 2)
 
 def omniWheel(speed, angle, direction):
     vel = speed * math.cos(math.radians(direction - angle))
-
     return vel
 
 def setMovement(direction ,robotSpeed, rotSpeed, throwerSpeed):
@@ -39,28 +38,6 @@ def throwBall(speed):
 
 def thrower(speed):
     ser.write(struct.pack("<hhhHH", 0, 0, 0, speed, 0xAAAA))
-
-def spinAroundBall():
-    ser.write(struct.pack("<hhhHH", 10, 0, 0, 0, 0xAAAA))
-
-def turnLeft():
-    ser.write(struct.pack("<hhhHH", 10, 10, 10, 0, 0xAAAA))
-
-def turnRight():
-    ser.write(struct.pack("<hhhHH", -10, -10, -10, 0, 0xAAAA))
-
-def spinRight():
-    ser.write(struct.pack("<hhhHH", -5, -5, -5, 0, 0xAAAA))
-
-def forward():
-    ser.write(struct.pack("<hhhHH", 0, -20, 20, 0, 0xAAAA))
-
-def backward():
-    ser.write(struct.pack("<hhhHH", 0, 20, -20, 0, 0xAAAA))
-
-def forwardspeed(speed, pid):
-    
-    ser.write(struct.pack("<hhhHH", 0, -speed+pid, speed-pid, 0, 0xAAAA))
 
 def stop():
     print("STOP")
