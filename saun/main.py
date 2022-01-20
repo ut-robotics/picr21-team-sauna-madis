@@ -141,7 +141,7 @@ def align_basket():
                 break
 
         elif basket_coordinates[0][0] > 320 :
-            movement.setMovement(180, 8, int(x_rotation + y_rotation), 0)
+            movement.setMovement(180, 8, int(-x_rotation + y_rotation), 0)
         else:
             movement.setMovement(0, 8, int(x_rotation + y_rotation), 0)
 
