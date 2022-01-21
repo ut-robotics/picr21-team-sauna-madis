@@ -1,25 +1,14 @@
-import pyrealsense2 as rs
-import numpy as np
-import cv2
-
-params = cv2.SimpleBlobDetector_Params()
-params.filterByArea = True
-params.filterByCircularity = False
-params.filterByConvexity = False
-params.filterByInertia = False
-params.minArea=50
-params.maxArea=9999999
-detector = cv2.SimpleBlobDetector_create(params)
-
+from image import *
+from imageProcess import *
 
 data = {
-    "lH" : 0,
-    "lS" : 0,
-    "lV" : 0,
-    "hH" : 0,
-    "hS" : 0,
-    "hV" : 0
-}
+    "lH": 0,
+    "lS": 0,
+    "lV": 0,
+    "hH": 0,
+    "hS": 0,
+    "hV": 0
+    }
 
 def updateValuelH(new_value):
     global data
@@ -41,85 +30,16 @@ def updateValuehV(new_value):
     data["hV"] = new_value
 
 
+window = cv2.namedWindow("Processed")
+vindow = cv2.namedWindow("RAW")
+image = Image()
+proccessed_ball = ImageProcess(70, 999999, "ball")
 
+for key in data.keys():
+    cv2.createTrackbar(key, "Processed", data[key], 255, eval("updateValue" + key))
 
-
-
-cv2.namedWindow("Processed")
-
-cv2.createTrackbar("lH", "Processed", data["lH"], 255, updateValuelH)
-cv2.createTrackbar("lS", "Processed", data["lS"], 255, updateValuelS)
-cv2.createTrackbar("lV", "Processed", data["lV"], 255, updateValuelV)
-cv2.createTrackbar("hH", "Processed", data["hH"], 255, updateValuehH)
-cv2.createTrackbar("hS", "Processed", data["hS"], 255, updateValuehS)
-cv2.createTrackbar("hV", "Processed", data["hV"], 255, updateValuehV)
-
-
-# Configure depth and color streams
-pipeline = rs.pipeline()
-config = rs.config()
-
-# Get device product line for setting a supporting resolution
-pipeline_wrapper = rs.pipeline_wrapper(pipeline)
-pipeline_profile = config.resolve(pipeline_wrapper)
-device = pipeline_profile.get_device()
-device_product_line = str(device.get_info(rs.camera_info.product_line))
-
-found_rgb = False
-for s in device.sensors:
-    if s.get_info(rs.camera_info.name) == 'RGB Camera':
-        found_rgb = True
-        break
-if not found_rgb:
-    print("The demo requires Depth camera with Color sensor")
-    exit(0)
-
-config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
-
-if device_product_line == 'L500':
-    config.enable_stream(rs.stream.color, 960, 540, rs.format.bgr8, 30)
-else:
-    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
-
-# Start streaming
-#pipeline.start(config)
-
-color_sensor = pipeline.start(config).get_device().query_sensors()[1]
-color_sensor.set_option(rs.option.enable_auto_exposure, False)
-color_sensor.set_option(rs.option.enable_auto_white_balance, False)
-
-try:
-    while True:
-        frames = pipeline.wait_for_frames()
-        color_frame = frames.get_color_frame()
-        color_image = np.asanyarray(color_frame.get_data())
-        frame = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
-
-        lowerLimits = np.array([data["lH"], data["lS"], data["lV"]])
-        upperLimits = np.array([data["hH"], data["hS"], data["hV"]])
-        thresholded = cv2.inRange(frame, lowerLimits, upperLimits)
-        
-        outimage = cv2.bitwise_and(frame, frame, mask = thresholded)
-        thresholded = cv2.bitwise_not(thresholded)
-        keyPoints = detector.detect(thresholded)
-        outimage = cv2.drawKeypoints(outimage, keyPoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        frame = cv2.drawKeypoints(frame, keyPoints, np.array([]), (0,0,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-
-        for keypoint in keyPoints:
-            x=int(keypoint.pt[0])
-            y=int(keypoint.pt[1])
-
-            koord=(str(x)+":"+str(y))
-            cv2.putText(frame, koord,(x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
-
-        # Show images
-        cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('RealSense', frame)
-        cv2.imshow('Processed', outimage)
-
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-
-finally:
-    # Stop streaming
-    pipeline.stop()
+while True:
+    rawImage = image.get_rbg_image()
+    proccessed_ball.find_objects(rawImage, window)
+    cv2.imshow(vindow, rawImage)
+    cv2.waitKey(1)
