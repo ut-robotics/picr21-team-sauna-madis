@@ -36,7 +36,7 @@ class Image:
         try:
             self.pipeline.stop()
         except:
-            print("camera oli juba stopped")
+            print("Camera was already stopped")
 
         # Start streaming
         color_sensor = self.pipeline.start(config).get_device().query_sensors()[1]

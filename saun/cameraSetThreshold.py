@@ -1,5 +1,3 @@
-#HSV pilt
-import keyboard
 import pyrealsense2 as rs
 import numpy as np
 import cv2
@@ -23,18 +21,6 @@ data = {
     "hV" : 0
 }
 
-try:
-    with open("../Not in use/pall_defaults.txt") as tholder:
-        txtdata = tholder.readline()
-        tykid = txtdata.split(",")
-        vaartused = list(data.keys())
-
-        for x in range(6):
-            data[vaartused[x]] = int(tykid[x])
-
-except:
-    print("Faili njetu")
-
 def updateValuelH(new_value):
     global data
     data["lH"] = new_value
@@ -54,20 +40,7 @@ def updateValuehV(new_value):
     global data
     data["hV"] = new_value
 
-def saveValue(fail):
-    tholder_new = open(fail, "w")
-    values = data.values()
 
-    for value in values:
-        cnt = 0
-        if (cnt == 5):
-            tholder_new.write(str(value))
-        else:
-            tholder_new.write(str(value) + ",")
-        cnt += 1
-
-    tholder_new.close()
-    pass
 
 
 
@@ -139,22 +112,10 @@ try:
             koord=(str(x)+":"+str(y))
             cv2.putText(frame, koord,(x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
-        #cv2.putText(frame, fps, (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2) fps jaoks ?
-
         # Show images
         cv2.namedWindow('RealSense', cv2.WINDOW_AUTOSIZE)
         cv2.imshow('RealSense', frame)
         cv2.imshow('Processed', outimage)
-
-        if keyboard.is_pressed("z"):
-            saveValue("pall_defaults.txt")
-            print("Salvestasin palli väärtused")
-        elif keyboard.is_pressed("x"):
-            saveValue("roosa_defaults.txt")
-            print("Salvestasin roosa korvi väärtused")
-        elif keyboard.is_pressed("c"):
-            saveValue("sinine_defaults.txt")
-            print("Salvestasin sinise korvi väärtused")
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break

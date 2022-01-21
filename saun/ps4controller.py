@@ -1,15 +1,17 @@
 import movement
 from pyPS4Controller.controller import Controller
 from threading import Thread
+from var import *
 
 
-gamestate = "controller" #"auto", "controller"
+#gamestate = "controller" #"auto", "controller"
+gamestate = MoveStyle.CONTROLLER
 throwerspeed = 200
 
 def getgamestate():
     return gamestate
 
-class controller:
+class Sontroller:
     
     def __init__(self):
         self.stopped = False
@@ -28,13 +30,12 @@ class controller:
                 Controller.__init__(self, **kwargs)
 
             def on_x_press(self):
-                global gamestate
 
                 print("Hello world")
-                if gamestate == "auto":
-                    gamestate = "controller"
+                if self.gamestate == MoveStyle.AUTO:
+                    self.gamestate = MoveStyle.CONTROLLER
                 else:
-                    gamestate = "auto"
+                    self.gamestate = MoveStyle.AUTO
                     
             
             def on_left_arrow_press(self):
@@ -76,7 +77,7 @@ class controller:
 
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
         # you can start listening before controller is paired, as long as you pair it within the timeout window
-        controller.listen(timeout=60)
+        Sontroller.listen(timeout=60)
 
 
 

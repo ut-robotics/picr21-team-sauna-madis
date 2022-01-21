@@ -2,6 +2,7 @@
 
 import math
 import serial
+from serial.tools import list_ports
 import struct
 import time
 
@@ -12,7 +13,7 @@ secondAngle = 130
 thirdAgnle = 230
 
 #kiirused 0-32767   65500-32768
-
+#Asenda port = list_ports.grep(VID:PID)
 ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout = 2)
 
 def omniWheel(speed, angle, direction):

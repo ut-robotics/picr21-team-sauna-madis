@@ -5,7 +5,7 @@ import websockets
 @asyncio.coroutines
 async def hello(websocket, uri):
     while True:
-        cmd = int(input("Vali käsk"))
+        cmd = int(input("Select action"))
         if cmd == 1:
             name = {
                 "signal": "start",
