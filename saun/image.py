@@ -34,10 +34,10 @@ class Image:
         self.config.enable_stream(rs.stream.depth, 848, 480, rs.format.z16, 60)
         self.config.enable_stream(rs.stream.color, 848, 480, rs.format.bgr8, 60)
 
-        try:
-            self.pipeline.stop()
-        except:
-            print("Camera was already stopped")
+        # try:
+        #     self.pipeline.stop()
+        # except:
+        #     print("Camera was already stopped")
 
         # Start streaming
         """
@@ -49,11 +49,12 @@ class Image:
         """
         self.profile = self.pipeline.start(self.config)
 
+        #AttributeError: 'pyrealsense2.pyrealsense2.pipeline_profile' object has no attribute 'set_option'
         print(self.profile)
-        self.profile.set_option(rs.option.enable_auto_exposure, False)
-        self.profile.set_option(rs.option.enable_auto_white_balance, False)
-        self.profile.set_option(rs.option.white_balance, 3300)
-        self.profile.set_option(rs.option.exposure, 80)
+        self.color_sensor.set_option(rs.option.enable_auto_exposure, False)
+        self.color_sensor.set_option(rs.option.enable_auto_white_balance, False)
+        self.color_sensor.set_option(rs.option.white_balance, 3300)
+        self.color_sensor.set_option(rs.option.exposure, 80)
 
         depth_sensor = self.profile.get_device().first_depth_sensor()
         depth_scale = depth_sensor.get_depth_scale()
