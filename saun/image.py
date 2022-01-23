@@ -35,7 +35,7 @@ class Image:
         self.config.enable_stream(rs.stream.color, 848, 480, rs.format.bgr8, 60)
 
         
-        self.pipeline.stop()
+#        self.pipeline.stop()
 
 
         #Start streaming
