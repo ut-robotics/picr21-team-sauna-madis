@@ -1,4 +1,4 @@
-from tkinter import S
+#from tkinter import S
 import pyrealsense2 as rs
 import numpy as np
 import cv2
