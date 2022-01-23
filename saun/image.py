@@ -99,18 +99,18 @@ class Image:
             print("Dept and color frames are not valid")
             return None
 
-        depth_image = np.asanyarray(self.aligned_depth_frame.get_data())
-        color_image = np.asanyarray(self.color_frame.get_data())
+        self.depth_image = np.asanyarray(self.aligned_depth_frame.get_data())
+        self.color_image = np.asanyarray(self.color_frame.get_data())
 
         # Remove background - Set pixels further than clipping_distance to grey
         grey_color = 153
-        depth_image_3d = np.dstack((depth_image,depth_image,depth_image)) #depth image is 1 channel, color is 3 channels
-        bg_removed = np.where((depth_image_3d > self.clipping_distance) | (depth_image_3d <= 0), grey_color, color_image)
+        depth_image_3d = np.dstack((self.depth_image,self.depth_image,self.depth_image)) #depth image is 1 channel, color is 3 channels
+        self.bg_removed = np.where((depth_image_3d > self.clipping_distance) | (depth_image_3d <= 0), grey_color, self.color_image)
 
         # Render images:
         #   depth align to color on left
         #   depth on right
-        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
-        images = np.hstack((bg_removed, depth_colormap))
+        self.depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(self.depth_image, alpha=0.03), cv2.COLORMAP_JET)
+        self.images = np.hstack((self.bg_removed, self.depth_colormap))
 
-        return images
+        return self.images
