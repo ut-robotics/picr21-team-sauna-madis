@@ -11,7 +11,7 @@ class Image:
 
     def __init__(self):
         # Configure depth and color streams
-        self.pipeline = rs.pipeline()
+        pipeline = rs.pipeline()
 
         self.config = rs.config()
 
@@ -46,7 +46,7 @@ class Image:
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         """
 
-        self.profile = self.pipeline(self.config)
+        self.profile = pipeline(self.config)
 
         self.color_sensor = self.profile.get_device().query_sensors()[1]
         
