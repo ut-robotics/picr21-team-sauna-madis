@@ -12,7 +12,9 @@ from var import *
 from ps4controller import Sontroller
 from ps4controller import getgamestate
 
-camera_x_mid = 320
+
+#848x480@60
+camera_x_mid = 424
 
 basket_color = "blue"  # "blue" , "pink"
 # move_style = "auto"  # "auto" , "controller"
@@ -85,12 +87,12 @@ def move_to_ball():
     print("Moving towards ball---------------------------------------------------------")
     ball_coordinates = get_ball_cord()
 
-    while ball_coordinates[0][0] != 0:  # 640-480
+    while ball_coordinates[0][0] != 0:  # 848-480
         if move_style_check(move_style): return True
 
         ball_coordinates = get_ball_cord()
 
-        movement.setMovement(90, 48 - int(ball_coordinates[0][1] / 10), int((320 - ball_coordinates[0][0]) / 10), 0)  # direction, robotspeed, rotspeed, throwerspeed
+        movement.setMovement(90, 48 - int(ball_coordinates[0][1] / 10), int((camera_x_mid - ball_coordinates[0][0]) / 10), 0)  # direction, robotspeed, rotspeed, throwerspeed
 
         if ball_coordinates[0][1] > 400:
             return False
@@ -128,14 +130,14 @@ def align_basket():
         y_rotation = (500 - ball_coordinates[0][1]) / 17
         print("Ball: " + str(ball_coordinates) + " Basket: " + str(basket_coordinates))
         print("X: " + str(x_rotation) + " Y: " + str(y_rotation))
-        if basket_coordinates[0][0] < 325 and basket_coordinates[0][0] > 315 and ball_coordinates[0][0] < 325 and ball_coordinates[0][0] > 315:
+        if basket_coordinates[0][0] < camera_x_mid+5 and basket_coordinates[0][0] > camera_x_mid-5 and ball_coordinates[0][0] < camera_x_mid+5 and ball_coordinates[0][0] > camera_x_mid-5:
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
             print("Basket distance: " + str(basket_depth))
             if basket_depth > 0.5:
                 throw_ball(basket_depth)
                 break
 
-        elif basket_coordinates[0][0] > 315:
+        elif basket_coordinates[0][0] > camera_x_mid-5:
             movement.setMovement(180, 7, int(x_rotation - y_rotation), 0)
         else:
             movement.setMovement(0, 7, int(x_rotation + y_rotation), 0)
