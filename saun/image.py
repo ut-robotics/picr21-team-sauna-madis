@@ -47,14 +47,14 @@ class Image:
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         color_sensor = self.pipeline.start(config).get_device().query_sensors()[1]
         """
-        profile = self.pipeline.start(self.config)
+        self.profile = self.pipeline.start(self.config)
 
-        profile.set_option(rs.option.enable_auto_exposure, False)
-        profile.set_option(rs.option.enable_auto_white_balance, False)
-        profile.set_option(rs.option.white_balance, 3300)
-        profile.set_option(rs.option.exposure, 80)
+        self.profile.set_option(rs.option.enable_auto_exposure, False)
+        self.profile.set_option(rs.option.enable_auto_white_balance, False)
+        self.profile.set_option(rs.option.white_balance, 3300)
+        self.profile.set_option(rs.option.exposure, 80)
 
-        depth_sensor = profile.get_device().first_depth_sensor()
+        depth_sensor = self.profile.get_device().first_depth_sensor()
         depth_scale = depth_sensor.get_depth_scale()
         print("Depth Scale is: ", depth_scale)
 
