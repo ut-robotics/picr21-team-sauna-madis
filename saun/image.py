@@ -47,7 +47,7 @@ class Image:
         """
         self.color_sensor = self.pipeline.start(self.config).get_device().query_sensors()[1]
         
-        self.profile = self.pipeline.start(self.config)
+        #self.profile = self.pipeline.start(self.config)
 
         #AttributeError: 'pyrealsense2.pyrealsense2.pipeline_profile' object has no attribute 'set_option'
         print(self.profile)
