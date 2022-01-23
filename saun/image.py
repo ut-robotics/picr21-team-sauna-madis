@@ -45,7 +45,11 @@ class Image:
         ALSO CHANGE profile.set_... to color_sensor.set_...
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         """
-        self.color_sensor = self.pipeline.start(self.config).get_device().query_sensors()[1]
+
+        self.profile = self.pipeline(self.config)
+
+
+        self.color_sensor = self.profile.get_device().query_sensors()[1]
         
         #self.profile = self.pipeline.start(self.config)
 
@@ -54,9 +58,9 @@ class Image:
         self.color_sensor.set_option(rs.option.white_balance, 3300)
         self.color_sensor.set_option(rs.option.exposure, 80)
 
-        depth_sensor = self.profile.get_device().first_depth_sensor()
-        depth_scale = depth_sensor.get_depth_scale()
-        print("Depth Scale is: ", depth_scale)
+        self.depth_sensor = self.profile.get_device().first_depth_sensor()
+        self.depth_scale = self.depth_sensor.get_depth_scale()
+        print("Depth Scale is: ", self.depth_scale)
 
         # We will be removing the background of objects more than
         #  clipping_distance_in_meters meters away
