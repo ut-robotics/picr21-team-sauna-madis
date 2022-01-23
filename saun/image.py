@@ -7,7 +7,7 @@ class Image:
     #Data
     aligned_depth_frame = 0
     depth = 0
-    pipeline = 0
+    pipeline = None
 
     def __init__(self):
         # Configure depth and color streams
@@ -47,7 +47,6 @@ class Image:
         """
 
         self.profile = self.pipeline(self.config)
-
 
         self.color_sensor = self.profile.get_device().query_sensors()[1]
         
