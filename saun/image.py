@@ -1,3 +1,4 @@
+from tkinter import S
 import pyrealsense2 as rs
 import numpy as np
 import cv2
@@ -12,11 +13,11 @@ class Image:
         # Configure depth and color streams
         self.pipeline = rs.pipeline()
 
-        config = rs.config()
+        self.config = rs.config()
 
         # Get device product line for setting a supporting resolution
         pipeline_wrapper = rs.pipeline_wrapper(self.pipeline)
-        pipeline_profile = config.resolve(pipeline_wrapper)
+        pipeline_profile = self.config.resolve(pipeline_wrapper)
         device = pipeline_profile.get_device()
         device_product_line = str(device.get_info(rs.camera_info.product_line))
         print(device_product_line)
@@ -30,8 +31,8 @@ class Image:
             print("The demo requires Depth camera with Color sensor")
             exit(0)
 
-        config.enable_stream(rs.stream.depth, 848, 480, rs.format.z16, 60)
-        config.enable_stream(rs.stream.color, 848, 480, rs.format.bgr8, 60)
+        self.config.enable_stream(rs.stream.depth, 848, 480, rs.format.z16, 60)
+        self.config.enable_stream(rs.stream.color, 848, 480, rs.format.bgr8, 60)
 
         try:
             self.pipeline.stop()
@@ -46,7 +47,7 @@ class Image:
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         color_sensor = self.pipeline.start(config).get_device().query_sensors()[1]
         """
-        profile = self.pipeline.start(config)
+        profile = self.pipeline.start(self.config)
 
         profile.set_option(rs.option.enable_auto_exposure, False)
         profile.set_option(rs.option.enable_auto_white_balance, False)
