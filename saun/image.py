@@ -96,7 +96,7 @@ class Image:
 
         # Validate that both frames are valid
         if not self.aligned_depth_frame or not self.color_frame:
-            print("Dept and color frames are not valid")
+            print("Depth and color frames are not valid")
             return None
 
         self.depth_image = np.asanyarray(self.aligned_depth_frame.get_data())
@@ -113,4 +113,4 @@ class Image:
         self.depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(self.depth_image, alpha=0.03), cv2.COLORMAP_JET)
         self.images = np.hstack((self.bg_removed, self.depth_colormap))
 
-        return self.images
+        return self.bg_removed
