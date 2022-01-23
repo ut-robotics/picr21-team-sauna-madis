@@ -46,7 +46,7 @@ class Image:
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         color_sensor = self.pipeline.start(config).get_device().query_sensors()[1]
         """
-        profile = pipeline.start(config)
+        profile = self.pipeline.start(config)
 
         profile.set_option(rs.option.enable_auto_exposure, False)
         profile.set_option(rs.option.enable_auto_white_balance, False)
