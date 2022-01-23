@@ -73,7 +73,7 @@ class ImageProcess:
         keyPoints = self.detector.detect(outputImageFiltered)
         self.outimage = cv2.drawKeypoints(outputImageFiltered, keyPoints, np.array([]), (0, 0, 255),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        cv2.putText(outimage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        cv2.putText(self.outimage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         hsv = cv2.drawKeypoints(image, keyPoints, np.array([]), (0, 0, 255),
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         self.cords.clear()
@@ -98,8 +98,8 @@ class ImageProcess:
         
         sorted(self.cords, key = lambda x: x[1], reverse = True)
         #Show images
-        show_image(window)
+        self.show_image(window)
 
-        return outimage
+        return self.outimage
 
 
