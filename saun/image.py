@@ -16,7 +16,7 @@ class Image:
         self.config = rs.config()
 
         # Get device product line for setting a supporting resolution
-        self.pipeline_wrapper = rs.pipeline_wrapper(self.pipeline)
+        self.pipeline_wrapper = rs.pipeline_wrapper(pipeline)
         self.pipeline_profile = self.config.resolve(self.pipeline_wrapper)
         self.device = self.pipeline_profile.get_device()
         self.device_product_line = str(self.device.get_info(rs.camera_info.product_line))
