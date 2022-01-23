@@ -49,8 +49,6 @@ class Image:
         
         #self.profile = self.pipeline.start(self.config)
 
-        #AttributeError: 'pyrealsense2.pyrealsense2.pipeline_profile' object has no attribute 'set_option'
-        print(self.profile)
         self.color_sensor.set_option(rs.option.enable_auto_exposure, False)
         self.color_sensor.set_option(rs.option.enable_auto_white_balance, False)
         self.color_sensor.set_option(rs.option.white_balance, 3300)
