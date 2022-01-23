@@ -113,4 +113,4 @@ class Image:
         self.depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(self.depth_image, alpha=0.03), cv2.COLORMAP_JET)
         self.images = np.hstack((self.bg_removed, self.depth_colormap))
 
-        return self.bg_removed
+        return self.color_image
