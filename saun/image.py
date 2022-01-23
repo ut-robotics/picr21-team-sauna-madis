@@ -34,12 +34,12 @@ class Image:
         self.config.enable_stream(rs.stream.depth, 848, 480, rs.format.z16, 60)
         self.config.enable_stream(rs.stream.color, 848, 480, rs.format.bgr8, 60)
 
-        # try:
-        #     self.pipeline.stop()
-        # except:
-        #     print("Camera was already stopped")
+        try:
+            self.pipeline.stop()
+        except:
+            print("Camera was already stopped")
 
-        # Start streaming
+        #Start streaming
         """
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         OLD CODE IF NOT WORKING WITH UPDATE FIX OR UNCOMMENT
