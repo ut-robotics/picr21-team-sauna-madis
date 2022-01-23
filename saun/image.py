@@ -16,14 +16,14 @@ class Image:
         self.config = rs.config()
 
         # Get device product line for setting a supporting resolution
-        pipeline_wrapper = rs.pipeline_wrapper(self.pipeline)
-        pipeline_profile = self.config.resolve(pipeline_wrapper)
-        device = pipeline_profile.get_device()
-        device_product_line = str(device.get_info(rs.camera_info.product_line))
-        print(device_product_line)
+        self.pipeline_wrapper = rs.pipeline_wrapper(self.pipeline)
+        self.pipeline_profile = self.config.resolve(self.pipeline_wrapper)
+        self.device = self.pipeline_profile.get_device()
+        self.device_product_line = str(self.device.get_info(rs.camera_info.product_line))
+        print(self.device_product_line)
 
         found_rgb = False
-        for s in device.sensors:
+        for s in self.device.sensors:
             if s.get_info(rs.camera_info.name) == 'RGB Camera':
                 found_rgb = True
                 break
