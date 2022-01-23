@@ -1,5 +1,5 @@
 import cv2
-import cv2.cv2
+#import cv2.cv2
 import numpy as np
 import time
 
@@ -15,7 +15,7 @@ class ImageProcess:
         self.lowerLimits = 0
         self.upperLimits = 0
         self.dectector = 0
-        self.pervTime = 0
+        self.previous_time = 0
         self.outimage = 0
 
         # Threshold data
@@ -60,9 +60,11 @@ class ImageProcess:
         cv2.waitKey(1)
 
     def find_objects(self, image, window):
+
         start = time.time()
-        fps = 1/(start - self.pervTime)
-        self.pervTime = start
+        fps = 1/(start - self.previous_time)
+        self.previous_time = start
+
         thresholded = cv2.inRange(image, self.lowerLimits, self.upperLimits)
         thresholded = cv2.bitwise_not(thresholded)
         outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
