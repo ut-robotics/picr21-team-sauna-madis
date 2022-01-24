@@ -25,9 +25,11 @@ class controller:
 
         class MyController(Controller):
 
-            def __init__(self, **kwargs):
+            def __init__(self, gamestate, **kwargs):
                 Controller.__init__(self, **kwargs)
+                self.gamestate = gamestate
                 self.movement = movement.Movement()
+                
                 
             def on_x_press(self):
 
