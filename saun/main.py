@@ -10,6 +10,7 @@ from image import *
 from imageProcess import *
 from var import *
 from ps4controller import controller
+import websockets as ws
 
 
 
@@ -86,7 +87,7 @@ def controller_movement():
         return True
 
 
-def find_ball():
+def find_ball(active_state):
     print("Searching for ball!---------------------------------------------------------")
     movement.setMovement(0, 10, 10, 0)  # direction, robotspeed, rotspeed, throwerspeed
     ball_coordinates = [[0, 0]]
@@ -100,7 +101,7 @@ def find_ball():
     active_state = ActiveState.MOVE2BALL
 
 
-def move_to_ball():
+def move_to_ball(active_state):
     print("Moving towards ball---------------------------------------------------------")
     ball_coordinates = get_ball_cord()
 
@@ -116,7 +117,7 @@ def move_to_ball():
             break
 
 
-def find_basket():
+def find_basket(active_state):
     print("Searching for basket---------------------------------------------------------")
     ball_coordinates = get_ball_cord()
 
@@ -137,7 +138,7 @@ def find_basket():
             break
 
 
-def align_basket():
+def align_basket(active_state):
     print("Found basket moving to align ---------------------------------------------------------")
     ball_coordinates, basket_coordinates = get_ballNbasket_cord()
     while ball_coordinates[0][0] != 0 and basket_coordinates[0][0] != 0:
