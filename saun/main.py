@@ -35,18 +35,18 @@ proccessed_basket = ImageProcess(150, 999999, basket_color)
 
 # ---------------------------------------------------------------------------Functions
 def get_ball_cord():
-    proccessed_ball.find_objects(image.get_aligned_Frames())
+    proccessed_ball.find_objects(image.get_aligned_Frames(), None)
     return proccessed_ball.getcords()
 
 
 def get_basket_cord():
-    proccessed_basket.find_objects(image.get_aligned_Frames())
+    proccessed_basket.find_objects(image.get_aligned_Frames(), None)
     return proccessed_basket.getcords()
 
 
 def get_ballNbasket_cord():
-    proccessed_ball.find_objects(image.get_aligned_Frames())
-    proccessed_basket.find_objects(image.get_aligned_Frames())
+    proccessed_ball.find_objects(image.get_aligned_Frames(), None)
+    proccessed_basket.find_objects(image.get_aligned_Frames(), None)
     return proccessed_ball.getcords(), proccessed_basket.getcords()
 
 
