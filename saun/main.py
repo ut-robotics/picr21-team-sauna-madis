@@ -9,7 +9,7 @@ import movement
 from image import *
 from imageProcess import *
 from var import *
-from ps4controller import Sontroller
+from ps4controller import controller
 from ps4controller import getgamestate
 
 
@@ -21,7 +21,7 @@ basket_color = "blue"  # "blue" , "pink"
 move_style = MoveStyle.AUTO
 
 print("Staring controller thread")
-cntrl = Sontroller()
+cntrl = controller()
 cntrl.start()
 
 # Movement
