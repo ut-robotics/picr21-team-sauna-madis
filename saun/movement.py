@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import math
+from shutil import move
 import serial
 from serial.tools import list_ports
 import struct
+from var import *
 
 class Movement:
     def __init__(self):
@@ -10,6 +12,8 @@ class Movement:
         self.firstAngle = 0
         self.secondAngle = 130
         self.thirdAgnle = 230
+
+        self.move_style = MoveStyle.AUTO
 
         #self.ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout=2)
         self.ser = serial.Serial(port=self.findPort("206638925056"), baudrate=115200, timeout=2)
@@ -19,6 +23,12 @@ class Movement:
         for p in ports:
             if serialNr == p.serial_number:
                 return p.device
+    
+    def getMovestyle(self):
+        return self.move_style
+    
+    def setMovestyle(self, move_style):
+        self.move_style = move_style
 
     def setMovement(self, direction ,robotSpeed, rotSpeed, throwerSpeed):
         #print("Moving")

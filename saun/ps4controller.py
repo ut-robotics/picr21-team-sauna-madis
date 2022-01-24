@@ -35,13 +35,14 @@ class controller:
 
                 if self.gamestate == MoveStyle.AUTO:
                     self.gamestate = MoveStyle.CONTROLLER
+                    self.movement.setMovestyle(MoveStyle.CONTROLLER)
                 else:
                     self.gamestate = MoveStyle.AUTO
-                    
-            
+                    self.movement.setMovestyle(MoveStyle.AUTO)
+                
             def on_left_arrow_press(self):
                 
-               self.movement.setMovement(0,0,20,0)
+                self.movement.setMovement(0,0,20,0)
 
             def on_right_arrow_press(self):
                 self.movement.setMovement(0,0,-20,0)
