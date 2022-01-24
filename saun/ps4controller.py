@@ -5,20 +5,21 @@ from var import *
 
 
 #gamestate = "controller" #"auto", "controller"
-gamestate = MoveStyle.AUTO
+#gamestate = MoveStyle.AUTO
 
-def getgamestate():
-    return gamestate
+
 
 class controller:
-    throwerspeed = 200
-
     def __init__(self):
         self.stopped = False
-                                 
+        self.throwerspeed = 200
+        self.gamestate = MoveStyle.AUTO             
     def start(self):
         Thread(target=self.listen, args=()).start()
         return self
+    
+    def getgamestate(self):
+        return self.gamestate   
 
     def listen(self):
 
@@ -27,6 +28,7 @@ class controller:
             def __init__(self, **kwargs):
                 Controller.__init__(self, **kwargs)
                 self.movement = movement.Movement()
+                
             def on_x_press(self):
 
                 if self.gamestate == MoveStyle.AUTO:
