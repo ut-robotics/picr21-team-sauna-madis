@@ -61,12 +61,13 @@ class ImageProcess:
 
     def find_objects(self, alignedFrames):
         aligned_color_frame = alignedFrames.get_color_frame()
+        color_image = np.asanyarray(aligned_color_frame.get_data())
 
         start = time.time()
         fps = 1/(start - self.previous_time)
         self.previous_time = start
 
-        thresholded = cv2.inRange(aligned_color_frame, self.lowerLimits, self.upperLimits)
+        thresholded = cv2.inRange(color_image, self.lowerLimits, self.upperLimits)
         thresholded = cv2.bitwise_not(thresholded)
         outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
         kernel = np.ones((5,5), np.uint8)
@@ -77,7 +78,7 @@ class ImageProcess:
         outimage = cv2.drawKeypoints(outputImageFiltered, keyPoints, np.array([]), (0, 0, 255),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         cv2.putText(outimage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        hsv = cv2.drawKeypoints(aligned_color_frame, keyPoints, np.array([]), (0, 0, 255),
+        hsv = cv2.drawKeypoints(color_image, keyPoints, np.array([]), (0, 0, 255),
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         self.cords.clear()
         # Finds keypoints

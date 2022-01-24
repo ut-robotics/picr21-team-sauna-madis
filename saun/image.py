@@ -85,4 +85,5 @@ class Image:
             print("Depth and color frames are not valid")
             return None
 
+        cv2.namedWindow()
         return aligned_frames
