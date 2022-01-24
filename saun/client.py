@@ -16,7 +16,6 @@ class Client:
         return self
 
     def listen(self):
-
         while not self.stopped:
             message = self.ws.recv()
             command = json.loads(message)

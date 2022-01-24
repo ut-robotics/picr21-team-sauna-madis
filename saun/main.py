@@ -10,11 +10,8 @@ from image import *
 from imageProcess import *
 from var import *
 from ps4controller import controller
-from websockets import connect
-import json
-
-IP = "localhost"
-PORT = 8080
+from client import Client
+import websockets
 
 #848x480@60
 camera_x_mid = 424
@@ -36,14 +33,11 @@ image = Image()
 proccessed_ball = ImageProcess(70, 999999, "ball")
 proccessed_basket = ImageProcess(150, 999999, basket_color)
 
+ws = websockets.connect("ws://localhost:8080")
+cl = Client(ws)
+cl.start()
+
 # ---------------------------------------------------------------------------Functions
-def run_listener():
-     server = f"ws://{IP}:{PORT}"
-     with connect(server) as websocket:
-         while True:
-             server_data = websocket.recv()
-             command = json.loads(server_data)
-             print(command)
 
 def what_to_do(state):
         if state == ActiveState.FINDBALL:
@@ -190,5 +184,4 @@ while True:
         if controller_movement():
             break
     while move_style == MoveStyle.AUTO:
-        run_listener()
         active_state = what_to_do(active_state)
