@@ -10,7 +10,7 @@ gamestate = MoveStyle.AUTO
 def getgamestate():
     return gamestate
 
-class Sontroller:
+class controller:
     throwerspeed = 200
 
     def __init__(self):
@@ -29,7 +29,6 @@ class Sontroller:
 
             def on_x_press(self):
 
-                print("Hello world")
                 if self.gamestate == MoveStyle.AUTO:
                     self.gamestate = MoveStyle.CONTROLLER
                 else:
@@ -59,20 +58,20 @@ class Sontroller:
                 movement.thrower(self.throwerspeed)
 
             def on_R1_press(self):
-                movement.setMovement(90,30,0,0)#direction, robotspeed, rotspeed, throwerSpeed
+                movement.setMovement(90,40,0,0)#direction, robotspeed, rotspeed, throwerSpeed
 
             def on_R1_release(self):
                 movement.stop()
             
             def on_L1_press(self):
-                movement.setMovement(270,30,0,0)
+                movement.setMovement(270,40,0,0)
 
             def on_L1_release(self):
                 movement.stop()
 
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
         # you can start listening before controller is paired, as long as you pair it within the timeout window
-        Sontroller.listen(timeout=60)
+        controller.listen(timeout=60)
 
 
 
