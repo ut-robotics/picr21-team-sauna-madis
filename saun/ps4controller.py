@@ -10,7 +10,7 @@ from var import *
 
 
 class controller:
-    def __init__(self, gamestate):
+    def __init__(self):
         self.stopped = False
         self.throwerspeed = 200
 
