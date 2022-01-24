@@ -1,4 +1,5 @@
 import cv2
+from cv2 import WINDOW_NORMAL
 #import cv2.cv2
 import numpy as np
 import time
@@ -101,7 +102,7 @@ class ImageProcess:
         sorted(self.cords, key = lambda x: x[1], reverse = True)
         #Show images
 
-        cv2.namedWindow("Processed image")
+        cv2.namedWindow("Processed image", cv2.WINDOW_NORMAL)
         cv2.imshow("Processed image", outimage)
         cv2.waitKey(1)
         #self.show_image(window, self.hsv)
