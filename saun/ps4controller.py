@@ -5,7 +5,7 @@ from var import *
 
 
 #gamestate = "controller" #"auto", "controller"
-gamestate = MoveStyle.CONTROLLER
+gamestate = MoveStyle.AUTO
 
 def getgamestate():
     return gamestate
