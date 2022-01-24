@@ -75,19 +75,24 @@ class ImageProcess:
 
         thresholded = cv2.inRange(color_image, self.lowerLimits, self.upperLimits)
         thresholded = cv2.bitwise_not(thresholded)
+        
         outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
+        
         kernel = np.ones((5,5), np.uint8)
         outputImageFiltered = cv2.medianBlur(outputImage, 3)
         outputImageFiltered = cv2.dilate(outputImage, kernel, iterations=1)
         outputImageFiltered = cv2.erode(outputImage, kernel, iterations=2)
+        
         keyPoints = self.detector.detect(outputImageFiltered)
-        outimage = cv2.drawKeypoints(outputImageFiltered, keyPoints, np.array([]), (0, 0, 255),
-                                     cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+        outimage = cv2.drawKeypoints(outputImageFiltered, keyPoints, np.array([]), (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         cv2.putText(outimage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        hsv = cv2.drawKeypoints(color_image, keyPoints, np.array([]), (0, 0, 255),
-                                cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        self.cords.clear()
+
+        hsv = cv2.drawKeypoints(color_image, keyPoints, np.array([]), (0, 0, 255),cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+       
+       
         # Finds keypoints
+        self.cords.clear()
         for keypoint in keyPoints:
             ball_keypoints = []
             x = int(keypoint.pt[0])
