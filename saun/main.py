@@ -39,7 +39,7 @@ proccessed_basket = ImageProcess(150, 999999, basket_color)
 # ---------------------------------------------------------------------------Functions
 def run_listener():
      server = f"ws://{IP}:{PORT}"
-     async with connect(server) as websocket:
+     with connect(server) as websocket:
          while True:
              server_data = await websocket.recv()
              command = json.loads(server_data)
