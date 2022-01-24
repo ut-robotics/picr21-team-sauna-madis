@@ -115,6 +115,8 @@ def move_to_ball():
         if ball_coordinates[0][1] > 400:
             return ActiveState.FINDBASKET
 
+    return ActiveState.FINDBALL
+
 
 def find_basket():
     print("Searching for basket---------------------------------------------------------")
@@ -135,6 +137,7 @@ def find_basket():
         if basket_coordinates[0][0] != 0:
             return ActiveState.ALIGNBASKET
 
+    return ActiveState.FINDBALL
 
 def align_basket():
     print("Found basket moving to align ---------------------------------------------------------")
@@ -152,13 +155,15 @@ def align_basket():
             print("Basket distance: " + str(basket_depth))
             if basket_depth > 0.5:
                 throw_ball(basket_depth)
-                break
+                return ActiveState.FINDBALL
+
 
         elif basket_coordinates[0][0] > camera_x_mid-5:
             movement.setMovement(180, 10, int(-(x_rotation + y_rotation)), 0)
         else:
             movement.setMovement(0, 10, int(x_rotation + y_rotation), 0)
 
+    return ActiveState.FINDBALL
 
 def throw_ball(basket_depth):
     print("Throwing ball---------------------------------------------------------")
