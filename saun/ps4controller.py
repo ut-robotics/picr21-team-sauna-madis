@@ -6,13 +6,13 @@ from var import *
 
 #gamestate = "controller" #"auto", "controller"
 gamestate = MoveStyle.AUTO
-throwerspeed = 200
 
 def getgamestate():
     return gamestate
 
 class Sontroller:
-    
+    throwerspeed = 200
+
     def __init__(self):
         self.stopped = False
                                  
@@ -48,17 +48,17 @@ class Sontroller:
                 movement.stop()
 
             def on_up_arrow_press(self):
-                global throwerspeed
-                throwerspeed = throwerspeed+100
-                print(throwerspeed)
+                
+                self.throwerspeed = self.throwerspeed+100
+                print(self.throwerspeed)
 
             def on_down_arrow_press(self):
-                global throwerspeed
-                throwerspeed = throwerspeed-100
-                print(throwerspeed)
+                
+                self.throwerspeed = self.throwerspeed-100
+                print(self.throwerspeed)
 
             def on_circle_press(self):
-                movement.thrower(throwerspeed)
+                movement.thrower(self.throwerspeed)
 
             def on_R1_press(self):
                 movement.setMovement(90,30,0,0)#direction, robotspeed, rotspeed, throwerSpeed
@@ -71,9 +71,6 @@ class Sontroller:
 
             def on_L1_release(self):
                 movement.stop()
-
-
-
 
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
         # you can start listening before controller is paired, as long as you pair it within the timeout window
