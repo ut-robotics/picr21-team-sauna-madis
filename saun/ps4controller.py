@@ -13,13 +13,11 @@ class controller:
     def __init__(self):
         self.stopped = False
         self.throwerspeed = 200
-        self.gamestate = MoveStyle.AUTO             
+             
     def start(self):
         Thread(target=self.listen, args=()).start()
         return self
     
-    def getgamestate(self):
-        return self.gamestate   
 
     def listen(self):
 
@@ -30,7 +28,9 @@ class controller:
                 self.gamestate = gamestate
                 self.movement = movement.Movement()
                 
-                
+            def getgamestate(self):
+                return self.gamestate   
+
             def on_x_press(self):
 
                 if self.gamestate == MoveStyle.AUTO:
