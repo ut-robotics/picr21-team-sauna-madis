@@ -6,10 +6,9 @@ from serial.tools import list_ports
 import struct
 from var import *
 
-
+move_style = MoveStyle.AUTO
 
 class Movement:
-    move_style = MoveStyle.AUTO
 
     def __init__(self):
         self.wheelSpeed = 18.75 * 64 / (2 * math.pi * 0.035 * 60)
