@@ -14,17 +14,17 @@ class Image:
         # Configure depth and color streams
         self.pipeline = rs.pipeline()
 
-        self.config = rs.config()
+        config = rs.config()
 
         # Get device product line for setting a supporting resolution
-        self.pipeline_wrapper = rs.pipeline_wrapper(self.pipeline)
-        self.pipeline_profile = self.config.resolve(self.pipeline_wrapper)
-        self.device = self.pipeline_profile.get_device()
-        self.device_product_line = str(self.device.get_info(rs.camera_info.product_line))
-        print(self.device_product_line)
+        pipeline_wrapper = rs.pipeline_wrapper(self.pipeline)
+        pipeline_profile = config.resolve(pipeline_wrapper)
+        device = pipeline_profile.get_device()
+        device_product_line = str(device.get_info(rs.camera_info.product_line))
+        print(device_product_line)
 
         found_rgb = False
-        for s in self.device.sensors:
+        for s in device.sensors:
             if s.get_info(rs.camera_info.name) == 'RGB Camera':
                 found_rgb = True
                 break
@@ -32,8 +32,8 @@ class Image:
             print("The demo requires Depth camera with Color sensor")
             exit(0)
 
-        self.config.enable_stream(rs.stream.depth, 848, 480, rs.format.z16, 60)
-        self.config.enable_stream(rs.stream.color, 848, 480, rs.format.bgr8, 60)
+        config.enable_stream(rs.stream.depth, 848, 480, rs.format.z16, 60)
+        config.enable_stream(rs.stream.color, 848, 480, rs.format.bgr8, 60)
 
 #        self.pipeline.stop()
         #Start streaming
@@ -44,31 +44,16 @@ class Image:
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         """
 
-        self.profile = self.pipeline.start(self.config)
+        profile = self.pipeline.start(config)
 
-        self.color_sensor = self.profile.get_device().query_sensors()[1]
-        
-        #self.profile = self.pipeline.start(self.config)
+        color_sensor = profile.get_device().query_sensors()[1]
+        color_sensor.set_option(rs.option.enable_auto_exposure, False)
+        color_sensor.set_option(rs.option.enable_auto_white_balance, False)
+        color_sensor.set_option(rs.option.white_balance, 3300)
+        color_sensor.set_option(rs.option.exposure, 80)
 
-        self.color_sensor.set_option(rs.option.enable_auto_exposure, False)
-        self.color_sensor.set_option(rs.option.enable_auto_white_balance, False)
-        self.color_sensor.set_option(rs.option.white_balance, 3300)
-        self.color_sensor.set_option(rs.option.exposure, 80)
-
-        self.depth_sensor = self.profile.get_device().first_depth_sensor()
-        self.depth_scale = self.depth_sensor.get_depth_scale()
-        print("Depth Scale is: ", self.depth_scale)
-
-        # We will be removing the background of objects more than
-        #  clipping_distance_in_meters meters away
-        self.clipping_distance_in_meters = 1  # 1 meter
-        self.clipping_distance = self.clipping_distance_in_meters / self.depth_scale
-
-        # Create an align object
-        # rs.align allows us to perform alignment of depth frames to others frames
-        # The "align_to" is the stream type to which we plan to align depth frames.
-        self.align_to = rs.stream.color
-        self.align = rs.align(self.align_to)
+        align_to = rs.stream.color
+        self.align = rs.align(align_to)
 
     def getDepth(self, x, y):
         return self.aligned_depth_frame.get_distance(x, y)
