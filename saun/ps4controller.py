@@ -25,24 +25,24 @@ class controller:
 
             def __init__(self, **kwargs):
                 Controller.__init__(self, **kwargs)  
-                self.movement= movement()
+                self.movement = movement()
 
             def on_x_press(self):
                 
-                if self.movement.getMovestyle() == MoveStyle.AUTO:
-                    self.movement.setMovestyle(MoveStyle.CONTROLLER)
+                if movement.getMovestyle() == MoveStyle.AUTO:
+                    movement.setMovestyle(MoveStyle.CONTROLLER)
                 else:
-                    self.movement.setMovestyle(MoveStyle.AUTO)
+                    movement.setMovestyle(MoveStyle.AUTO)
                 
             def on_left_arrow_press(self):
                 
-                self.movement.setMovement(0,0,20,0)
+                movement.setMovement(0,0,20,0)
 
             def on_right_arrow_press(self):
-                self.movement.setMovement(0,0,-20,0)
+                movement.setMovement(0,0,-20,0)
 
             def on_left_right_arrow_release(self):
-                self.movement.stop()
+                movement.stop()
 
             def on_up_arrow_press(self):
                 
@@ -58,16 +58,16 @@ class controller:
                 self.movement.thrower(self.throwerspeed)
 
             def on_R1_press(self):
-                self.movement.setMovement(90,40,0,0)#direction, robotspeed, rotspeed, throwerSpeed
+                movement.setMovement(90,40,0,0)#direction, robotspeed, rotspeed, throwerSpeed
 
             def on_R1_release(self):
-                self.movement.stop()
+                movement.stop()
             
             def on_L1_press(self):
-                self.movement.setMovement(270,40,0,0)
+                movement.setMovement(270,40,0,0)
 
             def on_L1_release(self):
-                self.movement.stop()
+                movement.stop()
 
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
         # you can start listening before controller is paired, as long as you pair it within the timeout window
