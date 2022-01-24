@@ -106,7 +106,7 @@ class ImageProcess:
         #Show images
         
         cv2.namedWindow("Processed image", cv2.WINDOW_AUTOSIZE)
-        cv2.imshow("Processed image", outimage)
+        cv2.imshow("Processed image", thresholded)
         cv2.waitKey(1)
         #self.show_image(window, self.hsv)
 
