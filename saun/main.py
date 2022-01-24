@@ -149,11 +149,16 @@ def align_basket():
         y_rotation = (500 - ball_coordinates[0][1]) / 15
         print("Ball: " + str(ball_coordinates) + " Basket: " + str(basket_coordinates))
         print("X: " + str(x_rotation) + " Y: " + str(y_rotation))
-        if basket_coordinates[0][0] < camera_x_mid+10 and basket_coordinates[0][0] > camera_x_mid-10 and ball_coordinates[0][0] < camera_x_mid+5 and ball_coordinates[0][0] > camera_x_mid-5:
+        if basket_coordinates[0][0] < camera_x_mid+20 and basket_coordinates[0][0] > camera_x_mid-20 and ball_coordinates[0][0] < camera_x_mid+5 and ball_coordinates[0][0] > camera_x_mid-5:
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
             print("Basket distance: " + str(basket_depth))
             if basket_depth > 0.5:
-                throw_ball(basket_depth)
+                thrower = int(basket_depth * 100 / 0.3934 + 735)
+                movement.setMovement(90, 12, 0, thrower)  # direction, robotspeed, rotspeed, throwerSpeed
+                print("Thrower speed: " + str(thrower))
+
+
+                #throw_ball(basket_depth)
                 return ActiveState.FINDBALL
 
 
@@ -164,12 +169,12 @@ def align_basket():
 
     return ActiveState.FINDBALL
 
-def throw_ball(basket_depth):
-    print("Throwing ball---------------------------------------------------------")
-    # x/0,3934+735
-    movement.setMovement(90, 20, 0, int(basket_depth * 100 / 0.3934 + 735))  # direction, robotspeed, rotspeed, throwerSpeed
-    print("Thrower speed: " + str(basket_depth * 100 / 0.3934 + 735))
-    time.sleep(2)  # for testing purposes
+# def throw_ball(basket_depth):
+#     print("Throwing ball---------------------------------------------------------")
+#     # x/0,3934+735
+#     movement.setMovement(90, 12, 0, int(basket_depth * 100 / 0.3934 + 735))  # direction, robotspeed, rotspeed, throwerSpeed
+#     print("Thrower speed: " + str(basket_depth * 100 / 0.3934 + 735))
+#     time.sleep(2)  # for testing purposes
 
 
 # -------------------------------------------------------------------------------- Main
