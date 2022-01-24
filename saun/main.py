@@ -10,7 +10,7 @@ from image import *
 from imageProcess import *
 from var import *
 from ps4controller import controller
-from ps4controller import getgamestate
+
 
 
 #848x480@60
