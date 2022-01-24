@@ -12,10 +12,11 @@ firstAngle = 0
 secondAngle = 130
 thirdAgnle = 230
 
-#kiirused 0-32767   65500-32768
-#Asenda port = list_ports.grep(VID:PID)ˇ, port=list_ports.grep(8086:0b07)
-ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout = 2)
-print(list_ports.comports())
+def findPort(pid, hid):
+    ports = list(serial.tools.list_ports.comports())
+    for p in ports :
+        if pid and hid in p.hwid:
+            return p.device
 
 def omniWheel(speed, angle, direction):
     vel = speed * math.cos(math.radians(direction - angle))
@@ -39,3 +40,7 @@ def thrower(speed):
 def stop():
     print("STOP")
     ser.write(struct.pack("<hhhHH", 0,0,0,0, 0xAAAA))
+
+#kiirused 0-32767   65500-32768
+#Asenda port = list_ports.grep(VID:PID)ˇ, port=list_ports.grep(8086:0b07)
+ser = serial.Serial(port=findPort("8086", "0b07"), baudrate=115200, timeout = 2)
