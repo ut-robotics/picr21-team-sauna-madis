@@ -40,7 +40,7 @@ for key in data.keys():
 
 while True:
     rawImage = image.get_aligned_Frames()
-    proccessed_ball.find_objects(rawImage)
+    proccessed_ball.find_objects(rawImage, data)
     
     cv2.imshow(window_raw, rawImage)
     cv2.waitKey(1)
