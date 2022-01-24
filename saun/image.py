@@ -4,12 +4,13 @@ import numpy as np
 import cv2
 
 class Image:
-    #Data
-    aligned_depth_frame = 0
-    depth = 0
-    pipeline = None
 
     def __init__(self):
+        # Data
+        self.aligned_depth_frame = 0
+        self.depth = 0
+        self.pipeline = None
+
         # Configure depth and color streams
         self.pipeline = rs.pipeline()
 
@@ -84,33 +85,27 @@ class Image:
         hsv = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
         """
         # Get frameset of color and depth
-        self.frames = self.pipeline.wait_for_frames()
+        frames = self.pipeline.wait_for_frames()
         # frames.get_depth_frame() is a 640x360 depth image
 
         # Align the depth frame to color frame
-        self.aligned_frames = self.align.process(self.frames)
+        aligned_frames = self.align.process(frames)
 
         # Get aligned frames
-        self.aligned_depth_frame = self.aligned_frames.get_depth_frame() # aligned_depth_frame is a 640x480 depth image
-        self.color_frame = self.aligned_frames.get_color_frame()
+        aligned_depth_frame = aligned_frames.get_depth_frame() # aligned_depth_frame is a 640x480 depth image
+        color_frame = aligned_frames.get_color_frame()
 
         # Validate that both frames are valid
-        if not self.aligned_depth_frame or not self.color_frame:
+        if not aligned_depth_frame or not color_frame:
             print("Depth and color frames are not valid")
             return None
 
-        self.depth_image = np.asanyarray(self.aligned_depth_frame.get_data())
-        self.color_image = np.asanyarray(self.color_frame.get_data())
+        depth_image = np.asanyarray(aligned_depth_frame.get_data())
+        color_image = np.asanyarray(color_frame.get_data())
 
         # Remove background - Set pixels further than clipping_distance to grey
         grey_color = 153
-        depth_image_3d = np.dstack((self.depth_image,self.depth_image,self.depth_image)) #depth image is 1 channel, color is 3 channels
-        self.bg_removed = np.where((depth_image_3d > self.clipping_distance) | (depth_image_3d <= 0), grey_color, self.color_image)
+        depth_image_3d = np.dstack((depth_image,depth_image,depth_image)) #depth image is 1 channel, color is 3 channels
+        bg_removed = np.where((depth_image_3d > self.clipping_distance) | (depth_image_3d <= 0), grey_color, color_image)
 
-        # Render images:
-        #   depth align to color on left
-        #   depth on right
-        self.depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(self.depth_image, alpha=0.03), cv2.COLORMAP_JET)
-        self.images = np.hstack((self.bg_removed, self.depth_colormap))
-
-        return self.color_image
+        return bg_removed
