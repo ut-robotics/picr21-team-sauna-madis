@@ -55,13 +55,13 @@ def move_style_check():
     move_style_new = movement.getMovestyle()
     print(move_style_new)
 
-    if move_style_new == MoveStyle.AUTO:
+    if move_style == MoveStyle.CONTROLLER and move_style_new == MoveStyle.AUTO:
         print("Changing gamestyle to auto")
         movement.stop()
         move_style = move_style_new
         return True
 
-    elif move_style_new == MoveStyle.CONTROLLER:
+    elif move_style == MoveStyle.AUTO and move_style_new == MoveStyle.CONTROLLER:
         print("Changing gamestyle to controller")
         movement.stop()
         move_style = move_style_new
@@ -71,7 +71,7 @@ def move_style_check():
 def controller_movement():
     get_ball_cord()
 
-    if move_style_check(move_style):
+    if move_style_check():
         return True
 
 
