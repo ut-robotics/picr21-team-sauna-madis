@@ -160,7 +160,7 @@ def throw_ball(basket_depth):
 # -------------------------------------------------------------------------------- Main
 
 while True:
-    print(move_style)
+   # print(move_style)
     while move_style == MoveStyle.CONTROLLER:
         if controller_movement():
             break
