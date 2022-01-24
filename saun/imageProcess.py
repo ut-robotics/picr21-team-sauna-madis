@@ -8,7 +8,7 @@ class ImageProcess:
     #Data
     pinkBasket = (170,183,187,178,255,255)
     blueBasket = (107,237,91,123,255,153)
-    ball = (13,136,37,85,255,153)
+    ball = (18,86,43,81,184,117)
 
     def __init__(self, minArea, maxArea, object):
         ##Data
