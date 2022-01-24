@@ -31,16 +31,16 @@ def updateValuehV(new_value):
 
 
 # window_processed = cv2.namedWindow("Processed")
-# window_raw = cv2.namedWindow("RAW")
+window_raw = cv2.namedWindow("RAW")
 image = Image()
 proccessed_ball = ImageProcess(70, 999999, "ball")
 
 for key in data.keys():
-    cv2.createTrackbar(key, "Processed", data[key], 255, eval("updateValue" + key))
+    cv2.createTrackbar(key, "RAW", data[key], 255, eval("updateValue" + key))
 
 while True:
     rawImage = image.get_rbg_image()
     proccessed_ball.find_objects(rawImage)
-    window_raw = cv2.namedWindow("RAW")
+    
     cv2.imshow(window_raw, rawImage)
     cv2.waitKey(1)
