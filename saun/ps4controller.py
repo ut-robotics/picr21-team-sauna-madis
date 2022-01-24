@@ -24,12 +24,13 @@ class controller:
 
         class MyController(Controller):
 
-            def __init__(self, gamestate, **kwargs):
+            def __init__(self, **kwargs):
                 Controller.__init__(self, **kwargs)  
-                self.gamestate = gamestate
+                
+
             def on_x_press(self):
-                print(self.gamestate)
-                if self.gamestate == MoveStyle.AUTO:
+                
+                if self.movement.getMovestyle() == MoveStyle.AUTO:
                     self.gamestate = MoveStyle.CONTROLLER
                 else:
                     self.gamestate = MoveStyle.AUTO
