@@ -31,23 +31,22 @@ movement = movement.Movement()
 image = Image()
 proccessed_ball = ImageProcess(70, 999999, "ball")
 proccessed_basket = ImageProcess(150, 999999, basket_color)
-window = cv2.namedWindow("SaunaMadis")
+#window = cv2.namedWindow("SaunaMadis")
 
 # ---------------------------------------------------------------------------Functions
 def get_ball_cord():
-    global window
-    proccessed_ball.find_objects(image.get_rbg_image(), window)
+    proccessed_ball.find_objects(image.get_rbg_image())
     return proccessed_ball.getcords()
 
 
 def get_basket_cord():
-    proccessed_basket.find_objects(image.get_rbg_image(), window)
+    proccessed_basket.find_objects(image.get_rbg_image())
     return proccessed_basket.getcords()
 
 
 def get_ballNbasket_cord():
-    proccessed_ball.find_objects(image.get_rbg_image(), window)
-    proccessed_basket.find_objects(image.get_rbg_image(), window)
+    proccessed_ball.find_objects(image.get_rbg_image())
+    proccessed_basket.find_objects(image.get_rbg_image())
     return proccessed_ball.getcords(), proccessed_basket.getcords()
 
 

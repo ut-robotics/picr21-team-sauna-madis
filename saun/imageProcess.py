@@ -59,7 +59,7 @@ class ImageProcess:
         cv2.imshow(window, image )
         cv2.waitKey(1)
 
-    def find_objects(self, image, window):
+    def find_objects(self, image):
 
         start = time.time()
         fps = 1/(start - self.previous_time)
@@ -100,8 +100,12 @@ class ImageProcess:
         
         sorted(self.cords, key = lambda x: x[1], reverse = True)
         #Show images
-        self.show_image(window, self.hsv)
 
-        return self.outimage
+        cv2.namedWindow("Processed image", cv2.WINDOW_NORMAL)
+        cv2.imshow("Processed image", self.outimage)
+
+        #self.show_image(window, self.hsv)
+
+        #return self.outimage
 
 
