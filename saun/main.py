@@ -52,7 +52,7 @@ def get_ballNbasket_cord():
 
 def move_style_check(move_style):
 
-    move_style_new = movement.getgamestate()
+    move_style_new = movement.getMovestyle()
     
 
     if move_style == MoveStyle.CONTROLLER and move_style_new == MoveStyle.AUTO:
