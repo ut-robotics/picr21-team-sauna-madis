@@ -14,6 +14,7 @@ class controller:
         self.stopped = False
         self.throwerspeed = 200
         self.gamestate= MoveStyle.AUTO
+
     def start(self):
         Thread(target=self.listen, args=()).start()
         return self
@@ -23,7 +24,7 @@ class controller:
 
         class MyController(Controller):
 
-            def __init__(self, **kwargs):
+            def __init__(self,gamestate, **kwargs):
                 Controller.__init__(self, **kwargs)  
 
             def on_x_press(self):
