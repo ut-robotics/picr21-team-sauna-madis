@@ -1,6 +1,6 @@
-import websockets
 from threading import Thread
 import json
+
 
 class Client:
 
@@ -26,15 +26,15 @@ class Client:
                 index = command["targets"].index(self.robot)
                 color = command["baskets"][index]
                 if color == "blue":
-                	self.blue = True
+                    self.blue = True
                 elif color == "magenta":
-                	self.blue = False
+                    self.blue = False
                 self.go = True
             else:
                 pass
 
     def getter(self):
-    	return (self.go, self.blue)
+        return (self.go, self.blue)
 
     def stop(self):
         self.stopped = True

@@ -33,10 +33,6 @@ image = Image()
 proccessed_ball = ImageProcess(70, 999999, "ball")
 proccessed_basket = ImageProcess(150, 999999, basket_color)
 
-ws = websockets.connect("ws://localhost:8080")
-cl = Client(ws)
-cl.start()
-
 # ---------------------------------------------------------------------------Functions
 
 def what_to_do(state):
