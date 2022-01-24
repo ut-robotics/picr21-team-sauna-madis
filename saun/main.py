@@ -38,13 +38,13 @@ proccessed_basket = ImageProcess(150, 999999, basket_color)
 # ---------------------------------------------------------------------------Functions
 def what_to_do(state):
         if state == ActiveState.FINDBALL:
-            find_ball()
+            find_ball(active_state)
         elif state == ActiveState.MOVE2BALL:
-            move_to_ball()
+            move_to_ball(active_state)
         elif state == ActiveState.FINDBASKET:
-            find_basket()
+            find_basket(active_state)
         elif state == ActiveState.ALIGNBASKET:
-            align_basket()
+            align_basket(active_state)
 
 def get_ball_cord():
     proccessed_ball.find_objects(image.get_aligned_Frames(), None)
