@@ -41,7 +41,7 @@ def run_listener():
      server = f"ws://{IP}:{PORT}"
      with connect(server) as websocket:
          while True:
-             server_data = await websocket.recv()
+             server_data = websocket.recv()
              command = json.loads(server_data)
              print(command)
 
