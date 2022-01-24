@@ -13,7 +13,7 @@ class controller:
     def __init__(self):
         self.stopped = False
         self.throwerspeed = 200
-             
+        self.gamestate= MoveStyle.AUTO
     def start(self):
         Thread(target=self.listen, args=()).start()
         return self
@@ -23,22 +23,15 @@ class controller:
 
         class MyController(Controller):
 
-            def __init__(self, gamestate, **kwargs):
-                Controller.__init__(self, **kwargs)
-                self.gamestate = gamestate
-                self.movement = movement.Movement()
-                
-            def getgamestate(self):
-                return self.gamestate   
+            def __init__(self, **kwargs):
+                Controller.__init__(self, **kwargs)  
 
             def on_x_press(self):
                 print(self.gamestate)
                 if self.gamestate == MoveStyle.AUTO:
                     self.gamestate = MoveStyle.CONTROLLER
-                    self.movement.setMovestyle(MoveStyle.CONTROLLER)
                 else:
                     self.gamestate = MoveStyle.AUTO
-                    self.movement.setMovestyle(MoveStyle.AUTO)
                 
             def on_left_arrow_press(self):
                 
