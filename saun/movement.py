@@ -11,15 +11,13 @@ class Movement:
         self.secondAngle = 130
         self.thirdAgnle = 230
 
-        self.ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout=2)
-        self.findPort("8086", "0b07")
-        #self.ser = serial.Serial(port=self.findPort("8086", "0b07"), baudrate=115200, timeout=2)
+        #self.ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout=2)
+        self.ser = serial.Serial(port=self.findPort("206638925056"), baudrate=115200, timeout=2)
 
-    def findPort(self, pid, hid):
+    def findPort(self, serial):
         ports = list(serial.tools.list_ports.comports())
         for p in ports:
-            print(str(p.pid))
-            if pid and hid in p.hwid:
+            if serial == p.serial_number:
                 return p.device
 
     def setMovement(self, direction ,robotSpeed, rotSpeed, throwerSpeed):
