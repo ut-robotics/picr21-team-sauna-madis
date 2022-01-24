@@ -25,6 +25,7 @@ class Movement:
                 return p.device
     
     def getMovestyle(self):
+        print(self.move_style)
         return self.move_style
     
     def setMovestyle(self, move_style):
