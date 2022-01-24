@@ -6,14 +6,18 @@ from serial.tools import list_ports
 import struct
 from var import *
 
+
+
 class Movement:
+    move_style = MoveStyle.AUTO
+
     def __init__(self):
         self.wheelSpeed = 18.75 * 64 / (2 * math.pi * 0.035 * 60)
         self.firstAngle = 0
         self.secondAngle = 130
         self.thirdAgnle = 230
 
-        self.move_style = MoveStyle.AUTO
+        
 
         #self.ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout=2)
         self.ser = serial.Serial(port=self.findPort("206638925056"), baudrate=115200, timeout=2)

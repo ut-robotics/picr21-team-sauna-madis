@@ -25,7 +25,7 @@ cntrl = controller()
 cntrl.start()
 
 # Movement
-movement = movement.Movement()
+movemen = movement.Movement()
 
 # Image and its processing
 image = Image()
@@ -52,7 +52,7 @@ def get_ballNbasket_cord():
 
 def move_style_check(move_style):
 
-    move_style_new = MoveStyle.AUTO
+    move_style_new = movemen.getMovestyle()
     
 
     if move_style == MoveStyle.CONTROLLER and move_style_new == MoveStyle.AUTO:
