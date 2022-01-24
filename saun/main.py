@@ -24,6 +24,9 @@ print("Staring controller thread")
 cntrl = Sontroller()
 cntrl.start()
 
+# Movement
+movement = movement.Movement()
+
 # Image and its processing
 image = Image()
 proccessed_ball = ImageProcess(70, 999999, "ball")
