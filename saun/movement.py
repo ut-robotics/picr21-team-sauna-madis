@@ -29,10 +29,12 @@ class Movement:
                 return p.device
     
     def getMovestyle(self):
-        return self.move_style
+        global move_style
+        return move_style
     
-    def setMovestyle(self, move_style):
-        self.move_style = move_style
+    def setMovestyle(self, style):
+        global move_style
+        move_style = style
 
     def setMovement(self, direction ,robotSpeed, rotSpeed, throwerSpeed):
         #print("Moving")
