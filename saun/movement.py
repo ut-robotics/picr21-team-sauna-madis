@@ -14,10 +14,10 @@ class Movement:
         #self.ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout=2)
         self.ser = serial.Serial(port=self.findPort("206638925056"), baudrate=115200, timeout=2)
 
-    def findPort(self, serial):
+    def findPort(self, serialNr):
         ports = list(serial.tools.list_ports.comports())
         for p in ports:
-            if serial == p.serial_number:
+            if serialNr == p.serial_number:
                 return p.device
 
     def setMovement(self, direction ,robotSpeed, rotSpeed, throwerSpeed):
