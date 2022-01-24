@@ -26,7 +26,7 @@ class controller:
 
             def __init__(self, **kwargs):
                 Controller.__init__(self, **kwargs)
-
+                self.movement = movement.Movement()
             def on_x_press(self):
 
                 if self.gamestate == MoveStyle.AUTO:
@@ -36,13 +36,14 @@ class controller:
                     
             
             def on_left_arrow_press(self):
-                movement.setMovement(0,0,20,0)
+                
+               self. movement.setMovement(0,0,20,0)
 
             def on_right_arrow_press(self):
-                movement.setMovement(0,0,-20,0)
+                self.movement.setMovement(0,0,-20,0)
 
             def on_left_right_arrow_release(self):
-                movement.stop()
+                self.movement.stop()
 
             def on_up_arrow_press(self):
                 
@@ -55,19 +56,19 @@ class controller:
                 print(self.throwerspeed)
 
             def on_circle_press(self):
-                movement.thrower(self.throwerspeed)
+                self.movement.thrower(self.throwerspeed)
 
             def on_R1_press(self):
-                movement.setMovement(90,40,0,0)#direction, robotspeed, rotspeed, throwerSpeed
+                self.movement.setMovement(90,40,0,0)#direction, robotspeed, rotspeed, throwerSpeed
 
             def on_R1_release(self):
-                movement.stop()
+                self.movement.stop()
             
             def on_L1_press(self):
-                movement.setMovement(270,40,0,0)
+                self.movement.setMovement(270,40,0,0)
 
             def on_L1_release(self):
-                movement.stop()
+                self.movement.stop()
 
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
         # you can start listening before controller is paired, as long as you pair it within the timeout window
