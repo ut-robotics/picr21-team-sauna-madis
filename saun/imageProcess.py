@@ -100,7 +100,7 @@ class ImageProcess:
         
         sorted(self.cords, key = lambda x: x[1], reverse = True)
         #Show images
-        self.show_image(window, self.outimage)
+        self.show_image(window, self.hsv)
 
         return self.outimage
 
