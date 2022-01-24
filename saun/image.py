@@ -56,7 +56,7 @@ class Image:
         self.align = rs.align(align_to)
 
     def getDepth(self, x, y):
-        return self.depth_image.get_distance(x, y)
+        return self.depth_frame.get_distance(x, y)
 
     def get_aligned_Frames(self):
         """
@@ -78,7 +78,7 @@ class Image:
         # Get aligned frames
         aligned_depth_frame = aligned_frames.get_depth_frame()
         color_frame = aligned_frames.get_color_frame()
-
+        self.depth_frame = aligned_frames.get_depth_frame()
         # Validate that both frames are valid
         if not aligned_depth_frame or not color_frame:
             print("Depth and color frames are not valid")
