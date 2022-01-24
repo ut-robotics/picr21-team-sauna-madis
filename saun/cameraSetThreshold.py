@@ -39,7 +39,7 @@ for key in data.keys():
     cv2.createTrackbar(key, "RAW", data[key], 255, eval("updateValue" + key))
 
 while True:
-    rawImage = image.get_rbg_image()
+    rawImage = image.get_aligned_Frames()
     proccessed_ball.find_objects(rawImage)
     
     cv2.imshow(window_raw, rawImage)
