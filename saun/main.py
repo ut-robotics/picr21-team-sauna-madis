@@ -50,18 +50,18 @@ def get_ballNbasket_cord():
     return proccessed_ball.getcords(), proccessed_basket.getcords()
 
 
-def move_style_check(move_style):
-
+def move_style_check():
+    global move_style
     move_style_new = movement.getMovestyle()
     print(move_style_new)
 
-    if move_style == MoveStyle.CONTROLLER and move_style_new == MoveStyle.AUTO:
+    if move_style_new == MoveStyle.AUTO:
         print("Changing gamestyle to auto")
         movement.stop()
         move_style = move_style_new
         return True
 
-    elif move_style == MoveStyle.AUTO and move_style_new == MoveStyle.CONTROLLER:
+    elif move_style_new == MoveStyle.CONTROLLER:
         print("Changing gamestyle to controller")
         movement.stop()
         move_style = move_style_new
@@ -81,7 +81,7 @@ def find_ball():
     ball_coordinates = [[0, 0]]
 
     while ball_coordinates[0][0] == 0:
-        if move_style_check(move_style): return True
+        if move_style_check(): return True
 
         ball_coordinates = get_ball_cord()
 
@@ -94,7 +94,7 @@ def move_to_ball():
     ball_coordinates = get_ball_cord()
 
     while ball_coordinates[0][0] != 0:  # 848-480
-        if move_style_check(move_style): return True
+        if move_style_check(): return True
 
         ball_coordinates = get_ball_cord()
 
@@ -110,7 +110,7 @@ def find_basket():
     ball_coordinates = get_ball_cord()
 
     while ball_coordinates[0][0] != 0:
-        if move_style_check(move_style): return True
+        if move_style_check(): return True
 
         x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
         y_rotation = (500 - ball_coordinates[0][1]) / 15
@@ -129,7 +129,7 @@ def align_basket():
     print("Found basket moving to align ---------------------------------------------------------")
     ball_coordinates, basket_coordinates = get_ballNbasket_cord()
     while ball_coordinates[0][0] != 0 and basket_coordinates[0][0] != 0:
-        if move_style_check(move_style): return True
+        if move_style_check(): return True
 
         ball_coordinates, basket_coordinates = get_ballNbasket_cord()
         x_rotation = (ball_coordinates[0][0] - camera_x_mid) / - 33  # -4
