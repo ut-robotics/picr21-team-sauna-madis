@@ -61,7 +61,7 @@ class ImageProcess:
         cv2.waitKey(1)
 
     def find_objects(self, color_image):
-
+        print("FIND OBJECT")
         start = time.time()
         fps = 1/(start - self.previous_time)
         self.previous_time = start
