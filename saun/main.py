@@ -53,7 +53,7 @@ def get_ballNbasket_cord():
 def move_style_check():
     global move_style
     move_style_new = movement.getMovestyle()
-    print(move_style_new)
+    #print(move_style_new)
 
     if move_style == MoveStyle.CONTROLLER and move_style_new == MoveStyle.AUTO:
         print("Changing gamestyle to auto")
