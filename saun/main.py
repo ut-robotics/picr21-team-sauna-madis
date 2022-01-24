@@ -25,7 +25,7 @@ cntrl = controller()
 cntrl.start()
 
 # Movement
-movemen = movement.Movement()
+movement = movement.Movement()
 
 # Image and its processing
 image = Image()
