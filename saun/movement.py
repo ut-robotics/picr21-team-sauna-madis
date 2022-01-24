@@ -32,11 +32,6 @@ def setMovement(direction ,robotSpeed, rotSpeed, throwerSpeed):
     package = struct.pack("<hhhHH", x, z, y, throwerSpeed, 0xAAAA)
     ser.write(package)
 
-def throwBall(speed):
-    # tagumine, parem, vasak parem
-    ser.write(struct.pack("<hhhHH", 0, -10, 10, speed, 0xAAAA))
-    time.sleep(2)
-
 def thrower(speed):
     ser.write(struct.pack("<hhhHH", 0, 0, 0, speed, 0xAAAA))
 
