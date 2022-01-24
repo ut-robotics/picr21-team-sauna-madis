@@ -65,6 +65,8 @@ class ImageProcess:
         if data != None:
             self.data = data
 
+        color_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
+
         start = time.time()
         fps = 1/(start - self.previous_time)
         self.previous_time = start
