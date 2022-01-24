@@ -19,7 +19,6 @@ class ImageProcess:
         self.previous_time = 0
         self.outimage = 0
 
-        # Threshold data
         self.data = {
             "lH": 0,
             "lS": 0,
@@ -28,6 +27,7 @@ class ImageProcess:
             "hS": 0,
             "hV": 0
         }
+
         keys = list(self.data.keys())
         # What image
         if object == "ball":
@@ -60,7 +60,10 @@ class ImageProcess:
         cv2.imshow(window, image )
         cv2.waitKey(1)
 
-    def find_objects(self, color_image):
+    def find_objects(self, color_image, data):
+
+        if data != None:
+            self.data = data
         
         start = time.time()
         fps = 1/(start - self.previous_time)
