@@ -24,8 +24,7 @@ class controller:
         class MyController(Controller):
 
             def __init__(self, **kwargs):
-                Controller.__init__(self, **kwargs)  
-                self.movement = movement()
+                Controller.__init__(self, **kwargs) 
 
             def on_x_press(self):
                 
