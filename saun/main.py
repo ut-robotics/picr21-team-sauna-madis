@@ -19,6 +19,7 @@ camera_x_mid = 424
 basket_color = "blue"  # "blue" , "pink"
 # move_style = "auto"  # "auto" , "controller"
 move_style = MoveStyle.AUTO
+active_state = ActiveState.FINDBALL
 
 print("Staring controller thread")
 cntrl = controller()
@@ -31,9 +32,19 @@ movement = movement.Movement()
 image = Image()
 proccessed_ball = ImageProcess(70, 999999, "ball")
 proccessed_basket = ImageProcess(150, 999999, basket_color)
-#window = cv2.namedWindow("SaunaMadis")
+
 
 # ---------------------------------------------------------------------------Functions
+def what_to_do(state):
+        if state == ActiveState.FINDBALL:
+            find_ball()
+        elif state == ActiveState.MOVE2BALL:
+            move_to_ball()
+        elif state == ActiveState.FINDBASKET:
+            find_basket()
+        elif state == ActiveState.ALIGNBASKET:
+            align_basket()
+
 def get_ball_cord():
     proccessed_ball.find_objects(image.get_aligned_Frames(), None)
     return proccessed_ball.getcords()
@@ -81,12 +92,12 @@ def find_ball():
     ball_coordinates = [[0, 0]]
 
     while ball_coordinates[0][0] == 0:
-        if move_style_check(): return True
+        if move_style_check(): break
 
         ball_coordinates = get_ball_cord()
 
     print("Ball found!")
-    return False
+    active_state = ActiveState.MOVE2BALL
 
 
 def move_to_ball():
@@ -94,15 +105,15 @@ def move_to_ball():
     ball_coordinates = get_ball_cord()
 
     while ball_coordinates[0][0] != 0:  # 848-480
-        if move_style_check(): return True
+        if move_style_check(): break
 
         ball_coordinates = get_ball_cord()
 
         movement.setMovement(90, 48 - int(ball_coordinates[0][1] / 10), int((camera_x_mid - ball_coordinates[0][0]) / 10), 0)  # direction, robotspeed, rotspeed, throwerspeed
 
         if ball_coordinates[0][1] > 400:
-            return False
-    return True
+            active_state = ActiveState.FINDBASKET
+            break
 
 
 def find_basket():
@@ -110,7 +121,7 @@ def find_basket():
     ball_coordinates = get_ball_cord()
 
     while ball_coordinates[0][0] != 0:
-        if move_style_check(): return True
+        if move_style_check(): break
 
         x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
         y_rotation = (500 - ball_coordinates[0][1]) / 15
@@ -122,14 +133,15 @@ def find_basket():
         print("basket coordinates:" + str(basket_coordinates))
 
         if basket_coordinates[0][0] != 0:
-            return False
+            active_state = ActiveState.ALIGNBASKET
+            break
 
 
 def align_basket():
     print("Found basket moving to align ---------------------------------------------------------")
     ball_coordinates, basket_coordinates = get_ballNbasket_cord()
     while ball_coordinates[0][0] != 0 and basket_coordinates[0][0] != 0:
-        if move_style_check(): return True
+        if move_style_check(): break
 
         ball_coordinates, basket_coordinates = get_ballNbasket_cord()
         x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
@@ -165,7 +177,4 @@ while True:
         if controller_movement():
             break
     while move_style == MoveStyle.AUTO:
-        if find_ball(): break
-        if move_to_ball(): break
-        if find_basket(): break
-        if align_basket(): break
+        what_to_do(active_state)
