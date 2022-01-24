@@ -145,8 +145,8 @@ def align_basket():
         if move_style_check(): break
 
         ball_coordinates, basket_coordinates = get_ballNbasket_cord()
-        x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -10  # -4
-        y_rotation = (500 - ball_coordinates[0][1]) / 15
+        x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -8  # -4
+        y_rotation = (500 - ball_coordinates[0][1]) / 10
         print("Ball: " + str(ball_coordinates) + " Basket: " + str(basket_coordinates))
         print("X: " + str(x_rotation) + " Y: " + str(y_rotation))
         if basket_coordinates[0][0] < camera_x_mid+30 and basket_coordinates[0][0] > camera_x_mid-30 and ball_coordinates[0][0] < camera_x_mid+20 and ball_coordinates[0][0] > camera_x_mid-20:
