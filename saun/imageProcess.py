@@ -59,13 +59,14 @@ class ImageProcess:
         cv2.imshow(window, image )
         cv2.waitKey(1)
 
-    def find_objects(self, image):
+    def find_objects(self, alignedFrames):
+        aligned_color_frame = alignedFrames.get_color_frame()
 
         start = time.time()
         fps = 1/(start - self.previous_time)
         self.previous_time = start
 
-        thresholded = cv2.inRange(image, self.lowerLimits, self.upperLimits)
+        thresholded = cv2.inRange(aligned_color_frame, self.lowerLimits, self.upperLimits)
         thresholded = cv2.bitwise_not(thresholded)
         outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
         kernel = np.ones((5,5), np.uint8)
@@ -73,10 +74,10 @@ class ImageProcess:
         outputImageFiltered = cv2.dilate(outputImage, kernel, iterations=1)
         outputImageFiltered = cv2.erode(outputImage, kernel, iterations=2)
         keyPoints = self.detector.detect(outputImageFiltered)
-        self.outimage = cv2.drawKeypoints(outputImageFiltered, keyPoints, np.array([]), (0, 0, 255),
+        outimage = cv2.drawKeypoints(outputImageFiltered, keyPoints, np.array([]), (0, 0, 255),
                                      cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-        cv2.putText(self.outimage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        self.hsv = cv2.drawKeypoints(image, keyPoints, np.array([]), (0, 0, 255),
+        cv2.putText(outimage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+        hsv = cv2.drawKeypoints(aligned_color_frame, keyPoints, np.array([]), (0, 0, 255),
                                 cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         self.cords.clear()
         # Finds keypoints
@@ -92,7 +93,7 @@ class ImageProcess:
             self.cords.append(ball_keypoints)
 
             koord = (str(x) + ":" + str(y))
-            cv2.putText(self.hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+            cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
         if len(keyPoints) == 0:
             self.cords.append([0,0])
@@ -102,7 +103,7 @@ class ImageProcess:
         #Show images
 
         cv2.namedWindow("Processed image", cv2.WINDOW_NORMAL)
-        cv2.imshow("Processed image", self.outimage)
+        cv2.imshow("Processed image", outimage)
 
         #self.show_image(window, self.hsv)
 

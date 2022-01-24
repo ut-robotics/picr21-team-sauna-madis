@@ -73,7 +73,7 @@ class Image:
     def getDepth(self, x, y):
         return self.aligned_depth_frame.get_distance(x, y)
 
-    def get_rbg_image(self):
+    def get_aligned_Frames(self):
         """
         !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         OLD CODE IF NOT WORKING WITH UPDATE FIX OR UNCOMMENT
@@ -100,12 +100,4 @@ class Image:
             print("Depth and color frames are not valid")
             return None
 
-        depth_image = np.asanyarray(aligned_depth_frame.get_data())
-        color_image = np.asanyarray(color_frame.get_data())
-
-        # Remove background - Set pixels further than clipping_distance to grey
-        grey_color = 153
-        depth_image_3d = np.dstack((depth_image,depth_image,depth_image)) #depth image is 1 channel, color is 3 channels
-        bg_removed = np.where((depth_image_3d > self.clipping_distance) | (depth_image_3d <= 0), grey_color, color_image)
-
-        return bg_removed
+        return aligned_frames
