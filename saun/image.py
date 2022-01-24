@@ -7,7 +7,7 @@ class Image:
 
     def __init__(self):
         # Data
-        self.aligned_depth_frame = 0
+        self.depth_image = None
         self.depth = 0
         self.pipeline = None
 
@@ -71,13 +71,12 @@ class Image:
         """
         # Get frameset of color and depth
         frames = self.pipeline.wait_for_frames()
-        # frames.get_depth_frame() is a 640x360 depth image
 
         # Align the depth frame to color frame
         aligned_frames = self.align.process(frames)
 
         # Get aligned frames
-        aligned_depth_frame = aligned_frames.get_depth_frame() # aligned_depth_frame is a 640x480 depth image
+        aligned_depth_frame = aligned_frames.get_depth_frame()
         color_frame = aligned_frames.get_color_frame()
 
         # Validate that both frames are valid
@@ -85,4 +84,7 @@ class Image:
             print("Depth and color frames are not valid")
             return None
 
-        return aligned_frames
+        self.depth_image = np.asanyarray(aligned_depth_frame.get_data())
+        color_image = np.asanyarray(color_frame.get_data())
+
+        return color_image

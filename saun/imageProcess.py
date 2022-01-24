@@ -60,8 +60,6 @@ class ImageProcess:
         cv2.waitKey(1)
 
     def find_objects(self, alignedFrames):
-        aligned_color_frame = alignedFrames.get_color_frame()
-        color_image = np.asanyarray(aligned_color_frame.get_data())
 
         start = time.time()
         fps = 1/(start - self.previous_time)
