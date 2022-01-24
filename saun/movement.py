@@ -11,7 +11,8 @@ class Movement:
         self.secondAngle = 130
         self.thirdAgnle = 230
 
-        self.ser = serial.Serial(port=self.findPort("8086", "0b07"), baudrate=115200, timeout=2)
+        self.ser = serial.Serial(port="/dev/ttyACM0", baudrate=115200, timeout=2)
+        #self.ser = serial.Serial(port=self.findPort("8086", "0b07"), baudrate=115200, timeout=2)
 
     def findPort(self, pid, hid):
         ports = list(serial.tools.list_ports.comports())
