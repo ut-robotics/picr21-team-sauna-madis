@@ -59,7 +59,7 @@ class ImageProcess:
         cv2.imshow(window, image )
         cv2.waitKey(1)
 
-    def find_objects(self, alignedFrames):
+    def find_objects(self, color_image):
 
         start = time.time()
         fps = 1/(start - self.previous_time)
