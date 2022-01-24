@@ -30,8 +30,8 @@ def updateValuehV(new_value):
     data["hV"] = new_value
 
 
-window = cv2.namedWindow("Processed")
-vindow = cv2.namedWindow("RAW")
+window_processed = cv2.namedWindow("Processed")
+window_raw = cv2.namedWindow("RAW")
 image = Image()
 proccessed_ball = ImageProcess(70, 999999, "ball")
 
@@ -40,6 +40,6 @@ for key in data.keys():
 
 while True:
     rawImage = image.get_rbg_image()
-    proccessed_ball.find_objects(rawImage, window)
-    cv2.imshow(vindow, rawImage)
+    proccessed_ball.find_objects(rawImage, window_processed)
+    #cv2.imshow(window_raw, rawImage)
     cv2.waitKey(1)
