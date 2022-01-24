@@ -65,8 +65,6 @@ class ImageProcess:
         if data != None:
             self.data = data
 
-        print(self.data)
-
         start = time.time()
         fps = 1/(start - self.previous_time)
         self.previous_time = start
