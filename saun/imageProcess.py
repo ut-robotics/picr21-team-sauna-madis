@@ -55,8 +55,8 @@ class ImageProcess:
     def getcords(self):
         return self.cords
 
-    def show_image(self, window):
-        cv2.imshow(window, self.hsv)
+    def show_image(self, window, image):
+        cv2.imshow(window, image )
         cv2.waitKey(1)
 
     def find_objects(self, image, window):
@@ -100,7 +100,7 @@ class ImageProcess:
         
         sorted(self.cords, key = lambda x: x[1], reverse = True)
         #Show images
-        self.show_image(window)
+        self.show_image(window, self.outimage)
 
         return self.outimage
 

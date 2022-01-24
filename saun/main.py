@@ -74,6 +74,7 @@ def find_ball():
     print("Searching for ball!---------------------------------------------------------")
     movement.setMovement(0, 10, 10, 0)  # direction, robotspeed, rotspeed, throwerspeed
     ball_coordinates = [[0, 0]]
+    
     while ball_coordinates[0][0] == 0:
         if move_style_check(move_style): return True
 
