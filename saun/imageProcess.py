@@ -1,5 +1,5 @@
 import cv2
-from cv2 import WINDOW_NORMAL
+#from cv2 import WINDOW_NORMAL
 #import cv2.cv2
 import numpy as np
 import time
@@ -7,7 +7,7 @@ import time
 class ImageProcess:
     #Data
     pinkBasket = (170,183,187,178,255,255)
-    blueBasket = (107,237,91,123,255,153)
+    blueBasket = (93,133,75,112,202,97)
     ball = (18,86,43,81,184,117)
 
     def __init__(self, minArea, maxArea, object):
