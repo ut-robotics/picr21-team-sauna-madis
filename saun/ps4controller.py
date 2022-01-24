@@ -10,7 +10,7 @@ from var import *
 
 
 class controller:
-    def __init__(self):
+    def __init__(self, gamestate):
         self.stopped = False
         self.throwerspeed = 200
 
@@ -25,7 +25,7 @@ class controller:
 
             def __init__(self, **kwargs):
                 Controller.__init__(self, **kwargs) 
-                self.movement = movement()
+                self.movement = movement.Movement()
 
             def on_x_press(self):
                 

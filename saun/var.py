@@ -4,3 +4,5 @@ class MoveStyle(Enum):
     CONTROLLER = 1
     AUTO = 2
 
+    def
+
