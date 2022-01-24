@@ -41,5 +41,6 @@ for key in data.keys():
 while True:
     rawImage = image.get_rbg_image()
     proccessed_ball.find_objects(rawImage)
-    #cv2.imshow(window_raw, rawImage)
+    window_raw = cv2.namedWindow("RAW")
+    cv2.imshow(window_raw, rawImage)
     cv2.waitKey(1)

@@ -5,7 +5,7 @@ from var import *
 
 
 #gamestate = "controller" #"auto", "controller"
-gamestate = MoveStyle.AUTO
+gamestate = MoveStyle.CONTROLLER
 
 def getgamestate():
     return gamestate
@@ -16,7 +16,6 @@ class Sontroller:
     def __init__(self):
         self.stopped = False
                                  
-
     def start(self):
         Thread(target=self.listen, args=()).start()
         return self
@@ -24,7 +23,6 @@ class Sontroller:
     def listen(self):
 
         class MyController(Controller):
-            
 
             def __init__(self, **kwargs):
                 Controller.__init__(self, **kwargs)
