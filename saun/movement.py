@@ -17,6 +17,7 @@ class Movement:
         ports = list(serial.tools.list_ports.comports())
         for p in ports :
             if pid and hid in p.hwid:
+                print(p.device)
                 return p.device
 
     def setMovement(self, direction ,robotSpeed, rotSpeed, throwerSpeed):
