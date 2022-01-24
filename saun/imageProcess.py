@@ -64,6 +64,8 @@ class ImageProcess:
 
         if data != None:
             self.data = data
+            self.lowerLimits = np.array([data["lH"], data["lS"], data["lV"]])
+            self.upperLimits = np.array([data["hH"], data["hS"], data["hV"]])
 
         color_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
 
