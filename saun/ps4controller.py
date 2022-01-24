@@ -32,7 +32,7 @@ class controller:
                 return self.gamestate   
 
             def on_x_press(self):
-
+                print(self.gamestate)
                 if self.gamestate == MoveStyle.AUTO:
                     self.gamestate = MoveStyle.CONTROLLER
                     self.movement.setMovestyle(MoveStyle.CONTROLLER)
