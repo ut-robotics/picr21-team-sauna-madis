@@ -18,7 +18,7 @@ class Movement:
     def findPort(self, pid, hid):
         ports = list(serial.tools.list_ports.comports())
         for p in ports:
-            print(str(p.hwid))
+            print(str(p.pid))
             if pid and hid in p.hwid:
                 return p.device
 
