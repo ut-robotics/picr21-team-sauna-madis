@@ -130,7 +130,7 @@ def find_basket():
         print("Not working correctly")
         return ActiveState.FINDBALL
 
-def align_basket(move_style):
+def align_basket():
     print("Found basket moving to align ---------------------------------------------------------")
     frame = image.get_aligned_Frames()
     ball_coordinates = get_ball_cord(frame)
