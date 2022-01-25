@@ -194,7 +194,7 @@ def throw_ball(move_style):
     if ball_coordinates[0][0] == 0:
         print("LOST BALL")
         return ActiveState.FINDBALL, move_style
-
+    return ActiveState.THROWBALL, move_style
 # def throw_ball(basket_depth):
 #     print("Throwing ball---------------------------------------------------------")
 #     # x/0,3934+735
