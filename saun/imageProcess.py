@@ -10,8 +10,8 @@ class ImageProcess:
     def __init__(self, minArea, maxArea, object):
         ##Data
         self.cords = [0,0]
-        self.lowerLimits = 0
-        self.upperLimits = 0
+        self.lower_limits = 0
+        self.upper_limits = 0
         self.dectector = 0
         self.previous_time = 0
         self.outimage = 0
@@ -25,13 +25,14 @@ class ImageProcess:
             "hV": 0
         }
         # What image
-        if object == "ball":
+        print(object)
+        if object == ImageProccesBall.OBJECT:
             for x in BallHL:
                 self.data[x.name] = x.value
-        elif object == BasketColor.PINK.value:
+        elif object == BasketColor.PINK:
             for x in PinkBasketHL:
                 self.data[x.name] = x.value
-        elif object == BasketColor.BLUE.value:
+        elif object == BasketColor.BLUE:
             for x in BlueBasketHL:
                 self.data[x.name] = x.value
 
@@ -41,14 +42,16 @@ class ImageProcess:
         params.filterByCircularity = False
         params.filterByConvexity = False
         params.filterByInertia = False
+        minArea = int(minArea.value)
+        maxArea = int(maxArea.value)
         params.minArea = minArea
         params.maxArea = maxArea
         self.detector = cv2.SimpleBlobDetector_create(params)
+        print(self.data)
+        self.lower_limits = np.array([self.data["lH"], self.data["lS"], self.data["lV"]])
+        self.upper_limits = np.array([self.data["hH"], self.data["hS"], self.data["hV"]])
 
-        self.lowerLimits = np.array([self.data["lH"], self.data["lS"], self.data["lV"]])
-        self.upperLimits = np.array([self.data["hH"], self.data["hS"], self.data["hV"]])
-
-    def getcords(self):
+    def get_cords(self):
         return self.cords
 
     def show_image(self, window, image):
@@ -59,8 +62,8 @@ class ImageProcess:
 
         if data != None:
             self.data = data
-            self.lowerLimits = np.array([data["lH"], data["lS"], data["lV"]])
-            self.upperLimits = np.array([data["hH"], data["hS"], data["hV"]])
+            self.lower_limits = np.array([data["lH"], data["lS"], data["lV"]])
+            self.upper_limits = np.array([data["hH"], data["hS"], data["hV"]])
 
         color_image = cv2.cvtColor(color_image, cv2.COLOR_BGR2HSV)
 
@@ -68,7 +71,7 @@ class ImageProcess:
         fps = 1/(start - self.previous_time)
         self.previous_time = start
 
-        thresholded = cv2.inRange(color_image, self.lowerLimits, self.upperLimits)
+        thresholded = cv2.inRange(color_image, self.lower_limits, self.upper_limits)
         thresholded = cv2.bitwise_not(thresholded)
         
         outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
@@ -106,7 +109,7 @@ class ImageProcess:
             self.cords.append([0,0])
 
         
-        sorted(self.cords, key = lambda x: x[1], reverse = True)
+        sorted(self.cords, key = lambda ball_y: ball_y[1], reverse = True)
         #Show images
         
         cv2.namedWindow("Processed image", cv2.WINDOW_AUTOSIZE)
