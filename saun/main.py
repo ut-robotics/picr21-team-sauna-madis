@@ -124,6 +124,8 @@ def find_basket():
         if basket_coordinates[0][0] != 0:
             print("basket coordinates:" + str(basket_coordinates))
             return ActiveState.ALIGNBASKET
+        else:
+            return ActiveState.FINDBASKET
     else:
         print("Not working correctly")
         return ActiveState.FINDBALL
@@ -155,12 +157,15 @@ def align_basket(move_style):
 
                 #throw_ball()
                 return ActiveState.THROWBALL
-
+            else:
+                return ActiveState.FINDBALL
 
         elif basket_coordinates[0][0] > camera_x_mid:
             movement.set_movement(180, 10, int(x_rotation + y_rotation), 0)
-        else:
+        elif basket_coordinates[0][0] < camera_x_mid:
             movement.set_movement(0, 10, int(x_rotation + y_rotation), 0)
+        else:
+            return ActiveState.FINDBALL
 
     else:
         print("Not working correctly")
@@ -191,7 +196,7 @@ def throw_ball():
     if ball_coordinates[0][0] == 0:
         print("LOST BALL")
         return ActiveState.FINDBALL
-
+    return ActiveState.FINDBALL
 # -------------------------------------------------------------------------------- Main
 
 while True:
