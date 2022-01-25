@@ -83,7 +83,7 @@ def move_style_check(move_style):
 
 
 def controller_movement(move_style):
-    get_ball_cord()
+    get_ball_cord(image.get_aligned_Frames())
     return move_style_check(move_style)
 
 
@@ -94,7 +94,7 @@ def find_ball(move_style):
 
     while ball_coordinates[0][0] == 0:
         if move_style_check(move_style) != move_style: return ActiveState.FINDBALL, move_style.CONTROLLER
-        ball_coordinates = get_ball_cord()
+        ball_coordinates = get_ball_cord(image.get_aligned_Frames())
 
     print("Ball found!")
     return ActiveState.MOVE2BALL, move_style
@@ -102,11 +102,11 @@ def find_ball(move_style):
 
 def move_to_ball(move_style):
     print("Moving towards ball---------------------------------------------------------")
-    ball_coordinates = get_ball_cord()
+    ball_coordinates = get_ball_cord(image.get_aligned_Frames())
 
     while ball_coordinates[0][0] != 0:  # 848-480
         if move_style_check(move_style) != move_style: return ActiveState.FINDBALL, move_style.CONTROLLER
-        ball_coordinates = get_ball_cord()
+        ball_coordinates = get_ball_cord(image.get_aligned_Frames())
 
         movement.set_movement(90, 48 - int(ball_coordinates[0][1] / 10), int((camera_x_mid - ball_coordinates[0][0]) / 10), 0)  # direction, robotspeed, rotspeed, throwerspeed
 
@@ -118,7 +118,7 @@ def move_to_ball(move_style):
 
 def find_basket(move_style):
     print("Searching for basket---------------------------------------------------------")
-    ball_coordinates = get_ball_cord()
+    ball_coordinates = get_ball_cord(image.get_aligned_Frames())
 
     while ball_coordinates[0][0] != 0:
         if move_style_check(move_style) != move_style: return ActiveState.FINDBALL, move_style.CONTROLLER
