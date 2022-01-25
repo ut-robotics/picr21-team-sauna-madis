@@ -28,11 +28,11 @@ class ImageProcess:
         if object == "ball":
             for x in BallHL:
                 self.data[x.name] = x.value
-        elif object == BasketColor.PINK:
+        elif object == BasketColor.PINK.value:
             for x in PinkBasketHL:
                 self.data[x.name] = x.value
-        elif object == BlueBasketHL:
-            for x in range(6):
+        elif object == BasketColor.BLUE.value:
+            for x in BlueBasketHL:
                 self.data[x.name] = x.value
 
         # Detection
