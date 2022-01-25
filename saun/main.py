@@ -33,7 +33,7 @@ ball_minarea = ImageProccesBall.MINAREA
 print(ball_minarea)
 #   Image and its processing
 image = Image()
-proccessed_ball = ImageProcess(ball_minarea), ImageProccesBall.MAXAREA, ImageProccesBall.OBJECT)
+proccessed_ball = ImageProcess(ball_minarea, ImageProccesBall.MAXAREA, ImageProccesBall.OBJECT)
 proccessed_basket = ImageProcess(ImageProcessBasket.MINAREA, ImageProcessBasket.MAXAREA, ImageProcessBasket.OBJECT)
 
 # ---------------------------------------------------------------------------Functions
