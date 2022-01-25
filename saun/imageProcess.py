@@ -109,7 +109,7 @@ class ImageProcess:
             self.cords.append([0,0])
 
         
-        sorted(self.cords, key = lambda x: x[1], reverse = True)
+        sorted(self.cords, key = lambda ball_y: ball_y[1], reverse = True)
         #Show images
         
         cv2.namedWindow("Processed image", cv2.WINDOW_AUTOSIZE)
