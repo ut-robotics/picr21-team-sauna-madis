@@ -98,6 +98,8 @@ def move_to_ball():
         movement.set_movement(90, 48 - int(ball_coordinates[0][1] / 10), int((camera_x_mid - ball_coordinates[0][0]) / 10), 0)  # direction, robotspeed, rotspeed, throwerspeed
         if ball_coordinates[0][1] > 400:
             return ActiveState.FINDBASKET
+        else:
+            return ActiveState.MOVE2BALL
     else:
         print("Not working correctly")
         return ActiveState.FINDBALL
