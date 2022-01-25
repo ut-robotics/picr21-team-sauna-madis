@@ -92,7 +92,7 @@ def move_to_ball():
     ball_coordinates = get_ball_cord(image.get_aligned_Frames())
 
     if ball_coordinates[0][0] == 0:  # 848-480
-        return active_state.FINDBALL
+        return ActiveState.FINDBALL
     elif ball_coordinates[0][0] != 0:
         print("Have ball")
         movement.set_movement(90, 48 - int(ball_coordinates[0][1] / 10), int((camera_x_mid - ball_coordinates[0][0]) / 10), 0)  # direction, robotspeed, rotspeed, throwerspeed
