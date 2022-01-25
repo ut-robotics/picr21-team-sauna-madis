@@ -57,7 +57,7 @@ class Image:
         align_to = rs.stream.color
         self.align = rs.align(align_to)
 
-    def getDepth(self, x, y):
+    def get_Depth(self, x, y):
         print(x)
         print(y)
         return self.depth_frame.get_distance(x, y)
