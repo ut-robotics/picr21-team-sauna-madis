@@ -26,11 +26,13 @@ cntrl.start()
 #   Movement
 movement = movement.Movement()
 
+#basket color, will change with ref commands in the future
 
+basket_color = BasketColor.BLUE
 #   Image and its processing
 image = Image()
 proccessed_ball = ImageProcess(ImageProccesBall.MINAREA, ImageProccesBall.MAXAREA, ImageProccesBall.OBJECT)
-proccessed_basket = ImageProcess(ImageProcessBasket.MINAREA, ImageProcessBasket.MAXAREA, ImageProcessBasket.OBJECT)
+proccessed_basket = ImageProcess(ImageProcessBasket.MINAREA, ImageProcessBasket.MAXAREA, basket_color)
 #Image resolution 848x480@60
 camera_x_mid = image.x_resolution/2
 # ---------------------------------------------------------------------------Functions
