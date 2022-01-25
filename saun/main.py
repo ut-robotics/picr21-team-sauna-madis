@@ -31,7 +31,7 @@ movement = movement.Movement()
 
 #   Image and its processing
 image = Image()
-proccessed_ball = ImageProcess(ImageProccesBall.MINAREA, ImageProccesBall.MAXAREA, ImageProccesBall.OBJECT)
+proccessed_ball = ImageProcess(int(ImageProccesBall.MINAREA), ImageProccesBall.MAXAREA, ImageProccesBall.OBJECT)
 proccessed_basket = ImageProcess(ImageProcessBasket.MINAREA, ImageProcessBasket.MAXAREA, ImageProcessBasket.OBJECT)
 
 # ---------------------------------------------------------------------------Functions
