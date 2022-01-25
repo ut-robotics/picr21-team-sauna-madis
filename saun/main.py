@@ -14,7 +14,7 @@ from ps4controller import controller
 #Enums
 #ImageProcessBasket.OBJECT = BasketColor.BLUE.value
 active_state = ActiveState.FINDBALL
-move_style = MoveStyle.CONTROLLER
+move_style = MoveStyle.AUTO
 
 
 print("Staring controller thread")
