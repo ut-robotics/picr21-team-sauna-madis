@@ -173,7 +173,9 @@ def align_basket(move_style):
 
 def throw_ball(move_style):
     print("Throwing ball -------------------------------------------------------------")
-    if move_style_check(move_style) != move_style: return ActiveState.FINDBALL, move_style.CONTROLLER
+    if move_style_check(move_style) != move_style: 
+        print("move style check")
+        return ActiveState.FINDBALL, move_style.CONTROLLER
 
     ball_coordinates, basket_coordinates = get_ballNbasket_cord()
     x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
