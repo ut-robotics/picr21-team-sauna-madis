@@ -80,9 +80,9 @@ class controller:
     def listen(self):
         controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
         controller.listen(timeout=60)
-        self.movement_style = controller.get_movement_style()
 
     def get_movement_style(self):
+        self.movement_style = controller.get_movement_style()
         return self.movement_style
 
 
