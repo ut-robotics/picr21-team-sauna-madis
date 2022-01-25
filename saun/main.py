@@ -192,6 +192,7 @@ def throw_ball(move_style):
         movement.setMovement(110, 10, int(x_rotation + y_rotation), thrower_speed)
    
     if ball_coordinates[0][0] == 0:
+        print("LOST BALL")
         return ActiveState.FINDBALL, move_style
 
 # def throw_ball(basket_depth):
