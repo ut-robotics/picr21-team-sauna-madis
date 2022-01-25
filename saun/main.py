@@ -194,7 +194,9 @@ def throw_ball():
 
 while True:
     move_style = move_style_check(move_style)
+    print("Before statemnts")
     if move_style == MoveStyle.CONTROLLER:
         controller_movement()
     else:
         active_state = what_to_do(active_state)
+        print(active_state)
