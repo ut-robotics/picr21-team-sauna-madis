@@ -7,7 +7,7 @@ from var import *
 
 class ImageProcess:
 
-    def __init__(self, min_Area, max_area, object):
+    def __init__(self, minArea, maxArea, object):
         ##Data
         self.cords = [0,0]
         self.lower_limits = 0
@@ -37,12 +37,12 @@ class ImageProcess:
 
         # Detection
         params = cv2.SimpleBlobDetector_Params()
-        params.filter_by_area = True
-        params.filter_by_circularity = False
-        params.filter_by_convexity = False
-        params.filter_by_inertia = False
-        params.min_Area = min_Area
-        params.max_area = max_area
+        params.filterByArea = True
+        params.filterByCircularity = False
+        params.filterByConvexity = False
+        params.filterByInertia = False
+        params.minArea = minArea
+        params.maxArea = maxArea
         self.detector = cv2.SimpleBlobDetector_create(params)
 
         self.lower_limits = np.array([self.data["lH"], self.data["lS"], self.data["lV"]])
