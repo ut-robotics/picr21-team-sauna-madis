@@ -1,3 +1,4 @@
+from re import M
 import movement
 from pyPS4Controller.controller import Controller
 from threading import Thread
@@ -12,17 +13,14 @@ from var import *
 
 class controller:
 
-    movement_style = MoveStyle.AUTO
-
-
     def __init__(self):
         self.stopped = False
         self.throwerspeed = 200
+        self.movement_style = MoveStyle.AUTO
 
     def start(self):
         Thread(target=self.listen, args=()).start()
         return self
-    
 
     def listen(self):
 
@@ -34,15 +32,11 @@ class controller:
 
             def on_x_press(self):
                 
-
-
-
-
-                if self.movement.get_movestyle() == MoveStyle.AUTO:
-                    self.movement.set_movestyle(MoveStyle.CONTROLLER)
+                if Controller.movement_style == MoveStyle.AUTO:
+                    Controller.movement_style = MoveStyle.CONTROLLER
                 else:
-                    self.movement.set_movestyle(MoveStyle.AUTO)
-                
+                    Controller.movement_style = MoveStyle.AUTO
+
             def on_left_arrow_press(self):
                 
                 self.movement.set_movement(180,30,0,0)
