@@ -115,7 +115,7 @@ def move_to_ball(move_style):
     return ActiveState.FINDBALL, move_style
 
 
-def find_basket():
+def find_basket(move_style):
     print("Searching for basket---------------------------------------------------------")
     ball_coordinates = get_ball_cord()
 
