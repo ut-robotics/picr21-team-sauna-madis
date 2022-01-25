@@ -41,7 +41,7 @@ class ImageProcess:
         params.filterByCircularity = False
         params.filterByConvexity = False
         params.filterByInertia = False
-        print(minArea)
+        print(minArea.value)
         params.minArea = minArea.value
         params.maxArea = maxArea.value
         self.detector = cv2.SimpleBlobDetector_create(params)
