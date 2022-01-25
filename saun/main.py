@@ -191,7 +191,7 @@ def throw_ball():
     if ball_coordinates[0][0] == 0:
         print("LOST BALL")
         return ActiveState.FINDBALL
-    return ActiveState.FINDBALL
+    return ActiveState.THROWBALL
 # -------------------------------------------------------------------------------- Main
 
 while True:
