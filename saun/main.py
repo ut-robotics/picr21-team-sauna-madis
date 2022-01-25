@@ -11,9 +11,6 @@ from imageProcess import *
 from var import *
 from ps4controller import controller
 
-#Image resolution 848x480@60
-camera_x_mid = 424
-
 #Enums
 #ImageProcessBasket.OBJECT = BasketColor.BLUE.value
 move_style = MoveStyle.AUTO
@@ -32,9 +29,10 @@ movement = movement.Movement()
 
 #   Image and its processing
 image = Image()
-proccessed_ball = ImageProcess(ImageProccesBall.MINAREA.value, ImageProccesBall.MAXAREA.value, ImageProccesBall.OBJECT.value)
-proccessed_basket = ImageProcess(ImageProcessBasket.MINAREA.value, ImageProcessBasket.MAXAREA.value, ImageProcessBasket.OBJECT.value)
-
+proccessed_ball = ImageProcess(ImageProccesBall.MINAREA, ImageProccesBall.MAXAREA, ImageProccesBall.OBJECT)
+proccessed_basket = ImageProcess(ImageProcessBasket.MINAREA, ImageProcessBasket.MAXAREA, ImageProcessBasket.OBJECT)
+#Image resolution 848x480@60
+camera_x_mid = image.x_resolution/2
 # ---------------------------------------------------------------------------Functions
 
 def what_to_do(state, move_style):
@@ -49,25 +47,25 @@ def what_to_do(state, move_style):
         elif state == ActiveState.THROWBALL:
             return throw_ball(move_style)
 
-def get_ball_cord():
-    proccessed_ball.find_objects(image.get_aligned_Frames(), None)
-    return proccessed_ball.getcords()
-
-
-def get_basket_cord():
-    proccessed_basket.find_objects(image.get_aligned_Frames(), None)
-    return proccessed_basket.getcords()
-
-
-def get_ballNbasket_cord():
-    frame = image.get_aligned_Frames()
+def get_ball_cord(frame):
     proccessed_ball.find_objects(frame, None)
+    return proccessed_ball.get_cords()
+
+
+def get_basket_cord(frame):
     proccessed_basket.find_objects(frame, None)
-    return proccessed_ball.getcords(), proccessed_basket.getcords()
+    return proccessed_basket.get_cords()
+
+
+# def get_ballNbasket_cord():
+#     frame = image.get_aligned_Frames()
+#     proccessed_ball.find_objects(frame, None)
+#     proccessed_basket.find_objects(frame, None)
+#     return proccessed_ball.get_cords(), proccessed_basket.get_cords()
 
 
 def move_style_check(move_style):
-    move_style_new = movement.getMovestyle()
+    move_style_new = movement.get_movestyle()
 
     if move_style == MoveStyle.CONTROLLER and move_style_new == MoveStyle.AUTO:
         print("Changing gamestyle to auto")
@@ -91,7 +89,7 @@ def controller_movement(move_style):
 
 def find_ball(move_style):
     print("Searching for ball!---------------------------------------------------------")
-    movement.setMovement(0, 10, 10, 0)  # direction, robotspeed, rotspeed, throwerspeed
+    movement.set_movement(0, 10, 10, 0)  # direction, robotspeed, rotspeed, throwerspeed
     ball_coordinates = [[0, 0]]
 
     while ball_coordinates[0][0] == 0:
@@ -110,7 +108,7 @@ def move_to_ball(move_style):
         if move_style_check(move_style) != move_style: return ActiveState.FINDBALL, move_style.CONTROLLER
         ball_coordinates = get_ball_cord()
 
-        movement.setMovement(90, 48 - int(ball_coordinates[0][1] / 10), int((camera_x_mid - ball_coordinates[0][0]) / 10), 0)  # direction, robotspeed, rotspeed, throwerspeed
+        movement.set_movement(90, 48 - int(ball_coordinates[0][1] / 10), int((camera_x_mid - ball_coordinates[0][0]) / 10), 0)  # direction, robotspeed, rotspeed, throwerspeed
 
         if ball_coordinates[0][1] > 400:
             return ActiveState.FINDBASKET, move_style
@@ -128,9 +126,11 @@ def find_basket(move_style):
         x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
         y_rotation = (500 - ball_coordinates[0][1]) / 15
 
-        movement.setMovement(0, 10, int(x_rotation + y_rotation), 0)
+        movement.set_movement(0, 10, int(x_rotation + y_rotation), 0)
 
-        ball_coordinates, basket_coordinates = get_ballNbasket_cord()
+        frame = image.get_aligned_Frames()
+        ball_coordinates =get_ball_cord(frame)
+        basket_coordinates = get_basket_cord(frame)
 
         print("basket coordinates:" + str(basket_coordinates))
 
@@ -141,11 +141,17 @@ def find_basket(move_style):
 
 def align_basket(move_style):
     print("Found basket moving to align ---------------------------------------------------------")
-    ball_coordinates, basket_coordinates = get_ballNbasket_cord()
+    frame = image.get_aligned_Frames()
+    ball_coordinates =get_ball_cord(frame)
+    basket_coordinates = get_basket_cord(frame)
+
     while ball_coordinates[0][0] != 0 and basket_coordinates[0][0] != 0:
         if move_style_check(move_style) != move_style: return ActiveState.FINDBALL, move_style.CONTROLLER
 
-        ball_coordinates, basket_coordinates = get_ballNbasket_cord()
+        frame = image.get_aligned_Frames()
+        ball_coordinates =get_ball_cord(frame)
+        basket_coordinates = get_basket_cord(frame)
+
         x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -8  # -4
         y_rotation = (500 - ball_coordinates[0][1]) / 10
 
@@ -157,7 +163,7 @@ def align_basket(move_style):
             print("Basket distance: " + str(basket_depth))
             if basket_depth > 0.5:
                 thrower = int(basket_depth * 100 / 0.3934 + 735)
-                movement.setMovement(90, 12, 0, thrower)  # direction, robotspeed, rotspeed, throwerSpeed
+                movement.set_movement(90, 12, 0, thrower)  # direction, robotspeed, rotspeed, throwerSpeed
                 print("Thrower speed: " + str(thrower))
     
 
@@ -166,9 +172,9 @@ def align_basket(move_style):
 
 
         elif basket_coordinates[0][0] > camera_x_mid:
-            movement.setMovement(180, 10, int(x_rotation + y_rotation), 0)
+            movement.set_movement(180, 10, int(x_rotation + y_rotation), 0)
         else:
-            movement.setMovement(0, 10, int(x_rotation + y_rotation), 0)
+            movement.set_movement(0, 10, int(x_rotation + y_rotation), 0)
 
     return ActiveState.FINDBALL, move_style
 
@@ -178,7 +184,9 @@ def throw_ball(move_style):
         print("move style check")
         return ActiveState.FINDBALL, move_style.CONTROLLER
 
-    ball_coordinates, basket_coordinates = get_ballNbasket_cord()
+    frame = image.get_aligned_Frames()
+    ball_coordinates =get_ball_cord(frame)
+    basket_coordinates = get_basket_cord(frame)
     x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
     y_rotation = (500 - ball_coordinates[0][1]) / 15
 
@@ -186,14 +194,14 @@ def throw_ball(move_style):
     thrower_speed = int(basket_depth * 100 / 0.3934 + 735)
 
     if basket_coordinates[0][0] < camera_x_mid+80 and basket_coordinates[0][0] > camera_x_mid-60 and ball_coordinates[0][0] < camera_x_mid+70 and ball_coordinates[0][0] > camera_x_mid+30:
-        movement.setMovement(90, 10, 0, thrower_speed)
+        movement.set_movement(90, 10, 0, thrower_speed)
     elif basket_coordinates[0][0] < camera_x_mid:
-        movement.setMovement(70, 10, int(x_rotation + y_rotation), thrower_speed)
+        movement.set_movement(70, 10, int(x_rotation + y_rotation), thrower_speed)
     elif basket_coordinates[0][0] > camera_x_mid:
-        movement.setMovement(110, 10, int(x_rotation + y_rotation), thrower_speed)
+        movement.set_movement(110, 10, int(x_rotation + y_rotation), thrower_speed)
     
     if ball_coordinates[0][1] > 480:
-        movement.setMovement(90, 10, 0, thrower_speed)
+        movement.set_movement(90, 10, 0, thrower_speed)
         time.sleep(1)
         return ActiveState.FINDBALL, move_style
     if ball_coordinates[0][0] == 0:
@@ -203,7 +211,7 @@ def throw_ball(move_style):
 # def throw_ball(basket_depth):
 #     print("Throwing ball---------------------------------------------------------")
 #     # x/0,3934+735
-#     movement.setMovement(90, 12, 0, int(basket_depth * 100 / 0.3934 + 735))  # direction, robotspeed, rotspeed, throwerSpeed
+#     movement.set_movement(90, 12, 0, int(basket_depth * 100 / 0.3934 + 735))  # direction, robotspeed, rotspeed, throwerSpeed
 #     print("Thrower speed: " + str(basket_depth * 100 / 0.3934 + 735))
 #     time.sleep(2)  # for testing purposes
 

@@ -4,7 +4,9 @@ import numpy as np
 import cv2
 
 class Image:
-
+    x_resolution = 848
+    y_resolution = 640
+    
     def __init__(self):
         # Data
         self.depth_image = None
