@@ -26,20 +26,20 @@ class ImageProcessBasket(Enum):
     OBJECT = "blue" #None
 
 class BallHL(Enum):
-    lH = 18
-    lS = 86
-    lV = 43
-    hH = 81
-    hS = 184
-    hV = 117
+    lH = 65
+    lS = 57
+    lV = 45
+    hH = 83
+    hS = 117
+    hV = 139
 
 class BlueBasketHL(Enum):
-    lH = 93
-    lS = 133
-    lV = 75
-    hH = 112
-    hS = 202
-    hV = 97
+    lH = 40
+    lS = 156
+    lV = 60
+    hH = 115
+    hS = 192
+    hV = 109
 
 class PinkBasketHL(Enum):
     lH = 170
