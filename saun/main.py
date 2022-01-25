@@ -195,4 +195,4 @@ while True:
     if move_style == MoveStyle.CONTROLLER:
         controller_movement()
     else:
-        what_to_do(active_state)
+        active_state = what_to_do(active_state)
