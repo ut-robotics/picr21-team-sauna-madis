@@ -7,7 +7,7 @@ from var import *
 
 class ImageProcess:
 
-    def __init__(self, minArea, maxArea, object):
+    def __init__(self, min_area, max_area, object):
         ##Data
         self.cords = [0,0]
         self.lower_limits = 0
@@ -42,10 +42,8 @@ class ImageProcess:
         params.filterByCircularity = False
         params.filterByConvexity = False
         params.filterByInertia = False
-        minArea = int(minArea.value)
-        maxArea = int(maxArea.value)
-        params.minArea = minArea
-        params.maxArea = maxArea
+        params.minArea = int(min_area.value)
+        params.maxArea = int(max_area.value)
         self.detector = cv2.SimpleBlobDetector_create(params)
         print(self.data)
         self.lower_limits = np.array([self.data["lH"], self.data["lS"], self.data["lV"]])
@@ -74,24 +72,24 @@ class ImageProcess:
         thresholded = cv2.inRange(color_image, self.lower_limits, self.upper_limits)
         thresholded = cv2.bitwise_not(thresholded)
         
-        outputImage = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
+        output_Image = cv2.copyMakeBorder(thresholded, 10, 10, 10, 10, cv2.BORDER_CONSTANT, value=[255, 255, 255])
         
         kernel = np.ones((5,5), np.uint8)
-        outputImageFiltered = cv2.medianBlur(outputImage, 3)
-        outputImageFiltered = cv2.dilate(outputImage, kernel, iterations=1)
-        outputImageFiltered = cv2.erode(outputImage, kernel, iterations=2)
+        output_Image_Filtered = cv2.medianBlur(output_Image, 3)
+        output_Image_Filtered = cv2.dilate(output_Image, kernel, iterations=1)
+        output_Image_Filtered = cv2.erode(output_Image, kernel, iterations=2)
         
-        keyPoints = self.detector.detect(outputImageFiltered)
+        key_Points = self.detector.detect(output_Image_Filtered)
 
-        outimage = cv2.drawKeypoints(outputImageFiltered, keyPoints, np.array([]), (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        outimage = cv2.drawKeypoints(output_Image_Filtered, key_Points, np.array([]), (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
         cv2.putText(outimage, str(round(fps)), (5, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
-        hsv = cv2.drawKeypoints(color_image, keyPoints, np.array([]), (0, 0, 255),cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        hsv = cv2.drawKeypoints(color_image, key_Points, np.array([]), (0, 0, 255),cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
        
        
         # Finds keypoints
         self.cords.clear()
-        for keypoint in keyPoints:
+        for keypoint in key_Points:
             ball_keypoints = []
             x = int(keypoint.pt[0])
             y = int(keypoint.pt[1])
@@ -105,11 +103,11 @@ class ImageProcess:
             koord = (str(x) + ":" + str(y))
             cv2.putText(hsv, koord, (x, y), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
 
-        if len(keyPoints) == 0:
+        if len(key_Points) == 0:
             self.cords.append([0,0])
 
         
-        sorted(self.cords, key = lambda ball_y: ball_y[1], reverse = True)
+        sorted(self.cords, key = lambda ball_cord: ball_cord[1], reverse = True)
         #Show images
         
         cv2.namedWindow("Processed image", cv2.WINDOW_AUTOSIZE)
