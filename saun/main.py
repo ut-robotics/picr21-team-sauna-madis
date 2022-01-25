@@ -29,7 +29,7 @@ cntrl.start()
 #   Movement
 movement = movement.Movement()
 
-ball_minarea = ImageProccesBall.MINAREA
+ball_minarea = ImageProccesBall.MINAREA.value
 print(ball_minarea)
 #   Image and its processing
 image = Image()
