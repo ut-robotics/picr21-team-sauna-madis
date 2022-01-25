@@ -25,6 +25,7 @@ class ImageProcess:
             "hV": 0
         }
         # What image
+        print(object)
         if object == "ball":
             for x in BallHL:
                 self.data[x.name] = x.value
