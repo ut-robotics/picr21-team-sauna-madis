@@ -63,7 +63,7 @@ def move_style_check(move_style):
     move_style_new = cntrl.get_movement_style()
 
     if move_style != move_style_new:
-        print("Chahing movestryle to: " + move_style_new)
+        print("Changing movestyle")
         movement.stop()
         return move_style_new
     else:
