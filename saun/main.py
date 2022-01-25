@@ -14,12 +14,12 @@ from ps4controller import controller
 #Enums
 #ImageProcessBasket.OBJECT = BasketColor.BLUE.value
 active_state = ActiveState.FINDBALL
+move_style = MoveStyle.CONTROLLER
 
 
 print("Staring controller thread")
 cntrl = controller()
 cntrl.start()
-move_style = cntrl.get_movement_style()
 
 
 # Movement, Image & Image Processing
