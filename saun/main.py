@@ -60,6 +60,7 @@ def get_basket_cord(frame):
     return proccessed_basket.get_cords()
 
 
+
 def move_style_check(move_style):
     move_style_new = cntrl.get_movement_style()
 
