@@ -4,7 +4,7 @@ from shutil import move
 import serial
 from serial.tools import list_ports
 import struct
-from saun.main import move_style_check
+#from saun.main import move_style_check
 from var import *
 
 
