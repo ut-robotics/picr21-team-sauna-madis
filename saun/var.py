@@ -9,6 +9,7 @@ class ActiveState(Enum):
     MOVE2BALL = 2
     FINDBASKET = 3
     ALIGNBASKET = 4
+    THROWBALL = 5
 
 class BasketColor(Enum):
     BLUE = "blue"
@@ -23,7 +24,7 @@ class ImageProccesBall(Enum):
 class ImageProcessBasket(Enum):
     MINAREA = 150
     MAXAREA = 999999
-    OBJECT = "blue" #None
+    OBJECT = "blue" #None, temporary
 
 class BallHL(Enum):
     lH = 65
