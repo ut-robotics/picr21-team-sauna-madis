@@ -58,6 +58,8 @@ class Image:
         self.align = rs.align(align_to)
 
     def getDepth(self, x, y):
+        print(x)
+        print(y)
         return self.depth_frame.get_distance(x, y)
 
     def get_aligned_Frames(self):
