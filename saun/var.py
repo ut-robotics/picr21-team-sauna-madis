@@ -12,7 +12,7 @@ class ActiveState(Enum):
 
 class BasketColor(Enum):
     BLUE = 1
-    PINK = 1
+    PINK = 2
 
 # ------------------------------------------------
 class ImageProccesBall(Enum):
