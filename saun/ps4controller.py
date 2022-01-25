@@ -69,6 +69,7 @@ class MyController(Controller):
 class controller:
 
     def __init__(self):
+        self.controller = None
         self.stopped = False
         self.throwerspeed = 200
         self.movement_style = MoveStyle.AUTO
@@ -78,11 +79,11 @@ class controller:
         return self
 
     def listen(self):
-        controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
-        controller.listen(timeout=60)
+        self.controller = MyController(interface="/dev/input/js0", connecting_using_ds4drv=False)
+        self.controller.listen(timeout=60)
 
     def get_movement_style(self):
-        self.movement_style = controller.get_movement_style()
+        self.movement_style = self.controller.get_movement_style()
         return self.movement_style
 
 
