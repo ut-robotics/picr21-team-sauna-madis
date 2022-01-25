@@ -205,4 +205,6 @@ while True:
     while move_style == MoveStyle.CONTROLLER:
         move_style = controller_movement(move_style)
     while move_style == MoveStyle.AUTO:
+        print(active_state)
+        
         active_state, move_style = what_to_do(active_state, move_style)
