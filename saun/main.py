@@ -15,7 +15,7 @@ from ps4controller import controller
 camera_x_mid = 424
 
 #Enums
-#ImageProcessBasket.OBJECT = BasketColor.BLUE
+#ImageProcessBasket.OBJECT = BasketColor.BLUE.value
 move_style = MoveStyle.AUTO
 active_state = ActiveState.FINDBALL
 
@@ -29,12 +29,11 @@ cntrl.start()
 #   Movement
 movement = movement.Movement()
 
-ball_minarea = ImageProccesBall.MINAREA.value
-print(ball_minarea)
+
 #   Image and its processing
 image = Image()
-proccessed_ball = ImageProcess(ball_minarea, ImageProccesBall.MAXAREA, ImageProccesBall.OBJECT)
-proccessed_basket = ImageProcess(ImageProcessBasket.MINAREA, ImageProcessBasket.MAXAREA, ImageProcessBasket.OBJECT)
+proccessed_ball = ImageProcess(ImageProccesBall.MINAREA.value, ImageProccesBall.MAXAREA.value, ImageProccesBall.OBJECT.value)
+proccessed_basket = ImageProcess(ImageProcessBasket.MINAREA.value, ImageProcessBasket.MAXAREA.value, ImageProcessBasket.OBJECT.value)
 
 # ---------------------------------------------------------------------------Functions
 
