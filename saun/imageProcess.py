@@ -9,7 +9,7 @@ class ImageProcess:
 
     def __init__(self, minArea, maxArea, object):
         ##Data
-        self.cords = []
+        self.cords = [0,0]
         self.lowerLimits = 0
         self.upperLimits = 0
         self.dectector = 0

@@ -36,35 +36,50 @@ class controller:
                 
             def on_left_arrow_press(self):
                 
-                self.movement.setMovement(0,0,20,0)
+                self.movement.setMovement(180,30,0,0)
 
             def on_right_arrow_press(self):
-                self.movement.setMovement(0,0,-20,0)
+                self.movement.setMovement(0,30,0,0)
 
             def on_left_right_arrow_release(self):
                 self.movement.stop()
 
-            def on_up_arrow_press(self):
-                
+            def on_square_press(self):
+                self.throwerspeed = self.throwerspeed-100
+                print(self.throwerspeed)
+            
+            def on_triangle_press(self):
                 self.throwerspeed = self.throwerspeed+100
                 print(self.throwerspeed)
 
-            def on_down_arrow_press(self):
+            def on_up_arrow_press(self):
                 
-                self.throwerspeed = self.throwerspeed-100
-                print(self.throwerspeed)
+                self.movement.setMovement(90,40,0,0)
+
+
+                # self.throwerspeed = self.throwerspeed+100
+                # print(self.throwerspeed)
+
+            def on_down_arrow_press(self):
+                self.movement.setMovement(270,40,0,0)
+
+                # self.throwerspeed = self.throwerspeed-100
+                # print(self.throwerspeed)
 
             def on_circle_press(self):
                 self.movement.thrower(self.throwerspeed)
 
             def on_R1_press(self):
-                self.movement.setMovement(90,40,0,0)#direction, robotspeed, rotspeed, throwerSpeed
+                self.movement.setMovement(0,0,-20,0)
+                #self.movement.setMovement(90,40,0,0)#direction, robotspeed, rotspeed, throwerSpeed
 
             def on_R1_release(self):
+
                 self.movement.stop()
             
             def on_L1_press(self):
-                self.movement.setMovement(270,40,0,0)
+                self.movement.setMovement(0,0,20,0)
+                #self.movement.setMovement(270,40,0,0)
 
             def on_L1_release(self):
                 self.movement.stop()
