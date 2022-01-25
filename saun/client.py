@@ -1,40 +1,38 @@
-from threading import Thread
+import _thread
 import json
-
+from var import *
 
 class Client:
-
     def __init__(self, ws):
-        self.go = None
         self.stopped = False
+        self.signal = False
         self.robot = "SaunaMadis"
+        self.basket = BasketColor.BLUE
         self.ws = ws
-        self.blue = True
 
-    def start(self):
-        Thread(target=self.listen, args=()).start()
-        return self
 
-    def listen(self):
-        while not self.stopped:
-            message = self.ws.recv()
-            command = json.loads(message)
+    def listen(self, ws):
+        def run(*args):
+            while not self.stopped:
+                message = self.ws.recv()
+                command = json.loads(message)
 
-            if command["signal"] == "stop" and self.robot in command["targets"]:
-                self.go = False
-            elif command["signal"] == "start" and self.robot in command["targets"]:
-                index = command["targets"].index(self.robot)
-                color = command["baskets"][index]
-                if color == "blue":
-                    self.blue = True
-                elif color == "magenta":
-                    self.blue = False
-                self.go = True
-            else:
-                pass
+                if command["signal"] == "stop" and self.robot in command["targets"]:
+                    self.signal = False
+                elif command["signal"] == "start" and self.robot in command["targets"]:
+                    index = command["targets"].index(self.robot)
+                    color = command["baskets"][index]
+                    if color == "blue":
+                        self.basket = BasketColor.BLUE
+                    elif color == "magenta":
+                        self.basket = BasketColor.PINK
+                    self.signal = True
+                else:
+                    pass
+        _thread.start_new_thread(run, ())
 
     def getter(self):
-        return (self.go, self.blue)
+        return self.signal, self.basket
 
     def stop(self):
         self.stopped = True

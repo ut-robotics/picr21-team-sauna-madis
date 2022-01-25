@@ -16,7 +16,6 @@ from ps4controller import controller
 active_state = ActiveState.FINDBALL
 move_style = MoveStyle.AUTO
 
-
 print("Staring controller thread")
 cntrl = controller()
 cntrl.start()

@@ -1,34 +1,26 @@
 import asyncio
-import json
 import websockets
 
+
 async def main(websocket, path):
-    print("Starting")
+    print("Connection.")
     while True:
-        cmd = int(await asyncio.get_event_loop().run_in_executor(None, input, "input:"))
+        start_blue = '{"signal": "start","targets":  ["SaunaMadis"],"baskets": ["blue"]}'
+        start_rose = '{"signal": "start","targets":  ["SaunaMadis"],"baskets": ["magneta"]}'
+        stop = '{"signal": "stop", "targets":  ["SaunaMadis"]}'
+        fake = '{"signal": "start","targets":  ["any_id_whatever"],"baskets": ["magneta"]}'
 
-        if cmd == 1:
-            name = {
-                "signal": "start",
-                "targets": ["Io", "SaunaMadis"],
-                "baskets": ["blue", "magenta"]
-            }
-        elif cmd == 2:
-            name = {
-                "signal": "stop",
-                "targets": ["Io", "SaunaMadis"],
-            }
-        elif cmd == 3:
-            name = {
-                "signal": "start",
-                "targets": ["Io", "SaunaMadis"],
-                "baskets": ["magenta", "blue"]
-            }
-        y = json.dumps(name)
-        await websocket.send(y)
-        print("Sent")
+        input_data = str(await asyncio.get_event_loop().run_in_executor(None, input, "input:"))
+        if input_data == "blue":
+            await websocket.send(start_blue)
+        elif input_data == "rose":
+            await websocket.send(start_rose)
+        elif input_data == "stop":
+            await websocket.send(stop)
+        elif input_data == "fake":
+            await websocket.send(fake)
 
-# Below line has the SERVER IP address, not client.
-start_server = websockets.serve(main, 'localhost', 8080)
+
+start_server = websockets.serve(main, "localhost", 8888)
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
