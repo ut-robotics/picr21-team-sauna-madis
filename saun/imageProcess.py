@@ -42,6 +42,7 @@ class ImageProcess:
         params.filterByConvexity = False
         params.filterByInertia = False
         print(minArea)
+        print(minArea.value)
         print(maxArea)
         params.minArea = minArea
         params.maxArea = maxArea
