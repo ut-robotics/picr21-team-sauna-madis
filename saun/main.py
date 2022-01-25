@@ -58,8 +58,9 @@ def get_basket_cord():
 
 
 def get_ballNbasket_cord():
-    proccessed_ball.find_objects(image.get_aligned_Frames(), None)
-    proccessed_basket.find_objects(image.get_aligned_Frames(), None)
+    frame = image.get_aligned_Frames()
+    proccessed_ball.find_objects(frame, None)
+    proccessed_basket.find_objects(frame, None)
     return proccessed_ball.getcords(), proccessed_basket.getcords()
 
 
