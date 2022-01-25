@@ -8,6 +8,7 @@ class MyController(Controller):
         Controller.__init__(self, **kwargs)
         self.movement = movement.Movement()
         self.movement_style = MoveStyle.AUTO
+        self.throwerspeed = 200
 
     def get_movement_style(self):
         return self.movement_style
