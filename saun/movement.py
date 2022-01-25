@@ -28,15 +28,15 @@ class Movement:
             if serialNr == p.serial_number:
                 return p.device
     
-    def getMovestyle(self):
+    def get_movestyle(self):
         move_style = Movement.move_style
         return move_style
     
-    def setMovestyle(self, style):
+    def set_movestyle(self, style):
         move_style = style
         return move_style
 
-    def setMovement(self, direction ,robotSpeed, rotSpeed, throwerSpeed):
+    def set_movement(self, direction ,robotSpeed, rotSpeed, throwerSpeed):
         #print("Moving")
         x = int(self.omniWheel(robotSpeed, self.firstAngle, direction) + rotSpeed)
         #print("X: " + str(x))
