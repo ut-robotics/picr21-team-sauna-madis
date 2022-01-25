@@ -172,6 +172,7 @@ def align_basket(move_style):
     return ActiveState.FINDBALL, move_style
 
 def throw_ball(move_style):
+    print("Throwing ball -------------------------------------------------------------")
     if move_style_check(move_style) != move_style: return active_state.FINDBALL, move_style.CONTROLLER
 
     ball_coordinates, basket_coordinates = get_ballNbasket_cord()
@@ -206,5 +207,4 @@ while True:
         move_style = controller_movement(move_style)
     while move_style == MoveStyle.AUTO:
         print(active_state)
-        
         active_state, move_style = what_to_do(active_state, move_style)
