@@ -15,7 +15,7 @@ from ps4controller import controller
 camera_x_mid = 424
 
 #Enums
-ImageProcessBasket.OBJECT = BasketColor.BLUE
+#ImageProcessBasket.OBJECT = BasketColor.BLUE
 move_style = MoveStyle.AUTO
 active_state = ActiveState.FINDBALL
 

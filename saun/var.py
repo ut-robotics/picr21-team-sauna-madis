@@ -12,7 +12,7 @@ class ActiveState(Enum):
 
 class BasketColor(Enum):
     BLUE = "blue"
-    PINK = 2
+    PINK = "pink"
 
 # ------------------------------------------------
 class ImageProccesBall(Enum):
@@ -23,7 +23,7 @@ class ImageProccesBall(Enum):
 class ImageProcessBasket(Enum):
     MINAREA = 150
     MAXAREA = 999999
-    OBJECT = None
+    OBJECT = "blue" #None
 
 class BallHL(Enum):
     lH = 18
