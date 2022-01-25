@@ -1,6 +1,7 @@
 import movement
 from pyPS4Controller.controller import Controller
 from threading import Thread
+from saun.movement import Movement
 from var import *
 
 
@@ -10,6 +11,10 @@ from var import *
 
 
 class controller:
+
+    movement_style = MoveStyle.AUTO
+
+
     def __init__(self):
         self.stopped = False
         self.throwerspeed = 200
@@ -29,6 +34,10 @@ class controller:
 
             def on_x_press(self):
                 
+
+
+
+
                 if self.movement.get_movestyle() == MoveStyle.AUTO:
                     self.movement.set_movestyle(MoveStyle.CONTROLLER)
                 else:

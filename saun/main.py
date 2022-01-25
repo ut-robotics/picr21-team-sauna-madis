@@ -20,6 +20,7 @@ active_state = ActiveState.FINDBALL
 print("Staring controller thread")
 cntrl = controller()
 cntrl.start()
+cntrl.movement_style
 
 
 # Movement, Image & Image Processing

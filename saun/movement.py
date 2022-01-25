@@ -10,7 +10,9 @@ from var import *
 
 
 class Movement:
+    
     move_style = MoveStyle.AUTO
+
     def __init__(self):
         self.wheelSpeed = 18.75 * 64 / (2 * math.pi * 0.035 * 60)
         self.firstAngle = 0
