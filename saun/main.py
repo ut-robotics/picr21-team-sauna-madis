@@ -150,20 +150,17 @@ def align_basket():
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
             print("Basket distance: " + str(basket_depth))
             if basket_depth > 0.5:
-                thrower = int(basket_depth * 100 / 0.3934 + 735)
-                movement.set_movement(90, 12, 0, thrower)  # direction, robotspeed, rotspeed, throwerSpeed
-                print("Thrower speed: " + str(thrower))
-    
 
                 #throw_ball()
                 return ActiveState.THROWBALL
-            else:
-                return ActiveState.FINDBALL
 
         elif basket_coordinates[0][0] > camera_x_mid:
             movement.set_movement(180, 10, int(x_rotation + y_rotation), 0)
+            return ActiveState.ALIGNBASKET
         elif basket_coordinates[0][0] < camera_x_mid:
             movement.set_movement(0, 10, int(x_rotation + y_rotation), 0)
+            return ActiveState.ALIGNBASKET
+        print("BALL TOO CLOSE")
         return ActiveState.FINDBALL
     else:
         print("Not working correctly")
