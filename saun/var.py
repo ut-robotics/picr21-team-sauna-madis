@@ -11,7 +11,7 @@ class ActiveState(Enum):
     ALIGNBASKET = 4
 
 class BasketColor(Enum):
-    BLUE = 1
+    BLUE = "blue"
     PINK = 2
 
 # ------------------------------------------------
