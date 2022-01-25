@@ -164,9 +164,7 @@ def align_basket():
             movement.set_movement(180, 10, int(x_rotation + y_rotation), 0)
         elif basket_coordinates[0][0] < camera_x_mid:
             movement.set_movement(0, 10, int(x_rotation + y_rotation), 0)
-        else:
-            return ActiveState.FINDBALL
-
+        return ActiveState.FINDBALL
     else:
         print("Not working correctly")
         return ActiveState.FINDBALL
