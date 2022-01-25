@@ -41,15 +41,12 @@ class ImageProcess:
         params.filterByCircularity = False
         params.filterByConvexity = False
         params.filterByInertia = False
-        print(minArea)
-        print(minArea.value)
-        print(maxArea)
         minArea = int(minArea.value)
         maxArea = int(maxArea.value)
         params.minArea = minArea
         params.maxArea = maxArea
         self.detector = cv2.SimpleBlobDetector_create(params)
-
+        print(self.data)
         self.lower_limits = np.array([self.data["lH"], self.data["lS"], self.data["lV"]])
         self.upper_limits = np.array([self.data["hH"], self.data["hS"], self.data["hV"]])
 
