@@ -16,7 +16,7 @@ class Client:
             while not self.stopped:
                 message = self.ws.recv()
                 command = json.loads(message)
-
+                print(command)
                 if command["signal"] == "stop" and self.robot in command["targets"]:
                     self.signal = False
                 elif command["signal"] == "start" and self.robot in command["targets"]:

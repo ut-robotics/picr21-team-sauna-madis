@@ -1,12 +1,7 @@
-from image import *
-from imageProcess import *
-import movement
+from websocket import create_connection
+from client import Client
 
-pilt = Image()
-pilditootlusPall = ImageProcess(50, 9999999, "ball")
+ws = create_connection("ws:https//localhost:8080")
+cl = Client(ws)
+cl.listen(ws)
 
-while True:
-    movement.setMovement(0,5,0,0)
-    pilditootlusPall.find_objects(pilt.get_rbg_image())
-    cords = pilditootlusPall.getcords()
-    print(str(cords) + "ball")
