@@ -3,12 +3,9 @@ import cv2
 #import cv2.cv2
 import numpy as np
 import time
+from var import *
 
 class ImageProcess:
-    #Data
-    pinkBasket = (170,183,187,178,255,255)
-    blueBasket = (93,133,75,112,202,97)
-    ball = (18,86,43,81,184,117)
 
     def __init__(self, minArea, maxArea, object):
         ##Data
@@ -27,18 +24,16 @@ class ImageProcess:
             "hS": 0,
             "hV": 0
         }
-
-        keys = list(self.data.keys())
         # What image
         if object == "ball":
+            for x in BallHL:
+                self.data[x.name] = x.value
+        elif object == BasketColor.PINK:
+            for x in PinkBasketHL:
+                self.data[x.name] = x.value
+        elif object == BlueBasketHL:
             for x in range(6):
-                self.data[keys[x]] = self.ball[x]
-        elif object == "pink":
-            for x in range(6):
-                self.data[keys[x]] = self.pinkBasket[x]
-        elif object == "blue":
-            for x in range(6):
-                self.data[keys[x]] = self.blueBasket[x]
+                self.data[x.name] = x.value
 
         # Detection
         params = cv2.SimpleBlobDetector_Params()
