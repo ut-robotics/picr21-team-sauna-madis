@@ -74,7 +74,7 @@ class controller:
                 #self.movement.setMovement(90,40,0,0)#direction, robotspeed, rotspeed, throwerSpeed
 
             def on_R1_release(self):
-
+                print("STOP")
                 self.movement.stop()
             
             def on_L1_press(self):

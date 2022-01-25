@@ -9,6 +9,7 @@ class ActiveState(Enum):
     MOVE2BALL = 2
     FINDBASKET = 3
     ALIGNBASKET = 4
+    THROWBALL = 5
 
 class BasketColor(Enum):
     BLUE = "blue"

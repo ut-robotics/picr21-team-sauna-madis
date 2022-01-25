@@ -46,6 +46,8 @@ def what_to_do(state, move_style):
             return find_basket(move_style)
         elif state == ActiveState.ALIGNBASKET:
             return align_basket(move_style)
+        elif state == ActiveState.THROWBALL:
+            return throw_ball(move_style)
 
 def get_ball_cord():
     proccessed_ball.find_objects(image.get_aligned_Frames(), None)
@@ -145,8 +147,10 @@ def align_basket(move_style):
         ball_coordinates, basket_coordinates = get_ballNbasket_cord()
         x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -8  # -4
         y_rotation = (500 - ball_coordinates[0][1]) / 10
+
         print("Ball: " + str(ball_coordinates) + " Basket: " + str(basket_coordinates))
         print("X: " + str(x_rotation) + " Y: " + str(y_rotation))
+
         if basket_coordinates[0][0] < camera_x_mid+80 and basket_coordinates[0][0] > camera_x_mid-60 and ball_coordinates[0][0] < camera_x_mid+70 and ball_coordinates[0][0] > camera_x_mid+30:
             basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
             print("Basket distance: " + str(basket_depth))
@@ -154,10 +158,10 @@ def align_basket(move_style):
                 thrower = int(basket_depth * 100 / 0.3934 + 735)
                 movement.setMovement(90, 12, 0, thrower)  # direction, robotspeed, rotspeed, throwerSpeed
                 print("Thrower speed: " + str(thrower))
+    
 
-
-                #throw_ball(basket_depth)
-                return ActiveState.FINDBALL, move_style
+                #throw_ball()
+                return ActiveState.THROWBALL, move_style
 
 
         elif basket_coordinates[0][0] > camera_x_mid:
@@ -166,6 +170,25 @@ def align_basket(move_style):
             movement.setMovement(0, 10, int(x_rotation + y_rotation), 0)
 
     return ActiveState.FINDBALL, move_style
+
+def throw_ball(move_style):
+    if move_style_check(move_style) != move_style: return active_state.FINDBALL, move_style.CONTROLLER
+
+    ball_coordinates, basket_coordinates = get_ballNbasket_cord()
+    x_rotation = (ball_coordinates[0][0] - camera_x_mid) / -20  # -4
+    y_rotation = (500 - ball_coordinates[0][1]) / 15
+
+    basket_depth = image.getDepth(basket_coordinates[0][0], basket_coordinates[0][1])
+    thrower_speed = int(basket_depth * 100 / 0.3934 + 735)
+
+    if basket_coordinates[0][0] < camera_x_mid+80 and basket_coordinates[0][0] > camera_x_mid-60 and ball_coordinates[0][0] < camera_x_mid+70 and ball_coordinates[0][0] > camera_x_mid+30:
+        movement.setMovement(90, 10, 0, thrower_speed)
+    elif basket_coordinates[0][0] < camera_x_mid:
+        movement.setMovement(70, 10, int(x_rotation + y_rotation), thrower_speed)
+    elif basket_coordinates[0][0] > camera_x_mid:
+        movement.setMovement(110, 10, int(x_rotation + y_rotation), thrower_speed)
+   
+
 
 # def throw_ball(basket_depth):
 #     print("Throwing ball---------------------------------------------------------")
