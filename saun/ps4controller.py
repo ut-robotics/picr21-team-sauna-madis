@@ -17,7 +17,7 @@ class MyController(Controller):
         if self.movement_style == MoveStyle.AUTO:
             self.movement_style = MoveStyle.CONTROLLER
         else:
-            self.movement.set_movestyle(MoveStyle.AUTO)
+            self.movement_style = MoveStyle.AUTO
 
     def on_left_arrow_press(self):
 
@@ -48,6 +48,9 @@ class MyController(Controller):
 
         # self.throwerspeed = self.throwerspeed-100
         # print(self.throwerspeed)
+
+    def up_down_arrow_realeased(self):
+        self.movement.stop()
 
     def on_circle_press(self):
         self.movement.thrower(self.throwerspeed)
