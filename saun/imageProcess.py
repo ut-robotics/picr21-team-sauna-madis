@@ -44,6 +44,7 @@ class ImageProcess:
         print(minArea)
         print(minArea.value)
         print(maxArea)
+        minArea = int(minArea.value)
         params.minArea = minArea
         params.maxArea = maxArea
         self.detector = cv2.SimpleBlobDetector_create(params)
