@@ -197,6 +197,7 @@ while True:
     print("Before statemnts")
     if move_style == MoveStyle.CONTROLLER:
         controller_movement()
+    elif active_state == None:
+        break
     else:
         active_state = what_to_do(active_state)
-        print(active_state)
