@@ -4,12 +4,13 @@ from shutil import move
 import serial
 from serial.tools import list_ports
 import struct
+from saun.main import move_style_check
 from var import *
 
-move_style = MoveStyle.AUTO
+
 
 class Movement:
-
+    move_style = MoveStyle.AUTO
     def __init__(self):
         self.wheelSpeed = 18.75 * 64 / (2 * math.pi * 0.035 * 60)
         self.firstAngle = 0
@@ -28,6 +29,7 @@ class Movement:
                 return p.device
     
     def getMovestyle(self):
+        move_style = Movement.move_style
         return move_style
     
     def setMovestyle(self, style):
